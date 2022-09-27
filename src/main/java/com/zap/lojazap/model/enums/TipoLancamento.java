@@ -1,4 +1,4 @@
-package com.zap.lojazap.model.entity;
+package com.zap.lojazap.model.enums;
 
 public enum TipoLancamento {
 

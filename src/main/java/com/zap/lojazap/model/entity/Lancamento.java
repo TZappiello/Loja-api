@@ -17,6 +17,9 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import com.zap.lojazap.model.enums.StatusLancamento;
+import com.zap.lojazap.model.enums.TipoLancamento;
+
 @Entity
 @Table(name = "usuario", schema = "lancamento")
 public class Lancamento {
