@@ -1,10 +1,13 @@
 package com.zap.lojazap.model.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.model.entity.Usuario;
+import com.zap.lojazap.model.exception.ErroAtenticacao;
 import com.zap.lojazap.model.exception.RegraDeNegocioException;
 import com.zap.lojazap.model.repository.UsuarioRepository;
 import com.zap.lojazap.model.service.UsuarioService;
@@ -21,9 +24,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Usuario autenticar(String nome, String senha) {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario autenticar(String email, String senha) {
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+		
+		if(!usuario.isPresent()) {
+			throw new ErroAtenticacao("Usuario não cadatrado no sistema!");
+		}
+		
+		if(!usuario.get().getSenha().equals(senha)) {
+			throw new ErroAtenticacao("Senha inválida!");			
+		}
+		
+		return usuario.get();
 	}
 
 	@Override
@@ -35,7 +47,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void validarEmail(String email) {
-
 		boolean existe = usuarioRepository.existsByEmail(email);
 		if(existe) {
 			throw new RegraDeNegocioException("Esse email ja está cadastrado!");

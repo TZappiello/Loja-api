@@ -4,7 +4,7 @@ import com.zap.lojazap.model.entity.Usuario;
 
 public interface UsuarioService {
 
-	Usuario autenticar(String nome, String senha);
+	Usuario autenticar(String email, String senha);
 	
 	Usuario salvarUsuario(Usuario usuario);
 	
