@@ -2,8 +2,10 @@ package com.zap.lojazap.model.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.model.entity.Usuario;
+import com.zap.lojazap.model.exception.RegraDeNegocioException;
 import com.zap.lojazap.model.repository.UsuarioRepository;
 import com.zap.lojazap.model.service.UsuarioService;
 
@@ -25,14 +27,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
+	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+		validarEmail(usuario.getEmail());
+		return usuarioRepository.save(usuario);
 	}
 
 	@Override
 	public void validarEmail(String email) {
-		// TODO Auto-generated method stub
+
+		boolean existe = usuarioRepository.existsByEmail(email);
+		if(existe) {
+			throw new RegraDeNegocioException("Esse email ja está cadastrado!");
+		}
 		
 	}
 
