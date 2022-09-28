@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.model.dto.UsuarioDTO;
 import com.zap.lojazap.model.entity.Usuario;
+import com.zap.lojazap.model.exception.ErroAtenticacao;
 import com.zap.lojazap.model.exception.RegraDeNegocioException;
 import com.zap.lojazap.model.service.UsuarioService;
 
@@ -19,15 +20,23 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
+	@PostMapping("/autenticar")
+	public ResponseEntity autenticarUsuario(@RequestBody UsuarioDTO dto) {
+
+		try {
+			Usuario usuarioAutenticado = usuarioService.autenticar(dto.getEmail(), dto.getSenha());
+			return ResponseEntity.ok(usuarioAutenticado);
+		} catch (ErroAtenticacao e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody UsuarioDTO dto) {
-		
-		Usuario usuario = Usuario.builder()
-				.nome(dto.getNome())
-				.email(dto.getEmail())
-				.senha(dto.getSenha()).build();
-		
+
+		Usuario usuario = Usuario.builder().nome(dto.getNome()).email(dto.getEmail()).senha(dto.getSenha()).build();
+
 		try {
 			Usuario salvarUsuario = usuarioService.salvarUsuario(usuario);
 			return new ResponseEntity(salvarUsuario, HttpStatus.CREATED);
@@ -37,15 +46,3 @@ public class UsuarioController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
