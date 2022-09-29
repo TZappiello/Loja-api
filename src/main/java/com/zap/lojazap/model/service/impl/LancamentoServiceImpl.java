@@ -1,6 +1,7 @@
 package com.zap.lojazap.model.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +26,14 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public Lancamento atualizar(Lancamento lancamento) {
-		// TODO Auto-generated method stub
-		return null;
+		Objects.requireNonNull(lancamento.getId());
+		return lancamentoRepository.save(lancamento);
 	}
 
 	@Override
 	public void deletar(Lancamento lancamento) {
-		// TODO Auto-generated method stub
-		
+		Objects.requireNonNull(lancamento);
+		lancamentoRepository.delete(lancamento);
 	}
 
 	@Override
@@ -43,7 +44,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public void atualizarStatus(Lancamento lancamento, StatusLancamento status) {
-		// TODO Auto-generated method stub
+		lancamento.setStatus(status);
+		atualizar(lancamento);
 		
 	}
 
