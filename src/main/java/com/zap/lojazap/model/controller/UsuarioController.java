@@ -1,5 +1,7 @@
 package com.zap.lojazap.model.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import com.zap.lojazap.model.dto.UsuarioDTO;
 import com.zap.lojazap.model.entity.Usuario;
 import com.zap.lojazap.model.exception.ErroAtenticacao;
 import com.zap.lojazap.model.exception.RegraDeNegocioException;
+import com.zap.lojazap.model.repository.UsuarioRepository;
 import com.zap.lojazap.model.service.UsuarioService;
 
 @RestController
@@ -20,6 +23,10 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticarUsuario(@RequestBody UsuarioDTO dto) {
