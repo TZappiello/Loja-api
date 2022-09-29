@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zap.lojazap.model.dto.LancamentoDTO;
+import com.zap.lojazap.model.entity.Lancamento;
 import com.zap.lojazap.model.service.LancamentoService;
 
 @Controller
@@ -18,9 +19,15 @@ public class LancamentoController {
 	private LancamentoService lancamentoService;
 
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody LancamentoDTO dto) {
+	public ResponseEntity<?> salvar(@RequestBody LancamentoDTO dto) {
 		
 		return null;
 		
+	}
+	
+	private Lancamento converter(LancamentoDTO dto) {
+		Lancamento lancamento = new Lancamento();
+		
+		return lancamento;
 	}
 }
