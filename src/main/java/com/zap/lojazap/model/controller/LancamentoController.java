@@ -1,6 +1,5 @@
 package com.zap.lojazap.model.controller;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +35,7 @@ public class LancamentoController {
 		try {
 			Lancamento entidade = converter(dto);
 			entidade = lancamentoService.salvar(entidade);
-			return new ResponseEntity(entidade, HttpStatus.CREATED);
+			return new ResponseEntity<Object>(entidade, HttpStatus.CREATED);
 		} catch (RegraDeNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -58,6 +57,13 @@ public class LancamentoController {
 
 		}).orElseGet(() -> new ResponseEntity<>("Lancamento não encontrado na base de Dados", HttpStatus.BAD_REQUEST));
 
+	}
+	
+	public ResponseEntity<?> deletar(@PathVariable Long id) {
+		return lancamentoService.obterPorId(id).map(res ->{
+			lancamentoService.deletar(res);
+			return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+		}).orElseGet(() -> new ResponseEntity<>("Lancamento não encontrado na base de Dados", HttpStatus.BAD_REQUEST));
 	}
 
 	private Lancamento converter(LancamentoDTO dto) {
