@@ -1,6 +1,7 @@
 package com.zap.lojazap.model.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.zap.lojazap.model.entity.Lancamento;
 import com.zap.lojazap.model.enums.StatusLancamento;
@@ -18,5 +19,7 @@ public interface LancamentoService {
 	void atualizarStatus(Lancamento lancamento, StatusLancamento status);
 	
 	void validarLancamento(Lancamento lancamento);
+	
+	Optional<Lancamento> obterPorId(Long id);
 	
 }
