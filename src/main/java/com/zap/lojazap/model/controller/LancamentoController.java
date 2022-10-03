@@ -1,15 +1,20 @@
 package com.zap.lojazap.model.controller;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zap.lojazap.model.dto.LancamentoDTO;
 import com.zap.lojazap.model.entity.Lancamento;
@@ -30,6 +35,30 @@ public class LancamentoController {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	@GetMapping
+	public ResponseEntity<?> buscar (
+			//@RequestParam java.util.Map<String, String> params
+			@RequestParam(value = "descricao", required = false) String descricao,
+			@RequestParam(value = "mes", required = false) Integer mes,
+			@RequestParam(value = "ano", required = false) Integer ano,
+			@RequestParam(value = "usuario") Long idUsuario
+			) {
+		Lancamento lancamentoFiltro = new Lancamento();
+		lancamentoFiltro.setDescricao(descricao);
+		lancamentoFiltro.setMes(mes);
+		lancamentoFiltro.setAno(ano);
+		
+		Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
+		if(usuario.isPresent()) {
+			return ResponseEntity.badRequest().body("Não foi possivel fazer a consulta desse usuario o mesmo não foi encontrado");
+		} else {
+			lancamentoFiltro.setUsuario(usuario.get());
+		}
+		
+		List<Lancamento> lancamento = lancamentoService.buscar(lancamentoFiltro);
+		return ResponseEntity.ok(lancamento);
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody LancamentoDTO dto) {
 		try {
