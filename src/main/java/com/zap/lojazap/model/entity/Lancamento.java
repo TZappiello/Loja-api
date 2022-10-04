@@ -21,7 +21,7 @@ import com.zap.lojazap.model.enums.StatusLancamento;
 import com.zap.lojazap.model.enums.TipoLancamento;
 
 @Entity
-@Table(name = "usuario", schema = "lancamento")
+@Table(name = "lancamento", schema = "financas")
 public class Lancamento {
 
 	@Id

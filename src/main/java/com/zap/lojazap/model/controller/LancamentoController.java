@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +34,10 @@ import lombok.RequiredArgsConstructor;
 public class LancamentoController {
 
 	@Autowired
-	private final LancamentoService lancamentoService;
+	private LancamentoService lancamentoService;
 
 	@Autowired
-	private final UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 
 	@GetMapping
 	public ResponseEntity<?> buscar (
@@ -63,11 +64,11 @@ public class LancamentoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody LancamentoDTO dto) {
+	public ResponseEntity salvar(@RequestBody LancamentoDTO dto) {
 		try {
 			Lancamento entidade = converter(dto);
 			entidade = lancamentoService.salvar(entidade);
-			return new ResponseEntity<Object>(entidade, HttpStatus.CREATED);
+			return new ResponseEntity(entidade, HttpStatus.CREATED);
 		} catch (RegraDeNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -91,6 +92,7 @@ public class LancamentoController {
 
 	}
 	
+	@DeleteMapping
 	public ResponseEntity<?> deletar(@PathVariable Long id) {
 		return lancamentoService.obterPorId(id).map(res ->{
 			lancamentoService.deletar(res);
@@ -110,8 +112,18 @@ public class LancamentoController {
 				.orElseThrow(() -> new RegraDeNegocioException("Usuário não encontrado para o Id informado!"));
 
 		lancamento.setUsuario(usuario);
-		lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
-		lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+		
+		if(dto.getTipo() != null) {
+			lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));			
+		}
+		
+		if(dto.getStatus() != null) {
+			lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));			
+		}
+		
+		if(dto.getStatus()== null) {
+			lancamento.setStatus(StatusLancamento.PENDENTE);
+		}
 
 		return lancamento;
 	}
