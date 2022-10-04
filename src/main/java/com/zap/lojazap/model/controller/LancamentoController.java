@@ -92,7 +92,7 @@ public class LancamentoController {
 
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("{id}")
 	public ResponseEntity<?> deletar(@PathVariable Long id) {
 		return lancamentoService.obterPorId(id).map(res ->{
 			lancamentoService.deletar(res);
