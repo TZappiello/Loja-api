@@ -25,15 +25,18 @@ import com.zap.lojazap.model.exception.RegraDeNegocioException;
 import com.zap.lojazap.model.service.LancamentoService;
 import com.zap.lojazap.model.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("/lancamentos")
+@RequiredArgsConstructor
 public class LancamentoController {
 
 	@Autowired
-	private LancamentoService lancamentoService;
+	private final LancamentoService lancamentoService;
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private final UsuarioService usuarioService;
 
 	@GetMapping
 	public ResponseEntity<?> buscar (
