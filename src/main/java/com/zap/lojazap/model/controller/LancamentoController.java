@@ -4,6 +4,7 @@ package com.zap.lojazap.model.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.zap.lojazap.model.dto.AtualizarStatusDTO;
 import com.zap.lojazap.model.dto.LancamentoDTO;
 import com.zap.lojazap.model.entity.Lancamento;
 import com.zap.lojazap.model.entity.Usuario;
@@ -92,6 +94,25 @@ public class LancamentoController {
 
 		}).orElseGet(() -> new ResponseEntity<>("Lancamento não encontrado na base de Dados", HttpStatus.BAD_REQUEST));
 
+	}
+	
+	@PutMapping("{id}/atualizar-status")
+	public ResponseEntity<?> atualizarStatus(@PathVariable("id") Long id, @RequestBody AtualizarStatusDTO dto) {
+		return lancamentoService.obterPorId(id).map(res ->{
+			StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+			
+			if(statusSelecionado == null) {
+				return ResponseEntity.badRequest().body("Não foi possível atualizar o lançamento, envie um lançamento valido");
+			}
+			try {
+				res.setStatus(statusSelecionado);
+				lancamentoService.atualizar(res);
+				return ResponseEntity.ok(res);
+				
+			} catch (RegraDeNegocioException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		}).orElseGet(() -> new ResponseEntity<>("Lancamento não encontrado na base de Dados", HttpStatus.BAD_REQUEST));
 	}
 	
 	@DeleteMapping("{id}")
