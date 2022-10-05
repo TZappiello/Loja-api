@@ -45,15 +45,17 @@ public class LancamentoController {
 			@RequestParam(value = "descricao", required = false) String descricao,
 			@RequestParam(value = "mes", required = false) Integer mes,
 			@RequestParam(value = "ano", required = false) Integer ano,
+			@RequestParam(value = "tipo", required = false) TipoLancamento tipo,
 			@RequestParam(value = "usuario") Long idUsuario
 			) {
 		Lancamento lancamentoFiltro = new Lancamento();
 		lancamentoFiltro.setDescricao(descricao);
 		lancamentoFiltro.setMes(mes);
 		lancamentoFiltro.setAno(ano);
+		lancamentoFiltro.setTipo(tipo);
 		
 		Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
-		if(usuario.isPresent()) {
+		if(!usuario.isPresent()) {
 			return ResponseEntity.badRequest().body("Não foi possivel fazer a consulta desse usuario o mesmo não foi encontrado");
 		} else {
 			lancamentoFiltro.setUsuario(usuario.get());
@@ -62,13 +64,13 @@ public class LancamentoController {
 		List<Lancamento> lancamento = lancamentoService.buscar(lancamentoFiltro);
 		return ResponseEntity.ok(lancamento);
 	}
-	
+	 
 	@PostMapping
-	public ResponseEntity salvar(@RequestBody LancamentoDTO dto) {
+	public ResponseEntity<?> salvar(@RequestBody LancamentoDTO dto) {
 		try {
 			Lancamento entidade = converter(dto);
 			entidade = lancamentoService.salvar(entidade);
-			return new ResponseEntity(entidade, HttpStatus.CREATED);
+			return new ResponseEntity<Object>(entidade, HttpStatus.CREATED);
 		} catch (RegraDeNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
