@@ -1,5 +1,6 @@
 package com.zap.lojazap.model.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,7 @@ public interface LancamentoService {
 	void validarLancamento(Lancamento lancamento);
 	
 	Optional<Lancamento> obterPorId(Long id);
+	
+	BigDecimal obterSaldoPorUsuario(Long id);
 	
 }
