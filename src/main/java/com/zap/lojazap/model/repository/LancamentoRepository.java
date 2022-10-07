@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.zap.lojazap.model.entity.Lancamento;
+import com.zap.lojazap.model.enums.TipoLancamento;
 
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 
@@ -16,5 +17,5 @@ public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 			+ " AND l.tipo =:tipo group by u ")
 	BigDecimal obterSaldoPorTipoLancamentoEUsuario(
 										@Param("idUsuario") Long idUsuario,
-										@Param("tipo") String tipo);
+										@Param("tipo") TipoLancamento tipo);
 }

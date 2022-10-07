@@ -98,16 +98,16 @@ public class LancamentoController {
 	
 	@PutMapping("{id}/atualizar-status")
 	public ResponseEntity<?> atualizarStatus(@PathVariable("id") Long id, @RequestBody AtualizarStatusDTO dto) {
-		return lancamentoService.obterPorId(id).map(res ->{
+		return lancamentoService.obterPorId(id).map(entity ->{
 			StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
 			
 			if(statusSelecionado == null) {
 				return ResponseEntity.badRequest().body("Não foi possível atualizar o lançamento, envie um lançamento valido");
 			}
 			try {
-				res.setStatus(statusSelecionado);
-				lancamentoService.atualizar(res);
-				return ResponseEntity.ok(res);
+				entity.setStatus(statusSelecionado);
+				lancamentoService.atualizar(entity);
+				return ResponseEntity.ok(entity);
 				
 			} catch (RegraDeNegocioException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());
