@@ -21,6 +21,11 @@ public class CadastroCozinha {
 		return manager.createQuery(" from Cozinha", Cozinha.class)
 				.getResultList();
 	}
+	
+
+	public Cozinha buscarPorId(Long id) {
+		return manager.find(Cozinha.class, id);
+	}
 
 	@Transactional
 	public Cozinha cadastrar(Cozinha cozinha) {

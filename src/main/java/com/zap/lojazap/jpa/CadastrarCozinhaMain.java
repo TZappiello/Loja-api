@@ -9,7 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.zap.lojazap.LojaApiApplication;
 import com.zap.lojazap.domaindois.model.Cozinha;
 
-public class CozinhaMain2 {
+public class CadastrarCozinhaMain {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(LojaApiApplication.class)
