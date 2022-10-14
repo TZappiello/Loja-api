@@ -33,9 +33,9 @@ public class CadastrarCozinhaMain {
 			
 			
 			
-			System.out.printf("%d - %s\n", cozinha1.getId(), cozinha1.getNome());
-			System.out.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());
-			System.out.printf("%d - %s\n", cozinha3.getId(), cozinha3.getNome());
+			System.err.printf("%d - %s\n", cozinha1.getId(), cozinha1.getNome());
+			System.err.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());
+			System.err.printf("%d - %s\n", cozinha3.getId(), cozinha3.getNome());
 	}
 }
 
