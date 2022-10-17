@@ -1,6 +1,7 @@
-insert into cozinha (nome) values ('Chinesa');
-insert into cozinha (nome) values ('Mexicana');
-insert into cozinha (nome) values ('Tailandesa');
+insert into cozinha (id, nome) values (1, 'Chinesa');
+insert into cozinha (id, nome) values (2, 'Mexicana');
+insert into cozinha (id, nome) values (3, 'Tailandesa');
 
-insert into restaurante (nome) values ('Mestre cuca');
-insert into restaurante (nome) values ('Du Chefe');
+insert into restaurante (nome, taxa_frete, cozinha_id) values ('Mestre cuca', 14, 1) ;
+insert into restaurante (nome, taxa_frete, cozinha_id) values ('Du Chefe', 17, 2);
+insert into restaurante (nome, taxa_frete, cozinha_id) values ('Gula', 17, 3);
