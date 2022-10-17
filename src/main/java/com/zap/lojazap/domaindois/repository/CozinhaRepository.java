@@ -2,13 +2,13 @@ package com.zap.lojazap.domaindois.repository;
 
 import java.util.List;
 
-import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.model.CozinhaEntity;
 
 public interface CozinhaRepository {
 	
-	List<Cozinha> todas();
-	Cozinha porId(Long id);
-	Cozinha adicionar(Cozinha cozinha);
-	void remover(Cozinha cozinha);
+	List<CozinhaEntity> todas();
+	CozinhaEntity porId(Long id);
+	CozinhaEntity adicionar(CozinhaEntity cozinha);
+	void remover(CozinhaEntity cozinha);
 
 }

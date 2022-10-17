@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
-import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class CozinhaMain {
@@ -19,9 +19,9 @@ public class CozinhaMain {
 		
 		CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 			
-			List<Cozinha> cozinhas = cozinhaRepository.todas();
+			List<CozinhaEntity> cozinhas = cozinhaRepository.todas();
 			
-			for(Cozinha cozinha : cozinhas) {
+			for(CozinhaEntity cozinha : cozinhas) {
 				System.out.println(cozinha.getNome());
 			}
 	}

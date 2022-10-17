@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class CozinhaRepositoryImpl implements CozinhaRepository {
@@ -16,26 +16,26 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 	private EntityManager manager;
 	
 	@Override
-	public List<Cozinha> todas(){
+	public List<CozinhaEntity> todas(){
 		
-		return manager.createQuery(" from Cozinha", Cozinha.class)
+		return manager.createQuery(" from Cozinha", CozinhaEntity.class)
 				.getResultList();
 	}
 
 	@Override
-	public Cozinha porId(Long id) {
-		return manager.find(Cozinha.class, id);
+	public CozinhaEntity porId(Long id) {
+		return manager.find(CozinhaEntity.class, id);
 	}
 
 	@Transactional
 	@Override
-	public Cozinha adicionar(Cozinha cozinha) {
+	public CozinhaEntity adicionar(CozinhaEntity cozinha) {
 		return manager.merge(cozinha);
 	}
 
 	@Transactional
 	@Override
-	public void remover(Cozinha cozinha) {
+	public void remover(CozinhaEntity cozinha) {
 		cozinha = porId(cozinha.getId());
 		manager.remove(cozinha);
 	}

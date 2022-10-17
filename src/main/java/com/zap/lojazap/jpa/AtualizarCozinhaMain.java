@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
-import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class AtualizarCozinhaMain {
@@ -19,15 +19,15 @@ public class AtualizarCozinhaMain {
 			
 					
 
-			Cozinha cozinha = new Cozinha();
+			CozinhaEntity cozinha = new CozinhaEntity();
 			cozinha.setId(1L);
 			cozinha.setNome("Portuguesa");
 			
-			Cozinha cozinha2 = new Cozinha();
+			CozinhaEntity cozinha2 = new CozinhaEntity();
 			cozinha2.setId(2L);
 			cozinha2.setNome("Tailandesa");
 			
-			Cozinha cozinha3 =new Cozinha();
+			CozinhaEntity cozinha3 =new CozinhaEntity();
 			cozinha3.setId(3L);
 			cozinha3.setNome("Mexicana");
 

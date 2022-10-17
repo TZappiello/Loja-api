@@ -1,18 +1,24 @@
 package com.zap.lojazap.domaindois.model;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cozinha {
+public class RestauranteEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nome;
+
+	@Column(name = "taxa_frete")
+	private BigDecimal taxaFrente;
 
 	public Long getId() {
 		return id;
@@ -28,6 +34,14 @@ public class Cozinha {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public BigDecimal getTaxaFrente() {
+		return taxaFrente;
+	}
+
+	public void setTaxaFrente(BigDecimal taxaFrente) {
+		this.taxaFrente = taxaFrente;
 	}
 
 	@Override
@@ -46,7 +60,7 @@ public class Cozinha {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cozinha other = (Cozinha) obj;
+		RestauranteEntity other = (RestauranteEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -54,6 +68,5 @@ public class Cozinha {
 			return false;
 		return true;
 	}
-	
-	
+
 }

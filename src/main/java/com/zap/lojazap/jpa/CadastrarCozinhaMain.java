@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
-import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class CadastrarCozinhaMain {
@@ -19,13 +19,13 @@ public class CadastrarCozinhaMain {
 			
 					
 
-			Cozinha cozinha1 = new Cozinha();
+			CozinhaEntity cozinha1 = new CozinhaEntity();
 			cozinha1.setNome("Portuguesa");
 			
-			Cozinha cozinha2 = new Cozinha();
+			CozinhaEntity cozinha2 = new CozinhaEntity();
 			cozinha2.setNome("Japonesa");
 			
-			Cozinha cozinha3 = new Cozinha();
+			CozinhaEntity cozinha3 = new CozinhaEntity();
 			cozinha3.setNome("Cozinha da Lu");
 			
 			cozinha1 = cozinhaRepository.adicionar(cozinha1);
