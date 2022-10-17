@@ -16,8 +16,6 @@ public class CadastrarCozinhaMain {
 		
 			CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
 			
-					
-
 			Cozinha cozinha1 = new Cozinha();
 			cozinha1.setNome("Portuguesa");
 			
@@ -30,8 +28,6 @@ public class CadastrarCozinhaMain {
 			cozinha1 = cadastroCozinha.cadastrar(cozinha1);
 			cozinha2 = cadastroCozinha.cadastrar(cozinha2);
 			cozinha3 = cadastroCozinha.cadastrar(cozinha3);
-			
-			
 			
 			System.err.printf("%d - %s\n", cozinha1.getId(), cozinha1.getNome());
 			System.err.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());

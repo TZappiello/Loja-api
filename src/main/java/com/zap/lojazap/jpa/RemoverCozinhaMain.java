@@ -15,7 +15,6 @@ public class RemoverCozinhaMain {
 
 		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
 
-
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(2L);
 		
