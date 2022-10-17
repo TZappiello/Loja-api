@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
 import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class RemoverCozinhaMain {
 
@@ -13,7 +14,7 @@ public class RemoverCozinhaMain {
 		ConfigurableApplicationContext applicationContext = new SpringApplicationBuilder(LojaApiApplication.class)
 				.web(WebApplicationType.NONE).run(args);
 
-		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+		CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(2L);
@@ -21,8 +22,8 @@ public class RemoverCozinhaMain {
 		Cozinha cozinha2 = new Cozinha();
 		cozinha2.setId(1L);
 		
-		cadastroCozinha.remover(cozinha);
-		cadastroCozinha.remover(cozinha2);
+		cozinhaRepository.remover(cozinha);
+		cozinhaRepository.remover(cozinha2);
 
 	}
 }

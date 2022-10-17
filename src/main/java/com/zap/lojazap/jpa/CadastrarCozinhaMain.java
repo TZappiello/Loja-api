@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
 import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class CadastrarCozinhaMain {
 
@@ -14,8 +15,10 @@ public class CadastrarCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-			CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+			CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 			
+					
+
 			Cozinha cozinha1 = new Cozinha();
 			cozinha1.setNome("Portuguesa");
 			
@@ -25,10 +28,11 @@ public class CadastrarCozinhaMain {
 			Cozinha cozinha3 = new Cozinha();
 			cozinha3.setNome("Cozinha da Lu");
 			
-			cozinha1 = cadastroCozinha.cadastrar(cozinha1);
-			cozinha2 = cadastroCozinha.cadastrar(cozinha2);
-			cozinha3 = cadastroCozinha.cadastrar(cozinha3);
+			cozinha1 = cozinhaRepository.adicionar(cozinha1);
+			cozinha2 = cozinhaRepository.adicionar(cozinha2);
+			cozinha3 = cozinhaRepository.adicionar(cozinha3);
 			
+		
 			System.err.printf("%d - %s\n", cozinha1.getId(), cozinha1.getNome());
 			System.err.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());
 			System.err.printf("%d - %s\n", cozinha3.getId(), cozinha3.getNome());

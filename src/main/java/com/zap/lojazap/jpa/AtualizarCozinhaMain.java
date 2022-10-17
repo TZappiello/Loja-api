@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zap.lojazap.LojaApiApplication;
 import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
 public class AtualizarCozinhaMain {
 
@@ -14,7 +15,7 @@ public class AtualizarCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-			CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+			CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 			
 					
 
@@ -30,9 +31,9 @@ public class AtualizarCozinhaMain {
 			cozinha3.setId(3L);
 			cozinha3.setNome("Mexicana");
 
-			cozinha = cadastroCozinha.cadastrar(cozinha);
-			cozinha2 = cadastroCozinha.cadastrar(cozinha2);
-			cozinha3 = cadastroCozinha.cadastrar(cozinha3);
+			cozinha = cozinhaRepository.adicionar(cozinha);
+			cozinha2 = cozinhaRepository.adicionar(cozinha2);
+			cozinha3 = cozinhaRepository.adicionar(cozinha3);
 
 			System.out.printf("%d - %s\n", cozinha.getId(), cozinha.getNome());
 			System.out.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());

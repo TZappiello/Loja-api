@@ -1,39 +1,43 @@
-package com.zap.lojazap.jpa;
+package com.zap.lojazap.infrastructure.repository;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.model.Cozinha;
+import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
-@Component
-public class CadastroCozinha {
+public class CozinhaRepositoryImpl implements CozinhaRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public List<Cozinha> listar(){
+	@Override
+	public List<Cozinha> todas(){
 		
 		return manager.createQuery(" from Cozinha", Cozinha.class)
 				.getResultList();
 	}
 
-	public Cozinha buscarPorId(Long id) {
+	@Override
+	public Cozinha porId(Long id) {
 		return manager.find(Cozinha.class, id);
 	}
 
 	@Transactional
-	public Cozinha cadastrar(Cozinha cozinha) {
+	@Override
+	public Cozinha adicionar(Cozinha cozinha) {
 		return manager.merge(cozinha);
 	}
 
 	@Transactional
+	@Override
 	public void remover(Cozinha cozinha) {
-		cozinha = buscarPorId(cozinha.getId());
+		cozinha = porId(cozinha.getId());
 		manager.remove(cozinha);
 	}
+
 }
