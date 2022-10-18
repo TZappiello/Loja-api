@@ -15,7 +15,7 @@ public class FormaPagamentoRepositoryImpl implements FormaPagamentoRepository {
 	
 	@Override
 	public List<FormaPagamentoEntity> todas() {
-		return (List<FormaPagamentoEntity>) manager.createQuery("from FormaPagamentoEntity ", FormaPagamentoEntity.class).getResultList();
+		return (List<FormaPagamentoEntity>) manager.createQuery("from forma_pagamento ", FormaPagamentoEntity.class).getResultList();
 	}
 
 	@Override
