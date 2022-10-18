@@ -14,12 +14,10 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	@Override
-	public List<CozinhaEntity> todas(){
-		
-		return manager.createQuery(" from CozinhaEntity", CozinhaEntity.class)
-				.getResultList();
+	public List<CozinhaEntity> todas() {
+		return manager.createQuery(" from CozinhaEntity", CozinhaEntity.class).getResultList();
 	}
 
 	@Override
