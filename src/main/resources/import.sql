@@ -10,3 +10,7 @@ insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into forma_pagamento (descricao) values ('Cartão');
 
 insert into permissao (descricao, nome) values ('Pedido Telefone', 'Joao ');
+
+insert into estados (nome) values ('São Paulo');
+
+insert into cidades (nome, estado_id) values ('Mogi das Cruzes', 1);
