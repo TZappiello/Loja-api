@@ -15,14 +15,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "forma_pagamento")
+@Table(name = "permissao")
 @Entity
-public class FormaPagamentoEntity {
+public class PermissaoEntity {
 	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String nome;
 	
 	private String descricao;
 
