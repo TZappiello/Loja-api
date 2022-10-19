@@ -22,7 +22,7 @@ public class CozinhaRestauranteMain {
 			List<RestauranteEntity> restaurantes = restauranteRepository.todas();
 			
 			for(RestauranteEntity restaurante : restaurantes) {
-				System.out.printf("%s - %f - %s/n",restaurante.getNome(),
+				System.err.printf("%s - %f - %s\n",restaurante.getNome(),
 						restaurante.getTaxaFrente(), restaurante.getCozinha().getNome());
 			}
 	}

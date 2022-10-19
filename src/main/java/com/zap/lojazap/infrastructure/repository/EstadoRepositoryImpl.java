@@ -5,9 +5,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Component;
+
 import com.zap.lojazap.domaindois.model.EstadoEntity;
 import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
+@Component
 public class EstadoRepositoryImpl implements EstadoRepository {
 
 	@PersistenceContext
@@ -15,7 +18,7 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 	
 	@Override
 	public List<EstadoEntity> todas() {
-		return manager.createQuery(" from estados", EstadoEntity.class).getResultList();
+		return manager.createQuery(" from EstadoEntity", EstadoEntity.class).getResultList();
 	}
 
 	@Override

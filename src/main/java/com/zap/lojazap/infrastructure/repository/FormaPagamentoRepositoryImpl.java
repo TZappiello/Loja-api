@@ -5,9 +5,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Component;
+
 import com.zap.lojazap.domaindois.model.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.repository.FormaPagamentoRepository;
 
+@Component
 public class FormaPagamentoRepositoryImpl implements FormaPagamentoRepository {
 
 	@PersistenceContext
@@ -15,7 +18,7 @@ public class FormaPagamentoRepositoryImpl implements FormaPagamentoRepository {
 	
 	@Override
 	public List<FormaPagamentoEntity> todas() {
-		return (List<FormaPagamentoEntity>) manager.createQuery("from forma_pagamento ", FormaPagamentoEntity.class).getResultList();
+		return (List<FormaPagamentoEntity>) manager.createQuery("from FormaPagamentoEntity ", FormaPagamentoEntity.class).getResultList();
 	}
 
 	@Override

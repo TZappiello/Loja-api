@@ -5,9 +5,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Component;
+
 import com.zap.lojazap.domaindois.model.PermissaoEntity;
 import com.zap.lojazap.domaindois.repository.PermissaoRepository;
 
+@Component
 public class PermissaoRepositoryImpl implements PermissaoRepository {
 
 	@PersistenceContext
@@ -15,7 +18,7 @@ public class PermissaoRepositoryImpl implements PermissaoRepository {
 	
 	@Override
 	public List<PermissaoEntity> todas() {
-		return manager.createQuery("from permissao ", PermissaoEntity.class).getResultList();
+		return manager.createQuery("from PermissaoEntity ", PermissaoEntity.class).getResultList();
 	}
 
 	@Override

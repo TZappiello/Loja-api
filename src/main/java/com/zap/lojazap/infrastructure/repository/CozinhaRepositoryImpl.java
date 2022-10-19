@@ -5,11 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 
+@Component
 public class CozinhaRepositoryImpl implements CozinhaRepository {
 
 	@PersistenceContext
@@ -17,7 +19,7 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 
 	@Override
 	public List<CozinhaEntity> todas() {
-		return manager.createQuery(" from cozinha", CozinhaEntity.class).getResultList();
+		return manager.createQuery(" from CozinhaEntity", CozinhaEntity.class).getResultList();
 	}
 
 	@Override
