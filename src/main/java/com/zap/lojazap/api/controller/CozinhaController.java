@@ -63,10 +63,14 @@ public class CozinhaController {
 
 		CozinhaEntity cozinhaAtual = cozinhaRepository.porId(id);
 
-		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-		cozinhaAtual = cozinhaRepository.adicionar(cozinhaAtual);
-
-		return ResponseEntity.ok(cozinhaAtual);
+		if(cozinhaAtual != null) {
+			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+			cozinhaRepository.adicionar(cozinhaAtual);
+	
+			return ResponseEntity.ok(cozinhaAtual);
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 
 //	@PutMapping("/{id}")
