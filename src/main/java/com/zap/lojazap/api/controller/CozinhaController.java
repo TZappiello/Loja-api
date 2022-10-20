@@ -31,7 +31,8 @@ public class CozinhaController {
 		CozinhaEntity cozinha = cozinhaRepository.porId(id);
 
 		if (cozinha == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			//return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(cozinha);
 	}
