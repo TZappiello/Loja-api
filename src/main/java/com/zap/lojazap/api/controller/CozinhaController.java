@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
+import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -26,6 +27,9 @@ public class CozinhaController {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
+	
+	@Autowired
+	private CadastroCozinhaService cadastroCozinha;
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<CozinhaEntity> listar() {
@@ -50,7 +54,7 @@ public class CozinhaController {
 
 	@PostMapping
 	public ResponseEntity<CozinhaEntity> adicionar(@RequestBody CozinhaEntity cozinha) {
-		cozinha = cozinhaRepository.adicionar(cozinha);
+		cozinha = cadastroCozinha.adicionar(cozinha);
 		return ResponseEntity.created(null).body(cozinha);
 	}
 
