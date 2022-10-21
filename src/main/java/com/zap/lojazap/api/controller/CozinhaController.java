@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
+import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
@@ -27,7 +28,7 @@ public class CozinhaController {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 
@@ -69,13 +70,13 @@ public class CozinhaController {
 
 		CozinhaEntity cozinhaAtual = cozinhaRepository.porId(id);
 
-		if(cozinhaAtual != null) {
+		if (cozinhaAtual != null) {
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 			cozinhaRepository.adicionar(cozinhaAtual);
-	
+
 			return ResponseEntity.ok(cozinhaAtual);
 		}
-		
+
 		return ResponseEntity.notFound().build();
 	}
 
@@ -89,26 +90,24 @@ public class CozinhaController {
 //
 //		return ResponseEntity.ok(cozinhaAtual);
 //	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<CozinhaEntity> remover(@PathVariable Long  id) {
-		CozinhaEntity cozinha = cozinhaRepository.porId(id);
+	public ResponseEntity<CozinhaEntity> remover(@PathVariable Long id) {
 		try {
-			if(cozinha != null) {
-				cozinhaRepository.remover(cozinha);
-				
-				return ResponseEntity.noContent().build();
-			}
-			
+			cadastroCozinha.excluir(id);
+			return ResponseEntity.noContent().build();
+
+		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
-			
-		} catch (DataIntegrityViolationException e) {
-			return ResponseEntity.badRequest().build(); //poderia ser tbm o CONFLICT
+
+		} catch (EntidadeEmUsoException e) {
+			System.err.println(e);
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
 		}
 
 	}
-	
-	
+
 //	@DeleteMapping("/{id}")
 //	public void remover(@PathVariable Long  id) {
 //		CozinhaEntity cozinha = cozinhaRepository.porId(id);

@@ -12,6 +12,6 @@ public interface CozinhaRepository {
 	
 	CozinhaEntity adicionar(CozinhaEntity cozinha);
 	
-	void remover(CozinhaEntity cozinha);
+	void remover(Long id);
 
 }
