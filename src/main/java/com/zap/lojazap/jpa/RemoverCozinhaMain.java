@@ -22,8 +22,8 @@ public class RemoverCozinhaMain {
 		CozinhaEntity cozinha2 = new CozinhaEntity();
 		cozinha2.setId(1L);
 		
-		cozinhaRepository.remover(cozinha);
-		cozinhaRepository.remover(cozinha2);
+		cozinhaRepository.remover(null);
+		cozinhaRepository.remover(null);
 
 	}
 }
