@@ -72,7 +72,7 @@ public class CozinhaController {
 
 		if (cozinhaAtual != null) {
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-			cozinhaRepository.adicionar(cozinhaAtual);
+			cadastroCozinha.adicionar(cozinhaAtual);
 
 			return ResponseEntity.ok(cozinhaAtual);
 		}
