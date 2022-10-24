@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.model.RestauranteEntity;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
@@ -62,10 +63,10 @@ public class RestauranteController {
 		try {
 			RestauranteEntity restauranteId = restauranteRepository.porId(id);
 
-			if (restauranteId == null) {
-				throw new EntidadeNaoEncontradaException(
-						String.format("O código do restaurante não pode ser %d, precisa de um restaurante válido para poder atualizar", restauranteId));
-			}
+//			if (restauranteId == null) {
+//				throw new EntidadeEmUsoException(
+//						String.format("O código do restaurante não pode ser %d, precisa de um restaurante válido para poder atualizar", restauranteId));
+//			}
 
 			if (restauranteId != null) {
 				BeanUtils.copyProperties(restaurante, restauranteId, "id");
@@ -76,6 +77,9 @@ public class RestauranteController {
 
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
 		}
 	}
