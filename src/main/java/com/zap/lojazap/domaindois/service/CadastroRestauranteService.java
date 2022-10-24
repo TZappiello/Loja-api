@@ -19,10 +19,19 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
-	public RestauranteEntity cadstrar(RestauranteEntity restaurante) {
+	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		CozinhaEntity cozinha = cozinhaRepository.porId(cozinhaId);
 		
+//		Long restauranteId = restaurante.getId();
+//		RestauranteEntity restauranteContem = restauranteRepository.porId(restauranteId);
+//		
+//		if(restauranteContem == null) {
+//			System.err.println("Passando aqui" + restauranteId);
+//			throw new EntidadeEmUsoException(
+//					String.format("Não existe restaurante cadastra com código %d", restauranteId));
+//		}
+		 
 		if(cozinha == null) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe cozinha cadastra com código %d ", cozinhaId));
@@ -33,4 +42,6 @@ public class CadastroRestauranteService {
 		return restauranteRepository.adicionar(restaurante);
 		
 	}
+	
+	
 }
