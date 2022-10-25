@@ -63,10 +63,9 @@ public class RestauranteController {
 		try {
 			RestauranteEntity restauranteId = restauranteRepository.porId(id);
 
-//			if (restauranteId == null) {
-//				throw new EntidadeEmUsoException(
-//						String.format("O código do restaurante não pode ser %d, precisa de um restaurante válido para poder atualizar", restauranteId));
-//			}
+			if (restauranteId == null) {
+				return ResponseEntity.notFound().build();
+			}
 
 			if (restauranteId != null) {
 				BeanUtils.copyProperties(restaurante, restauranteId, "id");

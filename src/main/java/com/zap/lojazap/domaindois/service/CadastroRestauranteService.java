@@ -3,7 +3,6 @@ package com.zap.lojazap.domaindois.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.model.CozinhaEntity;
 import com.zap.lojazap.domaindois.model.RestauranteEntity;
@@ -24,14 +23,6 @@ public class CadastroRestauranteService {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		CozinhaEntity cozinha = cozinhaRepository.porId(cozinhaId);
 		
-		Long restauranteId = restaurante.getId();
-		RestauranteEntity restauranteContem = restauranteRepository.porId(restauranteId);
-		
-		if(restauranteContem == null) {
-			throw new EntidadeEmUsoException(
-					String.format("O código do restaurante não pode ser %d", restaurante));
-		}
-		 
 		if(cozinha == null) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe cozinha cadastra com código %d ", cozinhaId));
