@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import com.zap.lojazap.domaindois.model.EstadoEntity;
@@ -37,6 +38,10 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 	@Override 
 	public void remover(EstadoEntity estado) {
 		estado = porId(estado.getId());
+		
+		if(estado == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
 		manager.remove(estado);
 	}
 

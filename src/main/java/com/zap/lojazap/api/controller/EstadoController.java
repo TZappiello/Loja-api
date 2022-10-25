@@ -2,11 +2,13 @@ package com.zap.lojazap.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +46,20 @@ public class EstadoController {
 	public ResponseEntity<EstadoEntity> adicionar (@RequestBody EstadoEntity estados){
 		estados = cadastroEstados.adicionar(estados);
 		return ResponseEntity.created(null).body(estados);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<EstadoEntity> atualizar(@PathVariable Long id, @RequestBody EstadoEntity estados){
+		EstadoEntity estadoAtual = estadoRepository.porId(id);
+		
+		if(estadoAtual != null) {
+			BeanUtils.copyProperties(estados, estadoAtual, "id");
+			cadastroEstados.adicionar(estadoAtual);
+			
+			return ResponseEntity.created(null).body(estadoAtual);
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 }
 

@@ -24,7 +24,7 @@ public class EstadoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private String nome;
 
 }
