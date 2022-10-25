@@ -101,7 +101,6 @@ public class CozinhaController {
 			return ResponseEntity.notFound().build();
 
 		} catch (EntidadeEmUsoException e) {
-			System.err.println(e);
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
 		}

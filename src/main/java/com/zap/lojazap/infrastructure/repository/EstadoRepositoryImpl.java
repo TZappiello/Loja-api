@@ -36,8 +36,8 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 
 	@Transactional
 	@Override 
-	public void remover(EstadoEntity estado) {
-		estado = porId(estado.getId());
+	public void remover(Long id) {
+		EstadoEntity estado = porId(id);
 		
 		if(estado == null) {
 			throw new EmptyResultDataAccessException(1);

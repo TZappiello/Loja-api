@@ -12,6 +12,6 @@ public interface EstadoRepository {
 	
 	EstadoEntity adicionar(EstadoEntity estado);
 	
-	void remover(EstadoEntity estado);
+	void remover(Long id);
 
 }
