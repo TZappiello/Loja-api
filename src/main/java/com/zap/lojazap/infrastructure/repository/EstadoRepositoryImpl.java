@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
@@ -26,12 +27,14 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 		return manager.find(EstadoEntity.class, id);
 	}
 
+	@Transactional
 	@Override
-	public EstadoEntity adicionar(EstadoEntity estado) {
-		return manager.merge(estado);
+	public EstadoEntity adicionar(EstadoEntity estados) {
+		return manager.merge(estados);
 	}
 
-	@Override
+	@Transactional
+	@Override 
 	public void remover(EstadoEntity estado) {
 		estado = porId(estado.getId());
 		manager.remove(estado);
