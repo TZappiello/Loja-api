@@ -22,22 +22,6 @@ public class CadastroEstadosService {
 		return estadoRepository.adicionar(estados);
 	}
 	
-//	public EstadoEntity cadastrar(EstadoEntity estado) {
-//		
-//		Long cozinhaId = restaurante.getCozinha().getId();
-//		CozinhaEntity cozinha = cozinhaRepository.porId(cozinhaId);
-//		
-//		if(cozinha == null) {
-//			throw new EntidadeNaoEncontradaException(
-//					String.format("Não existe cozinha cadastra com código %d ", cozinhaId));
-//		}
-//		
-//		restaurante.setCozinha(cozinha);
-//		
-//		return restauranteRepository.adicionar(restaurante);
-//		
-//	}
-	
 	
 	public void excluir(Long id) {
 		try {
