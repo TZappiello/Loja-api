@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,8 +77,23 @@ public class CidadeController {
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 
-//		} catch (EntidadeEmUsoException e) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+		}
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<CidadeEntity> remover(@PathVariable Long id) {
+		try {
+			cadastroService.remover(id);
+			return ResponseEntity.noContent().build();
+			
+		} catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.notFound().build();
+
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
 		}
 	}

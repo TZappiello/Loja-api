@@ -1,8 +1,11 @@
 package com.zap.lojazap.domaindois.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.model.CidadeEntity;
 import com.zap.lojazap.domaindois.model.EstadoEntity;
@@ -33,4 +36,17 @@ public class CadastroCidadesService {
 		
 	}
 	
+	public void remover(Long id) {
+		try {
+			cidadeRepository.remover(id);
+			
+		} catch (EmptyResultDataAccessException e) {
+			throw new EntidadeNaoEncontradaException(
+					String.format("Não existe um cadastro de cidade com código %d", id));
+
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(
+					String.format("Cidade de código %d não pode ser removida, pois está em uso", id));
+		}
+	}
 }
