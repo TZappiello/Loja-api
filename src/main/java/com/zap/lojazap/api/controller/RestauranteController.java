@@ -1,12 +1,14 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -81,5 +83,25 @@ public class RestauranteController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
 		}
+	}
+	
+	@PatchMapping("/{id}")	
+	public ResponseEntity<?>atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos){
+		RestauranteEntity restauranteId = restauranteRepository.porId(id);
+		
+		if (restauranteId == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		merge(campos, restauranteId);
+		
+		return atualizar(id, restauranteId);
+	}
+
+	private void merge(Map<String, Object> camposOrigem, RestauranteEntity restauranteDestino) {
+		camposOrigem.forEach((nomePropriedade, valorPropriedade)->{
+			System.err.println(nomePropriedade + " = "+ valorPropriedade);
+			
+		});
 	}
 }
