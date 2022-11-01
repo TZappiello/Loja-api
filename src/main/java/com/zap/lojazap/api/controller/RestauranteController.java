@@ -1,5 +1,6 @@
 package com.zap.lojazap.api.controller;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.model.RestauranteEntity;
@@ -99,9 +102,18 @@ public class RestauranteController {
 	}
 
 	private void merge(Map<String, Object> camposOrigem, RestauranteEntity restauranteDestino) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		RestauranteEntity restauranteOrigem = objectMapper.convertValue(camposOrigem, RestauranteEntity.class);
+		
 		camposOrigem.forEach((nomePropriedade, valorPropriedade)->{
+			Field field = ReflectionUtils.findField(RestauranteEntity.class, nomePropriedade);
+			field.setAccessible(true);
+			
+			Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
+			
 			System.err.println(nomePropriedade + " = "+ valorPropriedade);
 			
+			ReflectionUtils.setField(field, restauranteDestino, novoValor);
 		});
 	}
 }
