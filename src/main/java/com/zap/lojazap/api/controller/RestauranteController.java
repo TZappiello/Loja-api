@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.model.RestauranteEntity;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
 

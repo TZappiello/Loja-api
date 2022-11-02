@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.model.EstadoEntity;
 import com.zap.lojazap.domaindois.repository.EstadoRepository;
 import com.zap.lojazap.domaindois.service.CadastroEstadosService;
 

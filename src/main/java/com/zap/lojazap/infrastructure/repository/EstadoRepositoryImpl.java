@@ -7,12 +7,12 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import com.zap.lojazap.domaindois.model.EstadoEntity;
+import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
-@Component
+@Repository
 public class EstadoRepositoryImpl implements EstadoRepository {
 
 	@PersistenceContext

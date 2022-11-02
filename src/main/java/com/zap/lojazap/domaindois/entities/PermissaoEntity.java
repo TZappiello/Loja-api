@@ -1,14 +1,9 @@
-package com.zap.lojazap.domaindois.model;
+package com.zap.lojazap.domaindois.entities;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -20,22 +15,17 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "restaurante")
+@Table(name = "permissao")
 @Entity
-public class RestauranteEntity {
-
+public class PermissaoEntity {
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String nome;
-
-	@Column(name = "taxa_frete")
-	private BigDecimal taxaFrente;
 	
-	@JoinColumn(name = "cozinha_id")
-	@ManyToOne
-	private CozinhaEntity cozinha;
+	private String nome;
+	
+	private String descricao;
 
 }

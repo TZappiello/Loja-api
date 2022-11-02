@@ -1,4 +1,4 @@
-package com.zap.lojazap.domaindois.model;
+package com.zap.lojazap.domaindois.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

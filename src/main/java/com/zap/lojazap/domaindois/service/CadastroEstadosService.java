@@ -5,9 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.model.EstadoEntity;
 import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
 @Service

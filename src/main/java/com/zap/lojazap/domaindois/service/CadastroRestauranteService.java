@@ -3,9 +3,9 @@ package com.zap.lojazap.domaindois.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zap.lojazap.domaindois.entities.CozinhaEntity;
+import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.model.CozinhaEntity;
-import com.zap.lojazap.domaindois.model.RestauranteEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 

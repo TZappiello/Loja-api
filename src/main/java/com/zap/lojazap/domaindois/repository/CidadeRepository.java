@@ -2,7 +2,7 @@ package com.zap.lojazap.domaindois.repository;
 
 import java.util.List;
 
-import com.zap.lojazap.domaindois.model.CidadeEntity;
+import com.zap.lojazap.domaindois.entities.CidadeEntity;
 
 public interface CidadeRepository {
 	
