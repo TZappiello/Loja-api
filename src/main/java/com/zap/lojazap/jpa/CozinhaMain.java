@@ -19,7 +19,7 @@ public class CozinhaMain {
 		
 		CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 			
-			List<CozinhaEntity> cozinhas = cozinhaRepository.todas();
+			List<CozinhaEntity> cozinhas = cozinhaRepository.findAll();
 			
 			for(CozinhaEntity cozinha : cozinhas) {
 				System.out.println(cozinha.getNome());

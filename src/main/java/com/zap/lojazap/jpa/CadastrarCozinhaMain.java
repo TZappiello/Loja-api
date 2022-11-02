@@ -28,9 +28,9 @@ public class CadastrarCozinhaMain {
 			CozinhaEntity cozinha3 = new CozinhaEntity();
 			cozinha3.setNome("Cozinha da Lu");
 			
-			cozinha1 = cozinhaRepository.adicionar(cozinha1);
-			cozinha2 = cozinhaRepository.adicionar(cozinha2);
-			cozinha3 = cozinhaRepository.adicionar(cozinha3);
+			cozinha1 = cozinhaRepository.save(cozinha1);
+			cozinha2 = cozinhaRepository.save(cozinha2);
+			cozinha3 = cozinhaRepository.save(cozinha3);
 			
 		
 			System.err.printf("%d - %s\n", cozinha1.getId(), cozinha1.getNome());

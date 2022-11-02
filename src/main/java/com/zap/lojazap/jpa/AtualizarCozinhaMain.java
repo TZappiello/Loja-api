@@ -31,9 +31,9 @@ public class AtualizarCozinhaMain {
 			cozinha3.setId(3L);
 			cozinha3.setNome("Mexicana");
 
-			cozinha = cozinhaRepository.adicionar(cozinha);
-			cozinha2 = cozinhaRepository.adicionar(cozinha2);
-			cozinha3 = cozinhaRepository.adicionar(cozinha3);
+			cozinha = cozinhaRepository.save(cozinha);
+			cozinha2 = cozinhaRepository.save(cozinha2);
+			cozinha3 = cozinhaRepository.save(cozinha3);
 
 			System.out.printf("%d - %s\n", cozinha.getId(), cozinha.getNome());
 			System.out.printf("%d - %s\n", cozinha2.getId(), cozinha2.getNome());
