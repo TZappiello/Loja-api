@@ -1,6 +1,7 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,15 @@ public class EstadoController {
 	
 	@GetMapping
 	public List<EstadoEntity> listar(){
-		return estadoRepository.todas();
+		return estadoRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<EstadoEntity> porId(@PathVariable Long id){
-		EstadoEntity estado = estadoRepository.porId(id);
-		if(estado != null) {
-			return ResponseEntity.ok().body(estado);
+		Optional<EstadoEntity> estado = estadoRepository.findById(id);
+		
+		if(estado.isPresent()) {
+			return ResponseEntity.ok().body(estado.get());
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -54,13 +56,13 @@ public class EstadoController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<EstadoEntity> atualizar(@PathVariable Long id, @RequestBody EstadoEntity estados){
-		EstadoEntity estadoAtual = estadoRepository.porId(id);
+		Optional<EstadoEntity> estadoAtual = estadoRepository.findById(id);
 		
-		if(estadoAtual != null) {
-			BeanUtils.copyProperties(estados, estadoAtual, "id");
-			cadastroEstados.adicionar(estadoAtual);
+		if(estadoAtual.isPresent()) {
+			BeanUtils.copyProperties(estados, estadoAtual.get(), "id");
+			cadastroEstados.adicionar(estadoAtual.get());
 			
-			return ResponseEntity.created(null).body(estadoAtual);
+			return ResponseEntity.created(null).body(estadoAtual.get());
 		}
 		
 		return ResponseEntity.notFound().build();

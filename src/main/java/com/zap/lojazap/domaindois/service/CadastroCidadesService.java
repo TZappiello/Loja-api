@@ -23,12 +23,10 @@ public class CadastroCidadesService {
 	
 	public CidadeEntity cadastrar(CidadeEntity cidade) {
 		Long estadoId = cidade.getEstado().getId();
-		EstadoEntity estado = estadoRepository.porId(estadoId);
-		
-		if(estado == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe estado cadastra com código %d ", estadoId));
-		}
+		EstadoEntity estado = estadoRepository.findById(estadoId)
+				.orElseThrow(()->
+				new EntidadeNaoEncontradaException(
+						String.format("Não existe estado cadastra com código %d ", estadoId)));
 		
 		cidade.setEstado(estado);
 		
