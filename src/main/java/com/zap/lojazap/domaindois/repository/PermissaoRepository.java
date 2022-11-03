@@ -1,14 +1,14 @@
 package com.zap.lojazap.domaindois.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.zap.lojazap.domaindois.entities.PermissaoEntity;
 
-public interface PermissaoRepository {
+public interface PermissaoRepository extends JpaRepository<PermissaoEntity, Long> {
 
-	List<PermissaoEntity> todas();
-	PermissaoEntity porId(Long id);
-	PermissaoEntity adicionar(PermissaoEntity permissao);
-	void remover(PermissaoEntity permissao);
+//	List<PermissaoEntity> todas();
+//	PermissaoEntity porId(Long id);
+//	PermissaoEntity adicionar(PermissaoEntity permissao);
+//	void remover(PermissaoEntity permissao);
 	
 }
