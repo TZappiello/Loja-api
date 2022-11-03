@@ -1,6 +1,7 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,14 @@ public class CidadeController {
 
 	@GetMapping
 	public List<CidadeEntity> listar() {
-		return cidadeRepository.todas();
+		return cidadeRepository.findAll();
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CidadeEntity> porId(@PathVariable Long id) {
-		CidadeEntity cidade = cidadeRepository.porId(id);
-		if (cidade != null) {
-			return ResponseEntity.ok(cidade);
+		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
+		if (cidade.isPresent()) {
+			return ResponseEntity.ok(cidade.get());
 		}
 
 		return ResponseEntity.notFound().build();
@@ -61,15 +62,15 @@ public class CidadeController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody CidadeEntity cidade){
 		try {
-			CidadeEntity cidadeId = cidadeRepository.porId(id);
+			Optional<CidadeEntity> cidadeId = cidadeRepository.findById(id);
 			
-			if(cidadeId == null) {
+			if(cidadeId.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}
 			
-			if(cidadeId != null) {
-				BeanUtils.copyProperties(cidade, cidadeId, "id");
-				cadastroService.cadastrar(cidadeId);
+			if(cidadeId.isPresent()) {
+				BeanUtils.copyProperties(cidade, cidadeId.get(), "id");
+				cadastroService.cadastrar(cidadeId.get());
 			}
 			
 			return ResponseEntity.ok(cidade);	
