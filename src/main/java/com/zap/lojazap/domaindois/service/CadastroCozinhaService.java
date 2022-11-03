@@ -17,12 +17,12 @@ public class CadastroCozinhaService {
 	private CozinhaRepository cozinhaRepository;
 
 	public CozinhaEntity adicionar(CozinhaEntity cozinha) {
-		return cozinhaRepository.adicionar(cozinha);
+		return cozinhaRepository.save(cozinha);
 	}
 
 	public void excluir(Long id) {
 		try {
-			cozinhaRepository.remover(id);
+			cozinhaRepository.deleteById(id);
 
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
