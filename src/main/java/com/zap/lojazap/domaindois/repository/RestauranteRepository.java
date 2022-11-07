@@ -1,5 +1,8 @@
 package com.zap.lojazap.domaindois.repository;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
@@ -13,5 +16,8 @@ public interface RestauranteRepository extends JpaRepository<RestauranteEntity, 
 //	RestauranteEntity adicionar(RestauranteEntity cozinha);
 //
 //	void remover(RestauranteEntity cozinha);
+	
+	List<RestauranteEntity> findBytaxaFrenteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
+	List<RestauranteEntity> findByNomeContainingAndCozinhaId(String nome, Long cozinha);
 }

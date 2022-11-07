@@ -1,6 +1,7 @@
 package com.zap.lojazap.api.controller;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +53,17 @@ public class RestauranteController {
 
 		return ResponseEntity.ok().body(restaurante.get());
 	}
+	
+	@GetMapping("/por-taxa")
+	public List<RestauranteEntity> porTaxa(@RequestParam BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal){
+		return restauranteRepository.findBytaxaFrenteBetween(taxaInicial, taxaFinal);
+	}
 
+	@GetMapping("/por-nome-id")
+	List<RestauranteEntity> porNomeECozinhaId(@RequestParam String nome, @RequestParam Long cozinha){
+		return restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinha);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Object> adicionar(@RequestBody RestauranteEntity restaurante) {
 		try {

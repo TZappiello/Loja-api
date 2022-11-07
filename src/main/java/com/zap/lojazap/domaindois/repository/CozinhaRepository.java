@@ -16,7 +16,7 @@ public interface CozinhaRepository extends JpaRepository<CozinhaEntity, Long> {
 	void remover(Long id);
 	 
 	 **/
-	List<CozinhaEntity> nome(String nome);
+	List<CozinhaEntity> findTodasBynomeContaining(String nome);
 	
 	Optional<CozinhaEntity> findNomeCompletoByNome(String nome);
 }

@@ -41,7 +41,7 @@ public class CozinhaController {
 	
 	@GetMapping("/por-nome")
 	public List<CozinhaEntity> listarPorNome(@RequestParam String nome){
-		return cozinhaRepository.nome(nome);
+		return cozinhaRepository.findTodasBynomeContaining(nome);
 	}
 
 	@GetMapping("/por-nome-completo")
