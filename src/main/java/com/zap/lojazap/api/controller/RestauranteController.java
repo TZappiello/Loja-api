@@ -1,18 +1,14 @@
 package com.zap.lojazap.api.controller;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
@@ -56,11 +51,21 @@ public class RestauranteController {
 	
 	@GetMapping("/por-taxa")
 	public List<RestauranteEntity> porTaxa(@RequestParam BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal){
-		return restauranteRepository.findBytaxaFrenteBetween(taxaInicial, taxaFinal);
+		return restauranteRepository.queryBytaxaFrenteBetween(taxaInicial, taxaFinal);
 	}
 
+	@GetMapping("/count")
+	public int countCozinha( @RequestParam Long cozinha){
+		return restauranteRepository.countByCozinhaId(cozinha);
+	}
+	
+	@GetMapping("/exists")
+	public boolean exists(@RequestParam String nome) {
+		return restauranteRepository.existsByNome(nome);
+	}
+	
 	@GetMapping("/por-nome-id")
-	List<RestauranteEntity> porNomeECozinhaId(@RequestParam String nome, @RequestParam Long cozinha){
+	public List<RestauranteEntity> porNomeECozinhaId(@RequestParam String nome, @RequestParam Long cozinha){
 		return restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinha);
 	}
 	

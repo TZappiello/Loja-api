@@ -17,7 +17,11 @@ public interface RestauranteRepository extends JpaRepository<RestauranteEntity, 
 //
 //	void remover(RestauranteEntity cozinha);
 	
-	List<RestauranteEntity> findBytaxaFrenteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
+	List<RestauranteEntity> queryBytaxaFrenteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
 	List<RestauranteEntity> findByNomeContainingAndCozinhaId(String nome, Long cozinha);
+	
+	boolean existsByNome(String nome);
+	
+	int countByCozinhaId(Long cozinha);
 }
