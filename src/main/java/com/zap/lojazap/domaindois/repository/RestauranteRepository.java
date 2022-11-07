@@ -16,7 +16,7 @@ public interface RestauranteRepository extends JpaRepository<RestauranteEntity, 
 //	RestauranteEntity adicionar(RestauranteEntity cozinha);
 //	void remover(RestauranteEntity cozinha);
 	
-	@Query("FROM RestauranteEntity WHERE nome LIKE %:nome% AND cozinha.id =:id")
+//	@Query("FROM RestauranteEntity WHERE nome LIKE %:nome% AND cozinha.id =:id")
 	List<RestauranteEntity> buscarPorNome(String nome, @Param("id") Long cozinha);
 	
 	List<RestauranteEntity> queryBytaxaFrenteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
