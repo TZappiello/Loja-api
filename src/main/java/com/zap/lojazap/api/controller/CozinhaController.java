@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
@@ -38,10 +39,15 @@ public class CozinhaController {
 		return cozinhaRepository.findAll();
 	}
 	
-//	@GetMapping("/por-nome")
-//	public List<CozinhaEntity> listarPorNome(@RequestParam("nome") String nome){
-//		return cozinhaRepository.listarPorNome(nome);
-//	}
+	@GetMapping("/por-nome")
+	public List<CozinhaEntity> listarPorNome(@RequestParam String nome){
+		return cozinhaRepository.nome(nome);
+	}
+
+	@GetMapping("/por-nome-completo")
+	public Optional<CozinhaEntity> listarPorNomeCompleto(@RequestParam String nome){
+		return cozinhaRepository.findNomeCompletoByNome(nome);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CozinhaEntity> porId(@PathVariable Long id) {
