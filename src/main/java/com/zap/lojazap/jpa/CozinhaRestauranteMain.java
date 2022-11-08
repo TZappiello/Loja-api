@@ -23,7 +23,7 @@ public class CozinhaRestauranteMain {
 			
 			for(RestauranteEntity restaurante : restaurantes) {
 				System.err.printf("%s - %f - %s\n",restaurante.getNome(),
-						restaurante.getTaxaFrente(), restaurante.getCozinha().getNome());
+						restaurante.getTaxaFrete(), restaurante.getCozinha().getNome());
 			}
 	}
 }

@@ -51,14 +51,15 @@ public class RestauranteController {
 	
 	@GetMapping("/por-taxa")
 	public List<RestauranteEntity> porTaxa(@RequestParam BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal){
-		return restauranteRepository.queryBytaxaFrenteBetween(taxaInicial, taxaFinal);
+		return restauranteRepository.queryBytaxaFreteBetween(taxaInicial, taxaFinal);
 	}
 	
 //	@RequestParam(value = "nomeParteInstituicao", defaultValue = "", required = false)
+//	(value = "nome", defaultValue = "", required = false)
 	
 	@GetMapping("/por-nome-frete")
 	public List<RestauranteEntity> porNomeETaxa(
-			@RequestParam(value = "nome", defaultValue = "", required = false) String nome,
+			@RequestParam String nome,
 			@RequestParam BigDecimal taxaInicial, 
 			@RequestParam BigDecimal taxaFinal
 			){
