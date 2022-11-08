@@ -1,22 +1,35 @@
-//package com.zap.lojazap.infrastructure.repository;
-//
-//import java.util.List;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//
-//import org.springframework.stereotype.Repository;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import com.zap.lojazap.domaindois.entities.RestauranteEntity;
-//import com.zap.lojazap.domaindois.repository.RestauranteRepository;
-//
-//@Repository
-//public class RestauranteRepositoryImpl implements RestauranteRepository {
-//
-//	@PersistenceContext
-//	private EntityManager manager;
-//
+package com.zap.lojazap.infrastructure.repository;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
+import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+
+@Repository
+public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
+
+	@PersistenceContext
+	private EntityManager manager;
+
+	@Override
+	public List<RestauranteEntity> buscar(String nome, BigDecimal taxaFreteInicial,
+					BigDecimal taxaFreteFinal) {
+		
+		var jpql = "FROM RestauranteEntity WHERE nome LIKE :nome "
+					+ "AND taxaFrente BETWEEN :taxaFreteInicial AND :taxaFreteFinal";
+
+		return manager.createQuery(jpql, RestauranteEntity.class)
+				.setParameter("nome", "%" + nome + "%")
+				.setParameter("taxaFreteInicial", taxaFreteInicial)
+				.setParameter("taxaFreteFinal", taxaFreteFinal)
+				.getResultList();
+	}
+
 //	@Override
 //	public List<RestauranteEntity> todas() {
 //
@@ -40,5 +53,5 @@
 //		restaurante = porId(restaurante.getId());
 //		manager.remove(restaurante);
 //	}
-//
-//}
+
+}
