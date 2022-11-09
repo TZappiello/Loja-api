@@ -1,15 +1,15 @@
 package com.zap.lojazap.infrastructure.repository;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.repository.RestauranteRepositoryQueries;
@@ -24,36 +24,44 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	public List<RestauranteEntity> buscar(String nome,
 			BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
 		
-
-		var jpql = new StringBuilder();
-		jpql.append(" FROM RestauranteEntity WHERE 0 = 0 ");
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		
-		var parametros = new HashMap<String, Object>();
+		CriteriaQuery<RestauranteEntity> criteria = builder.createQuery(RestauranteEntity.class);
+		criteria.from(RestauranteEntity.class);
 		
-		if(StringUtils.hasLength(nome)) {
-			jpql.append(" AND nome LIKE :nome ");
-			parametros.put("nome", "%" + nome + "%");
-		}
-		
-		if(taxaFreteInicial != null) {
-			jpql.append(" AND taxaFrete >= :taxaInicial ");
-			parametros.put("taxaInicial", taxaFreteInicial);
-		}
-		
-		if(taxaFreteFinal != null) {
-			jpql.append(" AND taxaFrete <= :taxaFinal ");
-			parametros.put("taxaFinal", taxaFreteFinal);
-		}
-		
-		TypedQuery<RestauranteEntity> query = manager
-				.createQuery(jpql.toString(), RestauranteEntity.class);
-		
-		parametros.forEach((chave, valor) -> query.setParameter(chave, valor));
-		
+		TypedQuery<RestauranteEntity> query = manager.createQuery(criteria);
 		return query.getResultList();
+
 	}
 
+//	var jpql = new StringBuilder();
+//	jpql.append(" FROM RestauranteEntity WHERE 0 = 0 ");
 //	
+//	var parametros = new HashMap<String, Object>();
+//	
+//	if(StringUtils.hasLength(nome)) {
+//		jpql.append(" AND nome LIKE :nome ");
+//		parametros.put("nome", "%" + nome + "%");
+//	}
+//	
+//	if(taxaFreteInicial != null) {
+//		jpql.append(" AND taxaFrete >= :taxaInicial ");
+//		parametros.put("taxaInicial", taxaFreteInicial);
+//	}
+//	
+//	if(taxaFreteFinal != null) {
+//		jpql.append(" AND taxaFrete <= :taxaFinal ");
+//		parametros.put("taxaFinal", taxaFreteFinal);
+//	}
+//	
+//	TypedQuery<RestauranteEntity> query = manager
+//			.createQuery(jpql.toString(), RestauranteEntity.class);
+//	
+//	parametros.forEach((chave, valor) -> query.setParameter(chave, valor));
+//	
+//	return query.getResultList();
+//	
+//	==============================================================================
 //	var jpql = " FROM RestauranteEntity WHERE nome LIKE :nome "
 //			+ " AND taxaFrete BETWEEN :taxaFreteInicial AND :taxaFreteFinal ";
 //
@@ -63,6 +71,8 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 //		.setParameter("taxaFreteFinal", taxaFreteFinal)
 //		.getResultList();
 //	
+//	==============================================================================
+
 //	@Override
 //	public List<RestauranteEntity> todas() {
 //
