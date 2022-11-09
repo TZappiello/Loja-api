@@ -23,24 +23,21 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	private EntityManager manager;
 
 	@Override
-	public List<RestauranteEntity> buscar(String nome,
-			BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
-		
+	public List<RestauranteEntity> buscar(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		
+
 		CriteriaQuery<RestauranteEntity> criteria = builder.createQuery(RestauranteEntity.class);
 		Root<RestauranteEntity> root = criteria.from(RestauranteEntity.class);
 
-		Predicate nomePredicate = builder.like(root.get("nome"), "%" +nome +"%");
-		
-		Predicate taxaInicial = builder.greaterThanOrEqualTo
-				(root.get("taxaFrete"), taxaFreteInicial);
-		
-		Predicate taxaFinal = builder.lessThanOrEqualTo
-				(root.get("taxaFrete"), taxaFreteFinal);
-		
-		criteria.where(nomePredicate, taxaInicial ,taxaFinal);
-		
+		Predicate nomePredicate = builder.like(root.get("nome"), "%" + nome + "%");
+
+		Predicate taxaInicial = builder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial);
+
+		Predicate taxaFinal = builder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal);
+
+		criteria.where(nomePredicate, taxaInicial, taxaFinal);
+
 		TypedQuery<RestauranteEntity> query = manager.createQuery(criteria);
 		return query.getResultList();
 
