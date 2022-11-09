@@ -57,7 +57,6 @@ public class RestauranteController {
 	}
 	
 //	@RequestParam(value = "nomeParteInstituicao", defaultValue = "", required = false)
-//	(value = "nome", defaultValue = "", required = false)
 	
 	@GetMapping("/por-nome-frete")
 	public List<RestauranteEntity> porNomeETaxa(
