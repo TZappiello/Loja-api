@@ -22,6 +22,8 @@ import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
+import com.zap.lojazap.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import com.zap.lojazap.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -66,6 +68,14 @@ public class RestauranteController {
 		return restauranteRepository.buscar(nome, taxaInicial, taxaFinal);
 	}
 
+	@GetMapping("/com-frete-gratis")
+	public List<RestauranteEntity> comFreteGratis(String nome){
+		var comFreteGratis = new RestauranteComFreteGratisSpec();
+		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+		
+		return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
+	}
+	
 	@GetMapping("/count")
 	public int countCozinha( @RequestParam Long cozinha){
 		return restauranteRepository.countByCozinhaId(cozinha);
