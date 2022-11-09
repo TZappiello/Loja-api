@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.repository.RestauranteRepositoryQueries;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {

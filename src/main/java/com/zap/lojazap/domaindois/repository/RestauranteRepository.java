@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
-import com.zap.lojazap.infrastructure.repository.RestauranteRepositoryQueries;
 
 public interface RestauranteRepository extends JpaRepository<RestauranteEntity, Long>, 
 RestauranteRepositoryQueries {

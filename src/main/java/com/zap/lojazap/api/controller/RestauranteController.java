@@ -59,9 +59,9 @@ public class RestauranteController {
 	
 	@GetMapping("/por-nome-frete")
 	public List<RestauranteEntity> porNomeETaxa(
-			@RequestParam String nome,
-			@RequestParam BigDecimal taxaInicial, 
-			@RequestParam BigDecimal taxaFinal
+			 String nome,
+			 BigDecimal taxaInicial, 
+			 BigDecimal taxaFinal
 			){
 		return restauranteRepository.buscar(nome, taxaInicial, taxaFinal);
 	}

@@ -1,4 +1,4 @@
-package com.zap.lojazap.infrastructure.repository;
+package com.zap.lojazap.domaindois.repository;
 
 import java.math.BigDecimal;
 import java.util.List;
