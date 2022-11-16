@@ -1,5 +1,8 @@
 package com.zap.lojazap.api.controller;
 
+import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comFreteGratis;
+import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +25,6 @@ import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
-import com.zap.lojazap.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
-import com.zap.lojazap.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
-import com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -69,11 +69,11 @@ public class RestauranteController {
 	}
 
 	@GetMapping("/com-frete-gratis")
-	public List<RestauranteEntity> comFreteGratis(String nome){
+	public List<RestauranteEntity> restauranteComFreteGratis(String nome){
 //		var comFreteGratis = new RestauranteComFreteGratisSpec();
 //		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
 		
-		return restauranteRepository.findAll(RestauranteSpec.comFreteGratis().and(RestauranteSpec.comNomeSemelhante(nome)));
+		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 	
 	@GetMapping("/count")
