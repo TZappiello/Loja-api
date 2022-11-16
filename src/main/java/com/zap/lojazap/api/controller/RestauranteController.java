@@ -25,7 +25,6 @@ import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
-import com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec;
 
 @RestController
 @RequestMapping("/restaurantes")
