@@ -73,7 +73,7 @@ public class RestauranteController {
 //		var comFreteGratis = new RestauranteComFreteGratisSpec();
 //		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
 		
-		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
+		return restauranteRepository.freteGratis(nome);
 	}
 	
 	@GetMapping("/count")

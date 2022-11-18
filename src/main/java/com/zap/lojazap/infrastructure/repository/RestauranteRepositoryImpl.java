@@ -1,5 +1,8 @@
 package com.zap.lojazap.infrastructure.repository;
 
+import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comFreteGratis;
+import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +15,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.repository.RestauranteRepositoryQueries;
 
 
@@ -24,6 +30,9 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired @Lazy
+	private RestauranteRepository restauranteRepository;
 
 	@Override
 	public List<RestauranteEntity> buscar(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
@@ -58,6 +67,11 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		TypedQuery<RestauranteEntity> query = manager.createQuery(criteria);
 		return query.getResultList();
 
+	}
+
+	@Override
+	public List<RestauranteEntity> freteGratis(String nome) {
+		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 
 //	var jpql = new StringBuilder();
