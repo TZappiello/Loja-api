@@ -34,6 +34,7 @@ public class RestauranteEntity {
 	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 	
+//	@JsonIgnore // não vai mostra nenhuma cozinha
 	@JoinColumn(name = "cozinha_id")
 	@ManyToOne
 	private CozinhaEntity cozinha;
