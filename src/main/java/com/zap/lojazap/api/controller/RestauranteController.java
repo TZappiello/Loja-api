@@ -1,8 +1,5 @@
 package com.zap.lojazap.api.controller;
 
-import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comFreteGratis;
-import static com.zap.lojazap.infrastructure.repository.spec.RestauranteSpec.comNomeSemelhante;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -113,7 +110,7 @@ public class RestauranteController {
 			}
 
 			if (restauranteId.isPresent()) {
-				BeanUtils.copyProperties(restaurante, restauranteId.get(), "id");
+				BeanUtils.copyProperties(restaurante, restauranteId.get(), "id", "formasPagamento");
 				cadastroRestaurante.cadastrar(restauranteId.get());
 			}
 
