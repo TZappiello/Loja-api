@@ -46,6 +46,7 @@ public class RestauranteEntity {
 	@ManyToOne
 	private CozinhaEntity cozinha;
 	
+	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 	
