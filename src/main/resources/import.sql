@@ -11,9 +11,9 @@ insert into cidades (nome, estado_id) values ('Suzano', 1);
 insert into cidades (nome, estado_id) values ('Barra da Tijuca', 2);
 insert into cidades (nome, estado_id) values ('Barbacena', 3);
 
-insert into restaurante ( endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, nome, taxa_frete, cozinha_id, endereco_cidade_id ) values ( 'Cj Bosque', '08743-000', 'Casa fundos', 'Rua Shozo Sakay', '1000',  'Mestre cuca', 14, 1, 1 );
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Du Chefe', 17, 2);
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Gula', 17, 3);
+insert into restaurante ( endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, nome, taxa_frete, cozinha_id, endereco_cidade_id, data_atualizacao, data_cadastro) values ( 'Cj Bosque', '08743-000', 'Casa fundos', 'Rua Shozo Sakay', '1000',  'Mestre cuca', 14, 1, 1, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro) values ('Du Chefe', 17, 2, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro) values ('Gula', 17, 3, utc_timestamp, utc_timestamp);
 
 insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into forma_pagamento (descricao) values ('Cartão Crédito');
