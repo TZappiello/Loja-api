@@ -110,7 +110,7 @@ public class RestauranteController {
 			}
 
 			if (restauranteId.isPresent()) {
-				BeanUtils.copyProperties(restaurante, restauranteId.get(), "id", "formasPagamento", "endereco");
+				BeanUtils.copyProperties(restaurante, restauranteId.get(), "id", "formasPagamento", "endereco", "dataCadastro");
 				cadastroRestaurante.cadastrar(restauranteId.get());
 			}
 
