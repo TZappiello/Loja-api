@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -70,5 +71,9 @@ public class RestauranteEntity {
 			joinColumns = @JoinColumn(name ="restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name ="forma_pagamento_id"))
 	private List<FormaPagamentoEntity> formasPagamento = new ArrayList<>();
+	
+	@JsonIgnore // ignora a serialização da id.
+	@OneToMany(mappedBy = "restaurante")
+	private List<ProdutoEntity> produtos = new ArrayList<>();
 
 }

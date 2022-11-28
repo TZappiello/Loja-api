@@ -19,9 +19,11 @@ insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into forma_pagamento (descricao) values ('Cartão Crédito');
 insert into forma_pagamento (descricao) values ('Cartão Débito');
 
-insert into produtos(ativo, descricao, nome, preco, restaurante_id) values(true, "Virado a Paulista", "Prato da Casa", 22, 1);
-
 insert into permissao (descricao, nome) values ('Pedido Telefone', 'Joao ');
 
-
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1,1), (1,2), (1,3),(2,1),(2,2),(3,1);
+
+insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (true, "Virado a Paulista", "Prato da Casa", 22, 1);
+insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (true, "Bisteca", "Opção", 17, 2);
+insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (false, "Churrasco", "Especial", 26, 1);
+
