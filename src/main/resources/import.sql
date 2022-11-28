@@ -27,3 +27,7 @@ insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (true
 insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (true, "Bisteca", "Opção", 17, 2);
 insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (false, "Churrasco", "Especial", 26, 1);
 
+insert into grupo(nome) values ("Pertmitido");
+insert into grupo(nome) values ("Não permitido");
+
+insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(2,1);
