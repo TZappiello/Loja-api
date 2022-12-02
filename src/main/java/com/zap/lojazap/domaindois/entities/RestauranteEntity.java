@@ -47,9 +47,9 @@ public class RestauranteEntity {
 	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 	
-	@JsonIgnore // não vai mostra nenhuma cozinha
+	//@JsonIgnore // não vai mostra nenhuma cozinha
 	@JoinColumn(name = "cozinha_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne //(fetch = FetchType.LAZY)
 	private CozinhaEntity cozinha;
 	
 	@JsonIgnore
@@ -66,7 +66,7 @@ public class RestauranteEntity {
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataAtualizacao;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento",
 			joinColumns = @JoinColumn(name ="restaurante_id"),
