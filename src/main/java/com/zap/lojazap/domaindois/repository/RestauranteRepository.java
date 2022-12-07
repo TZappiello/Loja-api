@@ -19,8 +19,8 @@ public interface RestauranteRepository
 //	RestauranteEntity adicionar(RestauranteEntity cozinha);
 //	void remover(RestauranteEntity cozinha);
 	
-
-	@Query("FROM RestauranteEntity r JOIN r.cozinha LEFT JOIN FETCH r. formasPagamento ")
+	//@Query("FROM RestauranteEntity r JOIN r.cozinha LEFT JOIN FETCH r. formasPagamento "
+	@Query("FROM RestauranteEntity r JOIN FETCH r.cozinha")
 	List<RestauranteEntity> findAll();
 	
 	
