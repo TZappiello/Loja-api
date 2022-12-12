@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
-import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
-import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
 
@@ -107,21 +106,28 @@ public class CozinhaController {
 //	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<CozinhaEntity> remover(@PathVariable Long id) {
-		try {
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long id) {
 			cadastroCozinha.excluir(id);
-			return ResponseEntity.noContent().build();
-
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
-
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-
-		}
 
 	}
 
+//	@DeleteMapping("/{id}")
+//	public ResponseEntity<CozinhaEntity> remover(@PathVariable Long id) {
+//		try {
+//			cadastroCozinha.excluir(id);
+//			return ResponseEntity.noContent().build();
+//
+//		} catch (EntidadeNaoEncontradaException e) {
+//			return ResponseEntity.notFound().build();
+//
+//		} catch (EntidadeEmUsoException e) {
+//			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+//
+//		}
+//
+//	}
+	
 //	@DeleteMapping("/{id}")
 //	public void remover(@PathVariable Long  id) {
 //		CozinhaEntity cozinha = cozinhaRepository.porId(id);
