@@ -1,10 +1,13 @@
 package com.zap.lojazap.domaindois.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
@@ -20,6 +23,14 @@ public class CadastroRestauranteService {
 	private CozinhaRepository cozinhaRepository;
 	
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
+		
+		Optional<RestauranteEntity> contem = restauranteRepository.findNomeCompletoByNome(restaurante.getNome());
+		
+		if(contem.isPresent()) {
+			throw new EntidadeEmUsoException(
+					String.format("Esse Restaurante ja esta cadastrado tente novamente! "));
+		}
+		
 		Long cozinhaId = restaurante.getCozinha().getId();
 		CozinhaEntity cozinha = cozinhaRepository.findById(cozinhaId)
 				.orElseThrow(()-> new EntidadeNaoEncontradaException(

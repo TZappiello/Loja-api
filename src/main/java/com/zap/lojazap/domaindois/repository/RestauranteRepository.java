@@ -2,12 +2,14 @@ package com.zap.lojazap.domaindois.repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
 public interface RestauranteRepository 
@@ -23,6 +25,7 @@ public interface RestauranteRepository
 	@Query("FROM RestauranteEntity r JOIN FETCH r.cozinha")
 	List<RestauranteEntity> findAll();
 	
+	Optional<RestauranteEntity> findNomeCompletoByNome(String name);
 	
 
 //	@Query("FROM RestauranteEntity WHERE nome LIKE %:nome% AND cozinha.id =:id")

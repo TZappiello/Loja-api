@@ -66,6 +66,13 @@ public class CozinhaController {
 
 	@PostMapping
 	public ResponseEntity<CozinhaEntity> adicionar(@RequestBody CozinhaEntity cozinha) {
+//		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
+//		
+//		if(contem.isPresent()) {
+//			System.err.println("AQUI TEM ESSA COZINHA!!!");
+//			return ResponseEntity.badRequest().build();
+//		}
+		
 		cozinha = cadastroCozinha.adicionar(cozinha);
 		return ResponseEntity.created(null).body(cozinha);
 	}
