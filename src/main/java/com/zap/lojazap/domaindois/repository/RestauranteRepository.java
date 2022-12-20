@@ -26,7 +26,7 @@ public interface RestauranteRepository
 	List<RestauranteEntity> findAll();
 	
 	Optional<RestauranteEntity> findNomeCompletoByNome(String name);
-//	Optional<RestauranteEntity> findTaxaByTaxaFrete(BigDecimal taxa);
+	Optional<RestauranteEntity> findTaxaByTaxaFrete(BigDecimal taxa);
 	
 
 //	@Query("FROM RestauranteEntity WHERE nome LIKE %:nome% AND cozinha.id =:id")

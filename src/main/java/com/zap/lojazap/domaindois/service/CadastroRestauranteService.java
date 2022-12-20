@@ -24,16 +24,16 @@ public class CadastroRestauranteService {
 	
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
 		
-//		Optional<RestauranteEntity> taxa = restauranteRepository.findTaxaByTaxaFrete(restaurante.getTaxaFrete());
+		Optional<RestauranteEntity> taxa = restauranteRepository.findTaxaByTaxaFrete(restaurante.getTaxaFrete());
 		Optional<RestauranteEntity> contem = restauranteRepository.findNomeCompletoByNome(restaurante.getNome());
 		
-//		if(taxa.isPresent()) {
-//			throw new EntidadeEmUsoException(
-//					String.format("Taxa Frete com o mesmo valor ja esta cadastrada!!!! "));
-//		}
+		if(taxa.isPresent()) {
+			throw new EntidadeNaoEncontradaException(
+					String.format("Taxa Frete com o mesmo valor ja esta cadastrada!!!! "));
+		}
 		
 		if(contem.isPresent()) {
-			throw new EntidadeEmUsoException(
+			throw new EntidadeNaoEncontradaException(
 					String.format("Esse Restaurante ja esta cadastrado tente novamente! "));
 		}
 		
