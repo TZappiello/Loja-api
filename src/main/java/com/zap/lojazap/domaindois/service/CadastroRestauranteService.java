@@ -26,6 +26,9 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
+	@Autowired
+	private CadastroCozinhaService cadastroCozinhaService;
+	
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
 		
 		Optional<RestauranteEntity> taxa = restauranteRepository.findTaxaByTaxaFrete(restaurante.getTaxaFrete());
@@ -40,11 +43,13 @@ public class CadastroRestauranteService {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Esse Restaurante ja esta cadastrado tente novamente! "));
 		}
+
+		CozinhaEntity cozinha = cadastroCozinhaService.buscarSeTiver(restaurante.getCozinha().getId());
 		
-		Long cozinhaId = restaurante.getCozinha().getId();
-		CozinhaEntity cozinha = cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(()-> new EntidadeNaoEncontradaException(
-						String.format("Não existe cozinha cadastra com código %d ", cozinhaId)));
+//		Long cozinhaId = restaurante.getCozinha().getId();
+//		CozinhaEntity cozinha = cozinhaRepository.findById(cozinhaId)
+//				.orElseThrow(()-> new EntidadeNaoEncontradaException(
+//						String.format("Não existe cozinha cadastra com código %d ", cozinhaId)));
 		
 
 		restaurante.setCozinha(cozinha);
