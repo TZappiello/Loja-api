@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 
 @Service
@@ -22,9 +21,6 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
-	@Autowired
-	private CozinhaRepository cozinhaRepository;
 	
 	@Autowired
 	private CadastroCozinhaService cadastroCozinhaService;
