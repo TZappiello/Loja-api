@@ -14,6 +14,9 @@ import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 @Service
 public class CadastroRestauranteService {
 	
+	private static final String MSG_RESTAURANTE_EM_USO
+	= "Restaurante de código %d não pode ser removida, pois está em uso";
+	
 	private static final String MSG_RESTAURANTE_NAO_ENCONTRADA 
 	= "Não existe um cadastro de Restaurante com código %d";
 	

@@ -15,7 +15,10 @@ import com.zap.lojazap.domaindois.repository.EstadoRepository;
 @Service
 public class CadastroCidadesService {
 	
-	private static final String MSG_VIDADE_NAO_ENCONTRADA 
+	private static final String MSG_CIDADE_EM_USO
+	= "Cozinha de código %d não pode ser removida, pois está em uso";
+	
+	private static final String MSG_CIDADE_NAO_ENCONTRADA 
 	= "Não existe um cadastro da Cidade com código %d";
 
 	@Autowired
@@ -43,18 +46,18 @@ public class CadastroCidadesService {
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de cidade com código %d", id));
+					String.format(MSG_CIDADE_NAO_ENCONTRADA, id));
 
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Cidade de código %d não pode ser removida, pois está em uso", id));
+					String.format(MSG_CIDADE_EM_USO, id));
 		}
 	}
 
 	public CidadeEntity buscarSeTiver(Long id) {
 		return cidadeRepository.findById(id)
 				.orElseThrow(()-> new EntidadeNaoEncontradaException(
-						String.format(MSG_VIDADE_NAO_ENCONTRADA, id)));
+						String.format(MSG_CIDADE_NAO_ENCONTRADA, id)));
 	}
 	
 }

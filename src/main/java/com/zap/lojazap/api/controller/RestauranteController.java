@@ -3,6 +3,7 @@ package com.zap.lojazap.api.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,7 +97,11 @@ public class RestauranteController {
 	@PutMapping("/{id}")
 	public RestauranteEntity atualizar(@PathVariable Long id, @RequestBody RestauranteEntity restaurante) {
 
-		return cadastroRestaurante.buscarSeTiver(id);
+		RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
+		
+		BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
+		
+		return cadastroRestaurante.cadastrar(restauranteId);
 	}
 	
 	/*@PutMapping("/{id}")
