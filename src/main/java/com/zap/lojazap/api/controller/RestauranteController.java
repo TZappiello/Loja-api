@@ -2,9 +2,7 @@ package com.zap.lojazap.api.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
-import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
@@ -40,14 +37,8 @@ public class RestauranteController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<RestauranteEntity> porId(@PathVariable Long id) {
-		Optional<RestauranteEntity> restaurante = restauranteRepository.findById(id);
-
-		if (restaurante.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-
-		return ResponseEntity.ok().body(restaurante.get());
+	public RestauranteEntity porId(@PathVariable Long id) {
+		return cadastroRestaurante.buscarSeTiver(id);
 	}
 	
 	@GetMapping("/por-taxa")
@@ -103,29 +94,46 @@ public class RestauranteController {
 	}
 
 	@PutMapping("/{id}")
+	public RestauranteEntity atualizar(@PathVariable Long id, @RequestBody RestauranteEntity restaurante) {
+
+		return cadastroRestaurante.buscarSeTiver(id);
+	}
+	
+	/*@PutMapping("/{id}")
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody RestauranteEntity restaurante) {
 		try {
 			Optional<RestauranteEntity> restauranteId = restauranteRepository.findById(id);
-
+			
 			if (restauranteId.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}
-
+			
 			if (restauranteId.isPresent()) {
 				BeanUtils.copyProperties(restaurante, restauranteId.get(), "id", "formasPagamento", "endereco", "dataCadastro");
 				cadastroRestaurante.cadastrar(restauranteId.get());
 			}
-
+			
 			return ResponseEntity.ok(restaurante);
-
+			
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-
+			
 		} catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
+			
 		}
-	}
+	}*/
+	
+	/*@GetMapping("/{id}")
+	public ResponseEntity<RestauranteEntity> porId(@PathVariable Long id) {
+		Optional<RestauranteEntity> restaurante = restauranteRepository.findById(id);
+
+		if (restaurante.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok().body(restaurante.get());
+	}*/
 	
 //	@PatchMapping("/{id}")	
 //	public ResponseEntity<?>atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos){
