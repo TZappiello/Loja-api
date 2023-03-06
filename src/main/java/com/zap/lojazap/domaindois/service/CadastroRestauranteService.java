@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
-import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
-
+	
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADA 
+	= "Não existe um cadastro de Restaurante com código %d";
 	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
@@ -48,6 +49,12 @@ public class CadastroRestauranteService {
 		return restauranteRepository.save(restaurante);
 		
 	}
-	
+
+	public RestauranteEntity buscarSeTiver(Long id) {
+		return restauranteRepository.findById(id)
+				.orElseThrow(()->
+				new EntidadeNaoEncontradaException( 
+				String.format(MSG_RESTAURANTE_NAO_ENCONTRADA, id)));
+	}
 	
 }
