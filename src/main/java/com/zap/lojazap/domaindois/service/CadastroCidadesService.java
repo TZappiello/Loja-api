@@ -14,6 +14,9 @@ import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
 @Service
 public class CadastroCidadesService {
+	
+	private static final String MSG_VIDADE_NAO_ENCONTRADA 
+	= "Não existe um cadastro da Cidade com código %d";
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -47,4 +50,11 @@ public class CadastroCidadesService {
 					String.format("Cidade de código %d não pode ser removida, pois está em uso", id));
 		}
 	}
+
+	public CidadeEntity buscarSeTiver(Long id) {
+		return cidadeRepository.findById(id)
+				.orElseThrow(()-> new EntidadeNaoEncontradaException(
+						String.format(MSG_VIDADE_NAO_ENCONTRADA, id)));
+	}
+	
 }
