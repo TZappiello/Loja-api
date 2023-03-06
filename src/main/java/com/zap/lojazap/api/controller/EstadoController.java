@@ -38,14 +38,16 @@ public class EstadoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<EstadoEntity> porId(@PathVariable Long id){
-		Optional<EstadoEntity> estado = estadoRepository.findById(id);
+	public EstadoEntity porId(@PathVariable Long id){
 		
-		if(estado.isPresent()) {
-			return ResponseEntity.ok().body(estado.get());
-		}
-		
-		return ResponseEntity.notFound().build();
+		return cadastroEstados.buscarSeTiver(id);
+//		Optional<EstadoEntity> estado = estadoRepository.findById(id);
+//		
+//		if(estado.isPresent()) {
+//			return ResponseEntity.ok().body(estado.get());
+//		}
+//		
+//		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping

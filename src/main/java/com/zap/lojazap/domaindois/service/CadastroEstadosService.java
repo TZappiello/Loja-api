@@ -12,6 +12,9 @@ import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
 @Service
 public class CadastroEstadosService {
+	
+	private static final String MSG_ESTADO_NAO_ENCONTRADA 
+	= "Não existe um cadastro de Estado com código %d";
 
 	@Autowired
 	private EstadoRepository estadoRepository;
@@ -32,6 +35,13 @@ public class CadastroEstadosService {
 			throw new EntidadeEmUsoException(
 					String.format("Estado de código %d não pode ser removida, pois está em uso", id));
 		}
+	}
+
+	public EstadoEntity buscarSeTiver(Long id) {
+		
+		return estadoRepository.findById(id)
+				.orElseThrow(()-> new EntidadeNaoEncontradaException(
+						String.format(MSG_ESTADO_NAO_ENCONTRADA, id)));
 	}
 
 }
