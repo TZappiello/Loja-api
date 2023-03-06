@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
+import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
 import com.zap.lojazap.domaindois.service.CadastroCidadesService;
 
@@ -50,14 +52,13 @@ public class CidadeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> adicionar(@RequestBody CidadeEntity cidade) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public CidadeEntity adicionar(@RequestBody CidadeEntity cidade) {
 		try {
-			cidade = cadastroService.cadastrar(cidade);
-
-			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
+			return cadastroService.cadastrar(cidade);
 
 		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			throw new NegocioException(e.getMessage());
 		}
 	}
 	
@@ -68,7 +69,12 @@ public class CidadeController {
 		
 		BeanUtils.copyProperties(cidade, cidadeEntity, "id");
 		
-		return cadastroService.cadastrar(cidadeEntity);
+		try {
+			return cadastroService.cadastrar(cidadeEntity);
+			
+		} catch (EntidadeNaoEncontradaException e) {
+			 throw new NegocioException(e.getMessage());
+		}
 		
 		/*
 		try {
