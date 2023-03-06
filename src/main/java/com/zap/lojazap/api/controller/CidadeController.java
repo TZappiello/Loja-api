@@ -63,7 +63,15 @@ public class CidadeController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody CidadeEntity cidade){
+	public CidadeEntity atualizar(@PathVariable Long id, @RequestBody CidadeEntity cidade){
+		
+		CidadeEntity cidadeEntity = cadastroService.buscarSeTiver(id);
+		
+		BeanUtils.copyProperties(cidade, cidadeEntity, "id");
+		
+		return cadastroService.cadastrar(cidadeEntity);
+		
+		/*
 		try {
 			Optional<CidadeEntity> cidadeId = cidadeRepository.findById(id);
 			
@@ -84,7 +92,7 @@ public class CidadeController {
 		} catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
-		}
+		}*/
 	}
 	
 	@DeleteMapping("/{id}")
