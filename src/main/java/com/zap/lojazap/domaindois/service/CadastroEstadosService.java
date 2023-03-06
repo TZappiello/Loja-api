@@ -13,6 +13,9 @@ import com.zap.lojazap.domaindois.repository.EstadoRepository;
 @Service
 public class CadastroEstadosService {
 	
+	private static final String MSG_ESTADO_EM_USO
+	= "Estado de código %d não pode ser removida, pois está em uso";
+	
 	private static final String MSG_ESTADO_NAO_ENCONTRADA 
 	= "Não existe um cadastro de Estado com código %d";
 
@@ -29,11 +32,11 @@ public class CadastroEstadosService {
 
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de estado com código %d", id));
+					String.format(MSG_ESTADO_NAO_ENCONTRADA, id));
 
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Estado de código %d não pode ser removida, pois está em uso", id));
+					String.format(MSG_ESTADO_EM_USO, id));
 		}
 	}
 
