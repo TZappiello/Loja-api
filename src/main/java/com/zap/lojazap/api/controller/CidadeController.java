@@ -38,13 +38,16 @@ public class CidadeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CidadeEntity> porId(@PathVariable Long id) {
-		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
-		if (cidade.isPresent()) {
-			return ResponseEntity.ok(cidade.get());
-		}
-
-		return ResponseEntity.notFound().build();
+	public CidadeEntity porId(@PathVariable Long id) {
+		
+		return cadastroService.buscarSeTiver(id);
+		
+//		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
+//		if (cidade.isPresent()) {
+//			return ResponseEntity.ok(cidade.get());
+//		}
+//
+//		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping
