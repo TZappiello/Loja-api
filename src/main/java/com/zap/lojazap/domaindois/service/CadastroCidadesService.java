@@ -10,7 +10,6 @@ import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
-import com.zap.lojazap.domaindois.repository.EstadoRepository;
 
 @Service
 public class CadastroCidadesService {
@@ -23,16 +22,13 @@ public class CadastroCidadesService {
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+		
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private CadastroEstadosService cadastroEstadosService;
 	
 	public CidadeEntity cadastrar(CidadeEntity cidade) {
 		Long estadoId = cidade.getEstado().getId();
-		EstadoEntity estado = estadoRepository.findById(estadoId)
-				.orElseThrow(()->
-				new EntidadeNaoEncontradaException(
-						String.format("Não existe estado cadastra com código %d ", estadoId)));
+		EstadoEntity estado = cadastroEstadosService.buscarSeTiver(estadoId);
 		
 		cidade.setEstado(estado);
 		
