@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
-import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
-import com.zap.lojazap.domaindois.repository.CozinhaRepository;
+import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 
 @Service
@@ -17,14 +16,8 @@ public class CadastroRestauranteService {
 	private static final String MSG_RESTAURANTE_EM_USO
 	= "Restaurante de código %d não pode ser removida, pois está em uso";
 	
-	private static final String MSG_RESTAURANTE_NAO_ENCONTRADA 
-	= "Não existe um cadastro de Restaurante com código %d";
-	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
-	@Autowired
-	private CozinhaRepository cozinhaRepository;
 	
 	@Autowired
 	private CadastroCozinhaService cadastroCozinhaService;
@@ -35,13 +28,11 @@ public class CadastroRestauranteService {
 		Optional<RestauranteEntity> contem = restauranteRepository.findNomeCompletoByNome(restaurante.getNome());
 		
 		if(taxa.isPresent()) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Taxa Frete com o mesmo valor ja esta cadastrada!!!! "));
+			throw new RestauranteNaoEncontradoException(restaurante.getId());
 		}
 		
 		if(contem.isPresent()) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Esse Restaurante ja esta cadastrado tente novamente! "));
+			throw new  RestauranteNaoEncontradoException(restaurante.getId());
 		}
 
 		CozinhaEntity cozinha = cadastroCozinhaService.buscarSeTiver(restaurante.getCozinha().getId());
@@ -61,8 +52,7 @@ public class CadastroRestauranteService {
 	public RestauranteEntity buscarSeTiver(Long id) {
 		return restauranteRepository.findById(id)
 				.orElseThrow(()->
-				new EntidadeNaoEncontradaException( 
-				String.format(MSG_RESTAURANTE_NAO_ENCONTRADA, id)));
+				new  RestauranteNaoEncontradoException(id));
 	}
 	
 }

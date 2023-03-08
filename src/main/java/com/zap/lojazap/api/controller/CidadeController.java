@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
+import com.zap.lojazap.domaindois.exception.EstadoNaoEncontradoException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
 import com.zap.lojazap.domaindois.service.CadastroCidadesService;
@@ -57,23 +58,21 @@ public class CidadeController {
 		try {
 			return cadastroService.cadastrar(cidade);
 
-		} catch (EntidadeNaoEncontradaException e) {
-			throw new NegocioException(e.getMessage());
+		} catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
 		}
 	}
 	
 	@PutMapping("/{id}")
 	public CidadeEntity atualizar(@PathVariable Long id, @RequestBody CidadeEntity cidade){
-		
-		CidadeEntity cidadeEntity = cadastroService.buscarSeTiver(id);
-		
-		BeanUtils.copyProperties(cidade, cidadeEntity, "id");
-		
 		try {
+			CidadeEntity cidadeEntity = cadastroService.buscarSeTiver(id);
+			BeanUtils.copyProperties(cidade, cidadeEntity, "id");
+
 			return cadastroService.cadastrar(cidadeEntity);
 			
-		} catch (EntidadeNaoEncontradaException e) {
-			 throw new NegocioException(e.getMessage());
+		} catch (EstadoNaoEncontradoException e) {
+			 throw new NegocioException(e.getMessage(), e);
 		}
 		
 		/*
