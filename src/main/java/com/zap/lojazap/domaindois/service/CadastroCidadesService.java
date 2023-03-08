@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
+import com.zap.lojazap.domaindois.exception.CidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
-import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
 
 @Service
@@ -16,9 +16,6 @@ public class CadastroCidadesService {
 	
 	private static final String MSG_CIDADE_EM_USO
 	= "Cozinha de código %d não pode ser removida, pois está em uso";
-	
-	private static final String MSG_CIDADE_NAO_ENCONTRADA 
-	= "Não existe um cadastro da Cidade com código %d";
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -41,8 +38,7 @@ public class CadastroCidadesService {
 			cidadeRepository.deleteById(id);
 			
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
-					String.format(MSG_CIDADE_NAO_ENCONTRADA, id));
+			throw new CidadeNaoEncontradaException(id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
@@ -52,8 +48,7 @@ public class CadastroCidadesService {
 
 	public CidadeEntity buscarSeTiver(Long id) {
 		return cidadeRepository.findById(id)
-				.orElseThrow(()-> new EntidadeNaoEncontradaException(
-						String.format(MSG_CIDADE_NAO_ENCONTRADA, id)));
+				.orElseThrow(()-> new CidadeNaoEncontradaException(id));
 	}
 	
 }

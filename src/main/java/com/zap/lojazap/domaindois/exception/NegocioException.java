@@ -11,12 +11,7 @@ public class NegocioException extends RuntimeException {
 		super( mensagem);
 	}
 
-    /*public EntidadeNaoEncontradaException(HttpStatus status, String mensagem) {
-		super(status, mensagem);
+	public NegocioException( String mensagem, Throwable causa) {
+		super(mensagem, causa);
 	}
-	
-	public EntidadeNaoEncontradaException(String mensagem) {
-		this(HttpStatus.NOT_FOUND, mensagem);
-	} */
-
 }
