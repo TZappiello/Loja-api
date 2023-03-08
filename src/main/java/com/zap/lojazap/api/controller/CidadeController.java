@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
-import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.EstadoNaoEncontradoException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
@@ -83,15 +82,14 @@ public class CidadeController {
 			cadastroService.remover(id);
 			return ResponseEntity.noContent().build();
 			
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.notFound().build();
+		} catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
 
 		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			throw new EntidadeEmUsoException(e.getMessage());
 
 		}
 	}
-
 	
 	/*
 	try {

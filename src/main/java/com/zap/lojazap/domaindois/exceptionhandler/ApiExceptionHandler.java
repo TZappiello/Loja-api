@@ -8,6 +8,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 
@@ -27,6 +28,19 @@ public class ApiExceptionHandler {
 				.body(problema);
 	}
 	
+	@ExceptionHandler(EntidadeEmUsoException.class)
+	public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e){
+		
+		Problema problema = Problema.builder()
+				.dataHora(LocalDateTime.now())
+				.mensagem(e.getMessage())
+				.build();
+		
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(problema);
+		
+	}
+			
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<?>  tratarNegocioException(NegocioException e){
 		
@@ -41,7 +55,6 @@ public class ApiExceptionHandler {
 	
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<?> tratarHttpMediaTypeNotSupportedException(){
-		
 		
 		Problema problema = Problema.builder()
 				.dataHora(LocalDateTime.now())
