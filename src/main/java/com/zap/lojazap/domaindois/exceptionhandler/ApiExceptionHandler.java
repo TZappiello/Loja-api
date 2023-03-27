@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -24,11 +25,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		Throwable rootCause = ExceptionUtils.getRootCause(ex);
-		
-		if(rootCause instanceof InvalidFormatException) {
-			return handleInvalidFormatExceptio((InvalidFormatException)rootCause, headers, status, request);
+
+		if (rootCause instanceof InvalidFormatException) {
+			return handleInvalidFormatExceptio((InvalidFormatException) rootCause, headers, status, request);
+			
+		} else if (rootCause instanceof PropertyBindingException) {
+				return handlePropertyBindingException((PropertyBindingException) rootCause, headers, status, request);
+			
 		}
-		
+
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
 		String detail = "O corpo da requisição está inválida. Verifique o erro de sintaxe.";
 
@@ -37,19 +42,34 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 
-	private ResponseEntity<Object> handleInvalidFormatExceptio(InvalidFormatException ex,
+	private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-				
-		String path = ex.getPath().stream()
-				.map(x -> x.getFieldName())
-				.collect(Collectors.joining("."));
-		
+
+		String path = ex.getPath().stream().map(x -> x.getFieldName()).collect(Collectors.joining("."));
+
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
-		String detail = String.format("A propriendade '%s' recebeu o valor '%s', que é do tipo inválido."
-				+ " Corrija e informe um valor compátivel com o tipo '%s'. ", path, ex.getValue(), ex.getTargetType().getSimpleName() );
-		
+		String detail = String
+				.format("A propriendade '%s' no corpo da requisição não faz parte da entidade, que é do tipo inválido."
+						+ " os campos que fazem parte da Entidade São: '%s' ", path, ex.getKnownPropertyIds());
+
 		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
-		
+
+		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+
+	private ResponseEntity<Object> handleInvalidFormatExceptio(InvalidFormatException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+
+		String path = ex.getPath().stream().map(x -> x.getFieldName()).collect(Collectors.joining("."));
+
+		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+		String detail = String.format(
+				"A propriendade '%s' recebeu o valor '%s', que é do tipo inválido."
+						+ " Corrija e informe um valor compátivel com o tipo '%s'. ",
+				path, ex.getValue(), ex.getTargetType().getSimpleName());
+
+		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
+
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
