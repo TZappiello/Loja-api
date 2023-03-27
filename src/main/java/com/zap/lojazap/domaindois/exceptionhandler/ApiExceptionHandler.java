@@ -1,5 +1,8 @@
 package com.zap.lojazap.domaindois.exceptionhandler;
 
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -19,13 +23,34 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-
+		Throwable rootCause = ExceptionUtils.getRootCause(ex);
+		
+		if(rootCause instanceof InvalidFormatException) {
+			return handleInvalidFormatExceptio((InvalidFormatException)rootCause, headers, status, request);
+		}
+		
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
 		String detail = "O corpo da requisição está inválida. Verifique o erro de sintaxe.";
 
 		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+
+	private ResponseEntity<Object> handleInvalidFormatExceptio(InvalidFormatException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+				
+		String path = ex.getPath().stream()
+				.map(x -> x.getFieldName())
+				.collect(Collectors.joining("."));
+		
+		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+		String detail = String.format("A propriendade '%s' recebeu o valor '%s', que é do tipo inválido."
+				+ " Corrija e informe um valor compátivel com o tipo '%s'. ", path, ex.getValue(), ex.getTargetType().getSimpleName() );
+		
+		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
