@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -56,6 +57,32 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleTypeMismatch(ex, headers, status, request);
 	}
 	
+	@Override
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request){
+		
+		if(ex instanceof NoHandlerFoundException ) {
+			 return handleNoHandlerFound(
+		                (NoHandlerFoundException) ex, headers, status, request);
+		 }
+		
+		return super.handleNoHandlerFoundException(ex, headers, status, request);
+		
+	}
+	
+	private ResponseEntity<Object> handleNoHandlerFound(NoHandlerFoundException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+
+		
+		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+		String detail = String
+				.format("O recurso '%s', que você tenteu acessar, é inexistente.", ex.getRequestURL());
+
+		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
+
+		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
@@ -106,7 +133,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			WebRequest request) {
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
 		String detail = ex.getMessage();
 
 		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
@@ -141,6 +168,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<?> handleExceptions(Exception ex,  WebRequest request){
+		
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+		String detail = String.format("Ocorreu um erro interno inesperado no sistema. "
+				+ "Tente novamente e se o problema persistir, entre em contato com o administrador do sistema!");
+
+		Problem problem = CreateProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {

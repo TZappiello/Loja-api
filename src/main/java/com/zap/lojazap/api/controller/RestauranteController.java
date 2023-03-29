@@ -37,6 +37,9 @@ public class RestauranteController {
 
 	@GetMapping("/{id}")
 	public RestauranteEntity porId(@PathVariable Long id) {
+		if(true) {
+			throw new IllegalArgumentException("Teste");
+		}
 		return cadastroRestaurante.buscarSeTiver(id);
 	}
 	
