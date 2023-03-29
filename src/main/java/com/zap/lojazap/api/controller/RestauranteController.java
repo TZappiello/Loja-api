@@ -3,6 +3,8 @@ package com.zap.lojazap.api.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +39,6 @@ public class RestauranteController {
 
 	@GetMapping("/{id}")
 	public RestauranteEntity porId(@PathVariable Long id) {
-		if(true) {
-			throw new IllegalArgumentException("Teste");
-		}
 		return cadastroRestaurante.buscarSeTiver(id);
 	}
 	
@@ -83,7 +82,7 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public RestauranteEntity adicionar(@RequestBody RestauranteEntity restaurante) {
+	public RestauranteEntity adicionar(@RequestBody @Valid RestauranteEntity restaurante) {
 		try {
 			return cadastroRestaurante.cadastrar(restaurante);
 
