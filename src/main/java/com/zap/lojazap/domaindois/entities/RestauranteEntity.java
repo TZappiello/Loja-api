@@ -21,11 +21,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zap.lojazap.domaindois.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,7 +50,7 @@ public class RestauranteEntity {
 
 //	@NotNull 
 //	@NotEmpty
-	@NotBlank
+	@NotBlank 	//(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private String nome;
 
@@ -59,6 +62,7 @@ public class RestauranteEntity {
 	
 	//@JsonIgnore // não vai mostra nenhuma cozinha
 	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id")

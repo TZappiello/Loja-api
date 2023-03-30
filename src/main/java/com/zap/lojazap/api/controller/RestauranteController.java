@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.domaindois.Groups;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -82,7 +83,9 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public RestauranteEntity adicionar(@RequestBody @Valid RestauranteEntity restaurante) {
+	public RestauranteEntity adicionar(@RequestBody 
+						@Valid 				//@Validated(Groups.CozinhaId.class)
+					RestauranteEntity restaurante) {
 		try {
 			return cadastroRestaurante.cadastrar(restaurante);
 
@@ -94,7 +97,7 @@ public class RestauranteController {
 	}
 
 	@PutMapping("/{id}")
-	public RestauranteEntity atualizar(@PathVariable Long id, @RequestBody RestauranteEntity restaurante) {
+	public RestauranteEntity atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteEntity restaurante) {
 
 		RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
 		
