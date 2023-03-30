@@ -3,10 +3,9 @@ package com.zap.lojazap.api.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.domaindois.Groups;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -82,7 +82,9 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public RestauranteEntity adicionar(@RequestBody @Valid RestauranteEntity restaurante) {
+	public RestauranteEntity adicionar(@RequestBody 
+			@Validated(Groups.CadastroRestaurante.class) 
+					RestauranteEntity restaurante) {
 		try {
 			return cadastroRestaurante.cadastrar(restaurante);
 

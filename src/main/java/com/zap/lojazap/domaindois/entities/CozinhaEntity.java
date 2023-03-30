@@ -10,9 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zap.lojazap.domaindois.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CozinhaEntity {
 
-	@NotNull
+	@NotNull(groups = Groups.CadastroRestaurante.class)
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,7 @@ public class CozinhaEntity {
 
 //	@JsonIgnore  Ignora essa propriedade
 //	@JsonProperty("titulo") muda o nome em JSON e XML
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 

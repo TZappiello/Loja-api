@@ -26,6 +26,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zap.lojazap.domaindois.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,19 +48,19 @@ public class RestauranteEntity {
 
 //	@NotNull 
 //	@NotEmpty
-	@NotBlank
+	@NotBlank(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private String nome;
 
 //	@DecimalMin("0")
-	@PositiveOrZero
+	@PositiveOrZero(groups = Groups.CadastroRestaurante.class)
 	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 	
 	
 	//@JsonIgnore // não vai mostra nenhuma cozinha
 	@Valid
-	@NotNull
+	@NotNull(groups = Groups.CadastroRestaurante.class)
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id")
 	private CozinhaEntity cozinha;
