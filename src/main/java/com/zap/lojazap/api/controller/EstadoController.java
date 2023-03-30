@@ -3,6 +3,8 @@ package com.zap.lojazap.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,13 +53,13 @@ public class EstadoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<EstadoEntity> adicionar (@RequestBody EstadoEntity estados){
+	public ResponseEntity<EstadoEntity> adicionar (@RequestBody @Valid EstadoEntity estados){
 		estados = cadastroEstados.adicionar(estados);
 		return ResponseEntity.created(null).body(estados);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<EstadoEntity> atualizar(@PathVariable Long id, @RequestBody EstadoEntity estados){
+	public ResponseEntity<EstadoEntity> atualizar(@PathVariable Long id, @RequestBody @Valid EstadoEntity estados){
 		Optional<EstadoEntity> estadoAtual = estadoRepository.findById(id);
 		
 		if(estadoAtual.isPresent()) {

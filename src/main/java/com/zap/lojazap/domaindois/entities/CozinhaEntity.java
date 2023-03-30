@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CozinhaEntity {
 
-	@NotNull(groups = Groups.CadastroRestaurante.class)
+	@NotNull(groups = Groups.CozinhaId.class)
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,7 @@ public class CozinhaEntity {
 
 //	@JsonIgnore  Ignora essa propriedade
 //	@JsonProperty("titulo") muda o nome em JSON e XML
+	
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;

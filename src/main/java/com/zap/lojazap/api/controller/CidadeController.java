@@ -2,6 +2,8 @@ package com.zap.lojazap.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +55,7 @@ public class CidadeController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CidadeEntity adicionar(@RequestBody CidadeEntity cidade) {
+	public CidadeEntity adicionar(@RequestBody @Valid CidadeEntity cidade) {
 		try {
 			return cadastroService.cadastrar(cidade);
 
@@ -63,7 +65,7 @@ public class CidadeController {
 	}
 	
 	@PutMapping("/{id}")
-	public CidadeEntity atualizar(@PathVariable Long id, @RequestBody CidadeEntity cidade){
+	public CidadeEntity atualizar(@PathVariable Long id, @RequestBody @Valid CidadeEntity cidade){
 		try {
 			CidadeEntity cidadeEntity = cadastroService.buscarSeTiver(id);
 			BeanUtils.copyProperties(cidade, cidadeEntity, "id");

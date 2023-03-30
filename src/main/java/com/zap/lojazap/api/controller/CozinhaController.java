@@ -73,7 +73,7 @@ public class CozinhaController {
 	}
 
 	@PutMapping("/{id}")
-	public CozinhaEntity atualizar(@PathVariable Long id, @RequestBody CozinhaEntity cozinha) {
+	public CozinhaEntity atualizar(@PathVariable Long id, @RequestBody @Valid CozinhaEntity cozinha) {
 
 		CozinhaEntity cozinhaAtual = cadastroCozinha.buscarSeTiver(id);
 
