@@ -17,7 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -54,9 +56,12 @@ public class RestauranteEntity {
 	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 	
+	
 	//@JsonIgnore // não vai mostra nenhuma cozinha
-	@JoinColumn(name = "cozinha_id")
+	@Valid
+	@NotNull
 	@ManyToOne //(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cozinha_id")
 	private CozinhaEntity cozinha;
 	
 	@JsonIgnore
