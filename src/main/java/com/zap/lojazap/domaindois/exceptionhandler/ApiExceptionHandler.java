@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +96,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 	}
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	private ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
@@ -102,10 +108,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		BindingResult bindingResult = ex.getBindingResult();
 		
 		List<Problem.Field> fields = bindingResult.getFieldErrors().stream()
-				.map(fieldError -> Problem.Field.builder()
+				.map(fieldError -> {
+					String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+					
+				  return Problem.Field.builder()
 						.name(fieldError.getField())
-						.userMessage(fieldError.getDefaultMessage())
-						.build())
+						.userMessage(message)
+						.build();
+				})
 				.collect(Collectors.toList());
 		
 		Problem problem = CreateProblemBuilder(status, problemType, detail)

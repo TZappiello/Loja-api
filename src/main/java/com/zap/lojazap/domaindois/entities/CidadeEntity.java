@@ -32,7 +32,7 @@ public class CidadeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+	@NotBlank // posso adicionar uma mensagem de resposta na anotação. (message = "O campo não deve estar em branco!")
 	private String nome;
 	
 	@Valid
