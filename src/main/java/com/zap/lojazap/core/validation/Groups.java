@@ -1,4 +1,4 @@
-package com.zap.lojazap.domaindois;
+package com.zap.lojazap.core.validation;
 
 public interface Groups {
 

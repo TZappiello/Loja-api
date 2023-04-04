@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.zap.lojazap.domaindois.Groups;
+import com.zap.lojazap.core.validation.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
