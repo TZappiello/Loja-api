@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
-import com.zap.lojazap.domaindois.Groups;
+import com.zap.lojazap.core.validation.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
