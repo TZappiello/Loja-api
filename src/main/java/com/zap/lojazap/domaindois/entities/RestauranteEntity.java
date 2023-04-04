@@ -28,7 +28,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zap.lojazap.core.validation.Groups;
-import com.zap.lojazap.core.validation.Multiplo;
+import com.zap.lojazap.core.validation.TaxaFrete;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,10 +55,10 @@ public class RestauranteEntity {
 	private String nome;
 
 //	@PositiveOrZero  	//(message = "{TaxaFrete.invalida}") traz uma mensagem especifica
+//	@Multiplo(numero = 5) 		minha própria anotação com regra de negócio
 //	@DecimalMin("0")
-//	@TaxaFrete    	//minha própria anotação
 	@NotNull 
-	@Multiplo(numero = 5)
+	@TaxaFrete    	//minha própria anotação
 	@Column(name = "taxa_frete")
 	private BigDecimal taxaFrete;
 	
