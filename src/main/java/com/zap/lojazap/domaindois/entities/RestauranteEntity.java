@@ -29,12 +29,15 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zap.lojazap.core.validation.Groups;
 import com.zap.lojazap.core.validation.TaxaFrete;
+import com.zap.lojazap.core.validation.ValorZeroDescricao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@ValorZeroDescricao(valorField ="taxaFrete",
+		descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
