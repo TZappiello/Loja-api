@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
@@ -30,12 +29,15 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zap.lojazap.core.validation.Groups;
 import com.zap.lojazap.core.validation.TaxaFrete;
+import com.zap.lojazap.core.validation.ValorZeroDescricao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@ValorZeroDescricao(valorField ="taxaFrete",
+		descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
@@ -56,6 +58,7 @@ public class RestauranteEntity {
 	private String nome;
 
 //	@PositiveOrZero  	//(message = "{TaxaFrete.invalida}") traz uma mensagem especifica
+//	@Multiplo(numero = 5) 		minha própria anotação com regra de negócio
 //	@DecimalMin("0")
 	@NotNull 
 	@TaxaFrete    	//minha própria anotação

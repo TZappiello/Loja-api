@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
 public interface RestauranteRepository 
