@@ -38,8 +38,8 @@ class LojaApiApplicationTests {
 	}
 	
 	//unhappyPath
+	@Test
 //	@org.junit.Test(expected =  ConstraintViolationException.class)		
-	@Test					
 	public void testarCadastroCozinhaSemNome() {
 		
 		//cenário
@@ -51,5 +51,17 @@ class LojaApiApplicationTests {
 		
 		//validação
 //		assertThrows(ConstraintViolationException.class, null);
+	}
+	
+//	@org.junit.Test(expected =  EntidadeEmUsoException.class)	
+	@Test
+	public void testarCozinhaQuandoExcluirEmUso() {
+		cadastroCozinha.excluir(1L);
+	}
+	
+//	@org.junit.Test(expected =  CozinhaNaoEncontradaException.class)	
+	@Test
+	public void testarCozinhaQuandoExcluiCozinhaInexistente() {
+		cadastroCozinha.excluir(20L);
 	}
 }
