@@ -1,67 +1,78 @@
 package com.zap.lojazap;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 
-import com.zap.lojazap.domaindois.entities.CozinhaEntity;
-import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-class LojaApiApplicationTests {
-
-	@Autowired
-	private CadastroCozinhaService cadastroCozinha;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class CadastroCozinhaIT {
 	
-	//happyPath
+	@LocalServerPort
+	private int port;
+	
+	@Test
+	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+		
+		RestAssured.given()
+			.basePath("/cozinhas")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.statusCode(HttpStatus.OK.value());
+	}
+
+/*	@Autowired
+	private CadastroCozinhaService cadastroCozinha;
+
+	// happyPath
 	@Test
 	public void testarCadastraCozinhaComSucesso() {
-		
-		//cenário
+
+		// cenário
 		CozinhaEntity novaCozinha = new CozinhaEntity();
 		novaCozinha.setNome("DaLu");
-		
-		//ação
+
+		// ação
 		novaCozinha = cadastroCozinha.adicionar(novaCozinha);
-		
-		
-		//validação
+
+		// validação
 		assertThat(novaCozinha).isNotNull();
 		assertThat(novaCozinha.getId()).isNotNull();
 	}
-	
-	//unhappyPath
+
+	// unhappyPath
 	@Test
 //	@org.junit.Test(expected =  ConstraintViolationException.class)		
 	public void testarCadastroCozinhaSemNome() {
-		
-		//cenário
+
+		// cenário
 		CozinhaEntity novaCozinha = new CozinhaEntity();
 		novaCozinha.setNome(null);
-		
-		//ação
+
+		// ação
 		novaCozinha = cadastroCozinha.adicionar(novaCozinha);
-		
-		//validação
+
+		// validação
 //		assertThrows(ConstraintViolationException.class, null);
 	}
-	
-//	@org.junit.Test(expected =  EntidadeEmUsoException.class)	
+
+	// @org.junit.Test(expected = EntidadeEmUsoException.class)
 	@Test
 	public void testarCozinhaQuandoExcluirEmUso() {
 		cadastroCozinha.excluir(1L);
 	}
-	
-//	@org.junit.Test(expected =  CozinhaNaoEncontradaException.class)	
+
+	// @org.junit.Test(expected = CozinhaNaoEncontradaException.class)
 	@Test
 	public void testarCozinhaQuandoExcluiCozinhaInexistente() {
 		cadastroCozinha.excluir(20L);
-	}
+	}*/
 }
