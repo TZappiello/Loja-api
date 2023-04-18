@@ -45,6 +45,17 @@ class CadastroCozinhaIT {
 			.body("nome", Matchers.hasItem("Chinesa"));
 	}
 	
+	@Test
+	public void deveRetornarStatus201_QuandoForCadastradoUmaNovaCozinha() {
+		RestAssured.given()
+			.body("{ \"nome\": \"Brasileira\" }")
+			.contentType(ContentType.JSON)
+			.accept(ContentType.JSON)
+		.when()
+			.post()
+		.then()
+			.statusCode(HttpStatus.CREATED.value());
+	}
 
 /*	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
