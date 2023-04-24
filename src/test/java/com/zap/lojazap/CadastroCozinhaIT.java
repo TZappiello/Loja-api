@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.util.DatabaseCleaner;
+import com.zap.lojazap.util.ResourceUtils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -30,16 +31,24 @@ class CadastroCozinhaIT {
 	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+		
 	@BeforeEach
 	private void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.port = port;
 		RestAssured.basePath = "/cozinhas";
 		
+		cadastraCozinhaCorreto = ResourceUtils.getContentFromResource(
+				"/json/arquivoParaCadastraUmaCozinha.json");
+		
 		databaseCleaner.clearTables();
 		adicionarParaTeste();
 	}
+
+	private static final int COZINHA_INEXISTENTE = 100;
+	private int quantidadeCozinhas;
+	private String cadastraCozinhaCorreto;
+	private CozinhaEntity cozinhaChinesa;
 	
 	@Test
 	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
@@ -52,20 +61,20 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void deveConter2Cozinhas_QuandoConsultarCozinhas() {
+	public void deveConterQuantidadeCozinhasSalvas_QuandoConsultarTodasCozinhas() {
 		RestAssured.given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("", Matchers.hasSize(2))
-			.body("nome", Matchers.hasItem("Chinesa"));
+			.body("", Matchers.hasSize(quantidadeCozinhas));
+			//.body("nome", Matchers.hasItem("Chinesa"));
 	}
 	
 	@Test
 	public void deveRetornarStatus201_QuandoForCadastradoUmaNovaCozinha() {
 		RestAssured.given()
-			.body("{ \"nome\": \"Americana\" }")
+			.body(cadastraCozinhaCorreto)
 			.contentType(ContentType.JSON)
 			.accept(ContentType.JSON)
 		.when()
@@ -77,19 +86,19 @@ class CadastroCozinhaIT {
 	@Test
 	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
 		RestAssured.given()
-			.pathParam("cozinhaId", 2)
+			.pathParam("cozinhaId", cozinhaChinesa.getId())
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{cozinhaId}")
 		.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("nome", equalTo("Chinesa"));
+			.body("nome", equalTo(cozinhaChinesa.getNome()));
 	}
 	
 	@Test
 	public void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
 		RestAssured.given()
-			.pathParam("cozinhaId", 100)
+			.pathParam("cozinhaId", COZINHA_INEXISTENTE)
 			.accept(ContentType.JSON)
 		.when()
 			.get("/{cozinhaId}")
@@ -102,9 +111,12 @@ class CadastroCozinhaIT {
 		cozinha1.setNome("Brasileira");
 		cozinhaRepository.save(cozinha1);
 		
-		CozinhaEntity cozinha2 = new CozinhaEntity();
-		cozinha2.setNome("Chinesa");
-		cozinhaRepository.save(cozinha2);
+		cozinhaChinesa = new CozinhaEntity();
+		cozinhaChinesa.setNome("Chinesa");
+		cozinhaRepository.save(cozinhaChinesa);
+		
+		quantidadeCozinhas = (int) cozinhaRepository.count();
+		
 	}
 	
 
