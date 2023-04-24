@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
@@ -19,10 +20,12 @@ public class CadastroEstadosService {
 	@Autowired
 	private EstadoRepository estadoRepository;
 
+	@Transactional
 	public EstadoEntity adicionar(EstadoEntity estados) {
 		return estadoRepository.save(estados);
 	}
 
+	@Transactional
 	public void excluir(Long id) {
 		try {
 			estadoRepository.deleteById(id);

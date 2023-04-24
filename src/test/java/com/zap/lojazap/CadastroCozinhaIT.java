@@ -39,7 +39,7 @@ class CadastroCozinhaIT {
 		RestAssured.basePath = "/cozinhas";
 		
 		cadastraCozinhaCorreto = ResourceUtils.getContentFromResource(
-				"/json/arquivoParaCadastraUmaCozinha.json");
+				"/json/cadastra-cozinha.json");
 		
 		databaseCleaner.clearTables();
 		adicionarParaTeste();
