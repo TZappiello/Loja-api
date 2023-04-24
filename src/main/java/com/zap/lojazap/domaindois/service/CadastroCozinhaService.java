@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.exception.CozinhaNaoEncontradaException;
@@ -21,6 +22,7 @@ public class CadastroCozinhaService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
+	@Transactional
 	public CozinhaEntity adicionar(CozinhaEntity cozinha) {
 		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
 		
@@ -33,6 +35,7 @@ public class CadastroCozinhaService {
 		return cozinhaRepository.save(cozinha);
 	}
 
+	@Transactional
 	public void excluir(Long id) {
 		try {
 			cozinhaRepository.deleteById(id);

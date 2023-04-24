@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
@@ -23,6 +24,7 @@ public class CadastroCidadesService {
 	@Autowired
 	private CadastroEstadosService cadastroEstadosService;
 	
+	@Transactional
 	public CidadeEntity cadastrar(CidadeEntity cidade) {
 		Long estadoId = cidade.getEstado().getId();
 		EstadoEntity estado = cadastroEstadosService.buscarSeTiver(estadoId);
@@ -33,6 +35,7 @@ public class CadastroCidadesService {
 		
 	}
 	
+	@Transactional
 	public void remover(Long id) {
 		try {
 			cidadeRepository.deleteById(id);
