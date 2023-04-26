@@ -27,6 +27,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zap.lojazap.core.validation.Groups;
 import com.zap.lojazap.core.validation.TaxaFrete;
 import com.zap.lojazap.core.validation.ValorZeroDescricao;
@@ -67,6 +68,7 @@ public class RestauranteEntity {
 	
 	
 	//@JsonIgnore // não vai mostra nenhuma cozinha
+	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
