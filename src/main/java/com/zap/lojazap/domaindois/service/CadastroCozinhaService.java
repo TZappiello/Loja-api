@@ -26,11 +26,11 @@ public class CadastroCozinhaService {
 	public CozinhaEntity adicionar(CozinhaEntity cozinha) {
 		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
 		
-		if(contem.isPresent()) {
-			System.err.println("AQUI TEM ESSA COZINHA!!!");
-			throw new EntidadeEmUsoException(
-					String.format(MSG_COZINHA_EM_USO, cozinha.getId()));
-		}
+//		if(contem.isPresent()) {
+//			System.err.println("AQUI TEM ESSA COZINHA!!!");
+//			throw new EntidadeEmUsoException(
+//					String.format(MSG_COZINHA_EM_USO, cozinha.getId()));
+//		}
 		
 		return cozinhaRepository.save(cozinha);
 	}

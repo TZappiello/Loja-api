@@ -29,13 +29,13 @@ public class CadastroRestauranteService {
 		Optional<RestauranteEntity> taxa = restauranteRepository.findTaxaByTaxaFrete(restaurante.getTaxaFrete());
 		Optional<RestauranteEntity> contem = restauranteRepository.findNomeCompletoByNome(restaurante.getNome());
 		
-		if(taxa.isPresent()) {
-			throw new RestauranteNaoEncontradoException(restaurante.getId());
-		}
-		
-		if(contem.isPresent()) {
-			throw new  RestauranteNaoEncontradoException(restaurante.getId());
-		}
+//		if(taxa.isPresent()) {
+//			throw new RestauranteNaoEncontradoException(restaurante.getId());
+//		}
+//		
+//		if(contem.isPresent()) {
+//			throw new  RestauranteNaoEncontradoException(restaurante.getId());
+//		}
 
 		CozinhaEntity cozinha = cadastroCozinhaService.buscarSeTiver(restaurante.getCozinha().getId());
 		
