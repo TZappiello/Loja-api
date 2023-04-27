@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zap.lojazap.domaindois.enums.StatusPedido;
 
 import lombok.AllArgsConstructor;
@@ -66,7 +65,6 @@ public class PedidoEntity {
 	@Column(columnDefinition = "datetime")
 	private LocalDateTime dataEntrega;
 
-	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 	
