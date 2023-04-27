@@ -26,22 +26,20 @@ import lombok.NoArgsConstructor;
 @Table(name = "cidade")
 @Entity
 public class CidadeEntity {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank // posso adicionar uma mensagem de resposta na anotação. (message = "O campo não deve estar em branco!")
+
+	@NotBlank // posso adicionar uma mensagem de resposta na anotação. (message = "O campo não
+				// deve estar em branco!")
 	private String nome;
-	
+
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
 	@NotNull
 	@ManyToOne
 	private EstadoEntity estado;
-	
-	
-	
 
 }

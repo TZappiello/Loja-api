@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zap.lojazap.core.validation.Groups;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +42,6 @@ public class CozinhaEntity {
 	@Column(nullable = false)
 	private String nome;
 
-	@JsonIgnore // ignora a serialização da id.
 	@OneToMany(mappedBy = "cozinha")
 	private List<RestauranteEntity> restaurantes = new ArrayList<>();
 }
