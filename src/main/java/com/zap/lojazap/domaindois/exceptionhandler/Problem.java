@@ -1,9 +1,8 @@
 package com.zap.lojazap.domaindois.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -21,8 +20,8 @@ public class Problem {
 	private String detail;
 	
 	private String userMessage;
-	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss") 
-	private LocalDateTime timestamp;
+//	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss") 
+	private OffsetDateTime timestamp;
 	private List<Object> objects;
 	
 	@Getter

@@ -1,6 +1,6 @@
 package com.zap.lojazap.domaindois.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -241,11 +241,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpStatus status, WebRequest request) {
 
 		if (body == null) {
-			body = Problem.builder().title(status.getReasonPhrase()).status(status.value())
-					.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL).timestamp(LocalDateTime.now()).build();
+			body = Problem.builder()
+					.title(status.getReasonPhrase())
+					.status(status.value())
+					.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+					.timestamp(OffsetDateTime.now())
+					.build();
+			
 		} else if (body instanceof String) {
-			body = Problem.builder().title((String) body).status(status.value())
-					.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL).timestamp(LocalDateTime.now()).build();
+			body = Problem.builder()
+					.title((String) body)
+					.status(status.value())
+					.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+					.timestamp(OffsetDateTime.now())
+					.build();
 		}
 
 		return super.handleExceptionInternal(ex, body, headers, status, request);
@@ -253,7 +262,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private Problem.ProblemBuilder CreateProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
 
-		return Problem.builder().timestamp(LocalDateTime.now()).status(status.value()).type(problemType.getUri())
-				.title(problemType.getTitle()).detail(detail);
+		return Problem.builder()
+				.timestamp(OffsetDateTime.now())
+				.status(status.value())
+				.type(problemType.getUri())
+				.title(problemType.getTitle())
+				.detail(detail);
 	}
 }
