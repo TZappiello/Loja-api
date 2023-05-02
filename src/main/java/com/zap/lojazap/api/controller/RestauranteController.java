@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.DTO.CozinhaDTO;
 import com.zap.lojazap.api.DTO.RestauranteDTO;
+import com.zap.lojazap.api.input.RestauranteInput;
+import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -91,8 +93,10 @@ public class RestauranteController {
 	@PostMapping
 	public RestauranteDTO adicionar(@RequestBody 
 						@Valid 				//@Validated(Groups.CozinhaId.class)
-					RestauranteEntity restaurante) {
+					RestauranteInput restauranteInput) {
 		try {
+			RestauranteEntity restaurante = toDTOObject(restauranteInput);
+			
 			return toDTO(cadastroRestaurante.cadastrar(restaurante));
 
 		} catch (EntidadeNaoEncontradaException e) {
@@ -103,9 +107,11 @@ public class RestauranteController {
 	}
 
 	@PutMapping("/{id}")
-	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteEntity restaurante) {
+	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
+			RestauranteEntity restaurante = toDTOObject(restauranteInput);
+			
 			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
 			
 			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
@@ -135,6 +141,18 @@ public class RestauranteController {
 		return restaurantes.stream()
 			.map(restaurante -> toDTO(restaurante))
 			.collect(Collectors.toList());
+	}
+	
+	private RestauranteEntity toDTOObject(RestauranteInput restauranteInput ) {
+		RestauranteEntity restaurante = new RestauranteEntity();
+		restaurante.setNome(restauranteInput.getNome());
+		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
+		
+		CozinhaEntity cozinha = new CozinhaEntity();
+		cozinha.setId(restauranteInput.getCozinha().getId());
+		
+		restaurante.setCozinha(cozinha);
+		return restaurante;
 	}
 	
 	/*@PutMapping("/{id}")

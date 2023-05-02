@@ -17,16 +17,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.zap.lojazap.core.validation.Groups;
 import com.zap.lojazap.core.validation.TaxaFrete;
 import com.zap.lojazap.core.validation.ValorZeroDescricao;
 
@@ -52,7 +47,7 @@ public class RestauranteEntity {
 
 //	@NotNull 
 //	@NotEmpty
-	@NotBlank 	//(groups = Groups.CadastroRestaurante.class)
+//	@NotBlank 	(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private String nome;
 
@@ -65,9 +60,9 @@ public class RestauranteEntity {
 	private BigDecimal taxaFrete;
 	
 	
-	@Valid
-	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	@NotNull
+//	@Valid
+//	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+//	@NotNull
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id")
 	private CozinhaEntity cozinha;
