@@ -2,6 +2,7 @@ package com.zap.lojazap.api.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.api.DTO.CozinhaDTO;
+import com.zap.lojazap.api.DTO.RestauranteDTO;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -33,14 +36,18 @@ public class RestauranteController {
 	private CadastroRestauranteService cadastroRestaurante;
 
 	@GetMapping
-	public List<RestauranteEntity> listar() {
-		return restauranteRepository.findAll();
+	public List<RestauranteDTO> listar() {
+		return toCollectionDTO(restauranteRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public RestauranteEntity porId(@PathVariable Long id) {
-		return cadastroRestaurante.buscarSeTiver(id);
+	public RestauranteDTO porId(@PathVariable Long id) {
+		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(id);
+		
+		return toDTO(restaurante);	
 	}
+
+
 	
 	@GetMapping("/por-taxa")
 	public List<RestauranteEntity> porTaxa(@RequestParam BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal){
@@ -82,11 +89,11 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public RestauranteEntity adicionar(@RequestBody 
+	public RestauranteDTO adicionar(@RequestBody 
 						@Valid 				//@Validated(Groups.CozinhaId.class)
 					RestauranteEntity restaurante) {
 		try {
-			return cadastroRestaurante.cadastrar(restaurante);
+			return toDTO(cadastroRestaurante.cadastrar(restaurante));
 
 		} catch (EntidadeNaoEncontradaException e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -96,17 +103,38 @@ public class RestauranteController {
 	}
 
 	@PutMapping("/{id}")
-	public RestauranteEntity atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteEntity restaurante) {
+	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteEntity restaurante) {
 
-		RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
-		
-		BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
 		try {
-			return cadastroRestaurante.cadastrar(restauranteId);
+			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
+			
+			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
+			return toDTO(cadastroRestaurante.cadastrar(restauranteId));
 		
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
+		
+		
+	}
+	
+	private RestauranteDTO toDTO(RestauranteEntity restauranteEntity) {
+		CozinhaDTO cozinhaDTO = new CozinhaDTO();
+		cozinhaDTO.setId(restauranteEntity.getCozinha().getId());
+		cozinhaDTO.setNome(restauranteEntity.getCozinha().getNome());
+		
+		RestauranteDTO restauranteDTO = new RestauranteDTO();
+		restauranteDTO.setId(restauranteEntity.getId());
+		restauranteDTO.setNome(restauranteEntity.getNome());
+		restauranteDTO.setCozinha(cozinhaDTO);
+		return restauranteDTO;
+	}
+	
+	private List<RestauranteDTO> toCollectionDTO(List<RestauranteEntity> restaurantes){
+		
+		return restaurantes.stream()
+			.map(restaurante -> toDTO(restaurante))
+			.collect(Collectors.toList());
 	}
 	
 	/*@PutMapping("/{id}")
