@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import com.zap.lojazap.core.validation.Groups;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CozinhaEntity {
 
-	@NotNull(groups = Groups.CozinhaId.class)
+//	@NotNull(groups = Groups.CozinhaId.class)
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
