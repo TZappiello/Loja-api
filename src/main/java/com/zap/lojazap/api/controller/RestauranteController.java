@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.DTO.RestauranteDTO;
 import com.zap.lojazap.api.assember.RestauranteModelAssembler;
+import com.zap.lojazap.api.assember.RestauranteModelInputAssembler;
 import com.zap.lojazap.api.input.RestauranteInput;
-import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -35,6 +35,9 @@ public class RestauranteController {
 
 	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
+	
+	@Autowired
+	private RestauranteModelInputAssembler restauranteModelInputAssembler;
 	
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
@@ -97,7 +100,7 @@ public class RestauranteController {
 						@Valid 				//@Validated(Groups.CozinhaId.class)
 					RestauranteInput restauranteInput) {
 		try {
-			RestauranteEntity restaurante = toDTOObject(restauranteInput);
+			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
 			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restaurante));
 
@@ -112,7 +115,7 @@ public class RestauranteController {
 	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
-			RestauranteEntity restaurante = toDTOObject(restauranteInput);
+			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
 			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
 			
@@ -123,20 +126,6 @@ public class RestauranteController {
 			throw new NegocioException(e.getMessage());
 		}
 		
-		
-	}
-	
-	
-	private RestauranteEntity toDTOObject(RestauranteInput restauranteInput ) {
-		RestauranteEntity restaurante = new RestauranteEntity();
-		restaurante.setNome(restauranteInput.getNome());
-		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
-		
-		CozinhaEntity cozinha = new CozinhaEntity();
-		cozinha.setId(restauranteInput.getCozinha().getId());
-		
-		restaurante.setCozinha(cozinha);
-		return restaurante;
 	}
 	
 	/*@PutMapping("/{id}")
