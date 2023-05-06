@@ -2,7 +2,6 @@ package com.zap.lojazap.api.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.CozinhaDTO;
 import com.zap.lojazap.api.DTO.RestauranteDTO;
+import com.zap.lojazap.api.assember.RestauranteModelAssembler;
 import com.zap.lojazap.api.input.RestauranteInput;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
@@ -35,18 +34,21 @@ public class RestauranteController {
 	private RestauranteRepository restauranteRepository;
 
 	@Autowired
+	private RestauranteModelAssembler restauranteModelAssembler;
+	
+	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 
 	@GetMapping
 	public List<RestauranteDTO> listar() {
-		return toCollectionDTO(restauranteRepository.findAll());
+		return restauranteModelAssembler.toCollectionDTO(restauranteRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public RestauranteDTO porId(@PathVariable Long id) {
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(id);
 		
-		return toDTO(restaurante);	
+		return restauranteModelAssembler.toDTO(restaurante);	
 	}
 
 
@@ -97,7 +99,7 @@ public class RestauranteController {
 		try {
 			RestauranteEntity restaurante = toDTOObject(restauranteInput);
 			
-			return toDTO(cadastroRestaurante.cadastrar(restaurante));
+			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restaurante));
 
 		} catch (EntidadeNaoEncontradaException e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -115,7 +117,7 @@ public class RestauranteController {
 			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
 			
 			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
-			return toDTO(cadastroRestaurante.cadastrar(restauranteId));
+			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteId));
 		
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
@@ -124,24 +126,6 @@ public class RestauranteController {
 		
 	}
 	
-	private RestauranteDTO toDTO(RestauranteEntity restauranteEntity) {
-		CozinhaDTO cozinhaDTO = new CozinhaDTO();
-		cozinhaDTO.setId(restauranteEntity.getCozinha().getId());
-		cozinhaDTO.setNome(restauranteEntity.getCozinha().getNome());
-		
-		RestauranteDTO restauranteDTO = new RestauranteDTO();
-		restauranteDTO.setId(restauranteEntity.getId());
-		restauranteDTO.setNome(restauranteEntity.getNome());
-		restauranteDTO.setCozinha(cozinhaDTO);
-		return restauranteDTO;
-	}
-	
-	private List<RestauranteDTO> toCollectionDTO(List<RestauranteEntity> restaurantes){
-		
-		return restaurantes.stream()
-			.map(restaurante -> toDTO(restaurante))
-			.collect(Collectors.toList());
-	}
 	
 	private RestauranteEntity toDTOObject(RestauranteInput restauranteInput ) {
 		RestauranteEntity restaurante = new RestauranteEntity();
