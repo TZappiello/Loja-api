@@ -1,17 +1,22 @@
 package com.zap.lojazap.api.assember;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zap.lojazap.api.input.RestauranteInput;
-import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
 @Component
 public class RestauranteModelInputAssembler {
 
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public RestauranteEntity toDTOObject(RestauranteInput restauranteInput ) {
-		RestauranteEntity restaurante = new RestauranteEntity();
+		return modelMapper.map(restauranteInput, RestauranteEntity.class);
+
+		/* RestauranteEntity restaurante = new RestauranteEntity();
 		restaurante.setNome(restauranteInput.getNome());
 		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
 		
@@ -19,6 +24,6 @@ public class RestauranteModelInputAssembler {
 		cozinha.setId(restauranteInput.getCozinha().getId());
 		
 		restaurante.setCozinha(cozinha);
-		return restaurante;
+		return restaurante; */
 	}
 }
