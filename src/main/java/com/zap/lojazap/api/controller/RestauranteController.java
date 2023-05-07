@@ -115,12 +115,14 @@ public class RestauranteController {
 	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
-			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
+//			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
-			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
+			RestauranteEntity restauranteAtual = cadastroRestaurante.buscarSeTiver(id);
 			
-			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
-			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteId));
+			restauranteModelInputAssembler.copyToDtoObject(restauranteInput, restauranteAtual);
+			
+//			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
+			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteAtual));
 		
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
