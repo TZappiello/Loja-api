@@ -100,9 +100,11 @@ public class RestauranteController {
 						@Valid 				//@Validated(Groups.CozinhaId.class)
 					RestauranteInput restauranteInput) {
 		try {
-			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
+			RestauranteEntity restaurante = 
+					restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
-			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restaurante));
+			return restauranteModelAssembler.toDTO
+					(cadastroRestaurante.cadastrar(restaurante));
 
 		} catch (EntidadeNaoEncontradaException e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

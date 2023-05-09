@@ -1,6 +1,7 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.api.DTO.CidadeDTO;
+import com.zap.lojazap.api.DTO.EstadoDTO;
+import com.zap.lojazap.api.input.CidadeIdInput;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
+import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EstadoNaoEncontradoException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -36,14 +41,15 @@ public class CidadeController {
 	private CadastroCidadesService cadastroService;
 
 	@GetMapping
-	public List<CidadeEntity> listar() {
-		return cidadeRepository.findAll();
+	public List<CidadeDTO> listar() {
+		return toCollectionDTO(cidadeRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public CidadeEntity porId(@PathVariable Long id) {
+	public CidadeDTO porId(@PathVariable Long id) {
+		CidadeEntity cidade = cadastroService.buscarSeTiver(id);
 		
-		return cadastroService.buscarSeTiver(id);
+		return toDTO(cidade);
 		
 //		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
 //		if (cidade.isPresent()) {
@@ -54,10 +60,13 @@ public class CidadeController {
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public CidadeEntity adicionar(@RequestBody @Valid CidadeEntity cidade) {
+//	@ResponseStatus(HttpStatus.CREATED)
+	public CidadeDTO adicionar(@RequestBody @Valid CidadeIdInput cidadeIdInput) {
+		
 		try {
-			return cadastroService.cadastrar(cidade);
+			CidadeEntity cidade = toDTOEntity(cidadeIdInput);
+			
+			return toDTO(cadastroService.cadastrar(cidade));
 
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
@@ -116,4 +125,37 @@ public class CidadeController {
 
 	}*/
 
+	private CidadeDTO toDTO(CidadeEntity cidade) {
+		EstadoDTO estadoDTO = new EstadoDTO();
+		estadoDTO.setId(cidade.getEstado().getId());
+		estadoDTO.setNome(cidade.getEstado().getNome());
+		
+		CidadeDTO cidadeDTO = new CidadeDTO();
+		cidadeDTO.setId(cidade.getId());
+		cidadeDTO.setNome(cidade.getNome());
+		cidadeDTO.setEstado(estadoDTO);
+		
+		return cidadeDTO;
+	}
+	
+	private List<CidadeDTO> toCollectionDTO(List<CidadeEntity> cidades){
+		
+		return cidades.stream()
+				.map(cidade -> toDTO(cidade))
+				.collect(Collectors.toList());
+		
+	}
+	
+	
+	private CidadeEntity toDTOEntity (CidadeIdInput cidadeIdInput) {
+		CidadeEntity cidadeEntity = new CidadeEntity();
+		cidadeEntity.setNome(cidadeIdInput.getNome());
+
+		EstadoEntity estadoEntity = new EstadoEntity();
+		estadoEntity.setId(cidadeIdInput.getEstado().getId());
+		
+		cidadeEntity.setEstado(estadoEntity);
+		return cidadeEntity;
+		
+	}
 }
