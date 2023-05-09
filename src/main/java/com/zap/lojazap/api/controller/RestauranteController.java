@@ -100,9 +100,11 @@ public class RestauranteController {
 						@Valid 				//@Validated(Groups.CozinhaId.class)
 					RestauranteInput restauranteInput) {
 		try {
-			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
+			RestauranteEntity restaurante = 
+					restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
-			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restaurante));
+			return restauranteModelAssembler.toDTO
+					(cadastroRestaurante.cadastrar(restaurante));
 
 		} catch (EntidadeNaoEncontradaException e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -115,12 +117,14 @@ public class RestauranteController {
 	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
-			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
+//			RestauranteEntity restaurante = restauranteModelInputAssembler.toDTOObject(restauranteInput);
 			
-			RestauranteEntity restauranteId = cadastroRestaurante.buscarSeTiver(id);
+			RestauranteEntity restauranteAtual = cadastroRestaurante.buscarSeTiver(id);
 			
-			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
-			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteId));
+			restauranteModelInputAssembler.copyToDtoObject(restauranteInput, restauranteAtual);
+			
+//			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
+			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteAtual));
 		
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
