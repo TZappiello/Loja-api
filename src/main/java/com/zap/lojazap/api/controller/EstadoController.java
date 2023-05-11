@@ -45,13 +45,13 @@ public class EstadoController {
 
 	@GetMapping
 	public List<EstadoDTO> listar() {
-		return toColectorDTO(estadoRepository.findAll());
+		return estadoModelAssembler.toCollectionDTO(estadoRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public EstadoDTO porId(@PathVariable Long id) {
 
-		return toDTO(cadastroEstados.buscarSeTiver(id));
+		return estadoModelAssembler.toDTO(cadastroEstados.buscarSeTiver(id));
 //		Optional<EstadoEntity> estado = estadoRepository.findById(id);
 //		
 //		if(estado.isPresent()) {
@@ -65,7 +65,7 @@ public class EstadoController {
 	public EstadoDTO adicionar(@RequestBody @Valid EstadoIdInput estadoIdInput) {
 		EstadoEntity estados = estadoModelInputAssembler.toDTOObject(estadoIdInput);
 
-		return toDTO(cadastroEstados.adicionar(estados));
+		return estadoModelAssembler.toDTO(cadastroEstados.adicionar(estados));
 	}
 
 	@PutMapping("/{id}")
@@ -93,23 +93,4 @@ public class EstadoController {
 
 	}
 
-	public EstadoDTO toDTO(EstadoEntity estadoEntity) {
-		EstadoDTO estadoDto = new EstadoDTO();
-		estadoDto.setId(estadoEntity.getId());
-		estadoDto.setNome(estadoEntity.getNome());
-
-		return estadoDto;
-	}
-
-	public List<EstadoDTO> toColectorDTO(List<EstadoEntity> estados) {
-		return estados.stream().map(estado -> toDTO(estado)).collect(Collectors.toList());
-	}
-
-	private EstadoEntity toDTOEntity(EstadoIdInput estadoIdInput) {
-		EstadoEntity estadoEntity = new EstadoEntity();
-
-//		estadoEntity.setId(estadoIdInput.getId());
-
-		return estadoEntity;
-	}
 }
