@@ -1,7 +1,5 @@
 package com.zap.lojazap.api.input;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CozinhaIdInput {
 
-	@NotNull
 	private Long Id;
+	private String nome;
 	
 }

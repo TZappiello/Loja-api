@@ -77,6 +77,7 @@ public class EstadoController {
 		return estadoModelAssembler.toDTO(cadastroEstados.adicionar(estadoAtual));
 	}
 
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> remover(@PathVariable Long id) {
 		try {
