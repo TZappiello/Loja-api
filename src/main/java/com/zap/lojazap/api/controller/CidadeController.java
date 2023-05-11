@@ -1,13 +1,11 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.DTO.CidadeDTO;
-import com.zap.lojazap.api.DTO.EstadoDTO;
+import com.zap.lojazap.api.assember.CidadeModelAssembler;
+import com.zap.lojazap.api.assember.CidadeModelInputAssembler;
 import com.zap.lojazap.api.input.CidadeIdInput;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
@@ -39,17 +37,23 @@ public class CidadeController {
 
 	@Autowired
 	private CadastroCidadesService cadastroService;
+	
+	@Autowired
+	private CidadeModelAssembler cidadeModelAssembler;
+	
+	@Autowired
+	private CidadeModelInputAssembler cidadeModelInputAssembler;
 
 	@GetMapping
 	public List<CidadeDTO> listar() {
-		return toCollectionDTO(cidadeRepository.findAll());
+		return cidadeModelAssembler.toCollectionDTO(cidadeRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public CidadeDTO porId(@PathVariable Long id) {
 		CidadeEntity cidade = cadastroService.buscarSeTiver(id);
 		
-		return toDTO(cidade);
+		return cidadeModelAssembler.toDTO(cidade);
 		
 //		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
 //		if (cidade.isPresent()) {
@@ -64,9 +68,9 @@ public class CidadeController {
 	public CidadeDTO adicionar(@RequestBody @Valid CidadeIdInput cidadeIdInput) {
 		
 		try {
-			CidadeEntity cidade = toDTOEntity(cidadeIdInput);
+			CidadeEntity cidade = cidadeModelInputAssembler.toDTOObject(cidadeIdInput);
 			
-			return toDTO(cadastroService.cadastrar(cidade));
+			return cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
 
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
@@ -74,12 +78,13 @@ public class CidadeController {
 	}
 	
 	@PutMapping("/{id}")
-	public CidadeEntity atualizar(@PathVariable Long id, @RequestBody @Valid CidadeEntity cidade){
+	public CidadeDTO atualizar(@PathVariable Long id, @RequestBody @Valid CidadeIdInput cidadeIdInput){
 		try {
-			CidadeEntity cidadeEntity = cadastroService.buscarSeTiver(id);
-			BeanUtils.copyProperties(cidade, cidadeEntity, "id");
+			
+			CidadeEntity cidade = cadastroService.buscarSeTiver(id);
+			BeanUtils.copyProperties(cidadeIdInput, cidade, "id");
 
-			return cadastroService.cadastrar(cidadeEntity);
+			return cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
 			
 		} catch (EstadoNaoEncontradoException e) {
 			 throw new NegocioException(e.getMessage(), e);
@@ -125,37 +130,37 @@ public class CidadeController {
 
 	}*/
 
-	private CidadeDTO toDTO(CidadeEntity cidade) {
-		EstadoDTO estadoDTO = new EstadoDTO();
-		estadoDTO.setId(cidade.getEstado().getId());
-		estadoDTO.setNome(cidade.getEstado().getNome());
-		
-		CidadeDTO cidadeDTO = new CidadeDTO();
-		cidadeDTO.setId(cidade.getId());
-		cidadeDTO.setNome(cidade.getNome());
-		cidadeDTO.setEstado(estadoDTO);
-		
-		return cidadeDTO;
-	}
+//	private CidadeDTO toDTO(CidadeEntity cidade) {
+//		EstadoDTO estadoDTO = new EstadoDTO();
+//		estadoDTO.setId(cidade.getEstado().getId());
+//		estadoDTO.setNome(cidade.getEstado().getNome());
+//		
+//		CidadeDTO cidadeDTO = new CidadeDTO();
+//		cidadeDTO.setId(cidade.getId());
+//		cidadeDTO.setNome(cidade.getNome());
+//		cidadeDTO.setEstado(estadoDTO);
+//		
+//		return cidadeDTO;
+//	}
 	
-	private List<CidadeDTO> toCollectionDTO(List<CidadeEntity> cidades){
-		
-		return cidades.stream()
-				.map(cidade -> toDTO(cidade))
-				.collect(Collectors.toList());
-		
-	}
+//	private List<CidadeDTO> toCollectionDTO(List<CidadeEntity> cidades){
+//		
+//		return cidades.stream()
+//				.map(cidade -> toDTO(cidade))
+//				.collect(Collectors.toList());
+//		
+//	}
 	
-	
-	private CidadeEntity toDTOEntity (CidadeIdInput cidadeIdInput) {
-		CidadeEntity cidadeEntity = new CidadeEntity();
-		cidadeEntity.setNome(cidadeIdInput.getNome());
-
-		EstadoEntity estadoEntity = new EstadoEntity();
-		estadoEntity.setId(cidadeIdInput.getEstado().getId());
-		
-		cidadeEntity.setEstado(estadoEntity);
-		return cidadeEntity;
-		
-	}
+//	
+//	private CidadeEntity toDTOEntity (CidadeIdInput cidadeIdInput) {
+//		CidadeEntity cidadeEntity = new CidadeEntity();
+//		cidadeEntity.setNome(cidadeIdInput.getNome());
+//
+//		EstadoEntity estadoEntity = new EstadoEntity();
+//		estadoEntity.setId(cidadeIdInput.getEstado().getId());
+//		
+//		cidadeEntity.setEstado(estadoEntity);
+//		return cidadeEntity;
+//		
+//	}
 }
