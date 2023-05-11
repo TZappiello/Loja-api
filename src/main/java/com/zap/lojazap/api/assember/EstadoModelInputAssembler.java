@@ -4,18 +4,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zap.lojazap.api.input.CidadeIdInput;
-import com.zap.lojazap.domaindois.entities.CidadeEntity;
+import com.zap.lojazap.api.input.EstadoIdInput;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
 
 @Component
-public class CidadeModelInputAssembler {
+public class EstadoModelInputAssembler {
 
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public CidadeEntity toDTOObject(CidadeIdInput cidadeIdInput) {
-		return modelMapper.map(cidadeIdInput, CidadeEntity.class);
+	public EstadoEntity toDTOObject(EstadoIdInput estadoIdInput) {
+		return modelMapper.map(estadoIdInput, EstadoEntity.class);
 		/* RestauranteEntity restaurante = new RestauranteEntity();
 		restaurante.setNome(restauranteInput.getNome());
 		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
@@ -27,11 +26,10 @@ public class CidadeModelInputAssembler {
 		return restaurante; */
 	}
 	
-	public void copyToDtoObject(CidadeIdInput restauranteInput, CidadeEntity cidadeEntity) {
+	public void copyToDtoObject(EstadoIdInput eInput, EstadoEntity estadoEntity) {
 		/* PARA EVITAR  org.hibernate.HibernateException: 
 		 * identifier of an instance of com.zap.lojazap.domaindois.entities.CozinhaEntity was altered from 1 to 2*/
-		cidadeEntity.setEstado(new EstadoEntity());
 		
-		modelMapper.map(restauranteInput, cidadeEntity);
+		modelMapper.map(eInput, estadoEntity);
 	}
 }

@@ -41,8 +41,10 @@ public class CadastroEstadosService {
 
 	public EstadoEntity buscarSeTiver(Long id) {
 		
-		return estadoRepository.findById(id)
+		EstadoEntity estado = estadoRepository.findById(id)
 				.orElseThrow(()-> new EstadoNaoEncontradoException(id));
+		
+		return estado;
 	}
 
 }
