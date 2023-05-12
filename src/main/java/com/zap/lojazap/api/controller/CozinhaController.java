@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zap.lojazap.api.DTO.CozinhaDTO;
+import com.zap.lojazap.api.assember.CozinhaModelAssembler;
+import com.zap.lojazap.api.assember.CozinhaModelInputAssembler;
+import com.zap.lojazap.api.input.CozinhaIdInput;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
@@ -38,15 +42,21 @@ public class CozinhaController {
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
+	
+	@Autowired
+	private CozinhaModelAssembler cozinhaModelAssembler;
+	
+	@Autowired
+	private CozinhaModelInputAssembler cozinhaModelInputAssembler;
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<CozinhaEntity> listar() {
-		return cozinhaRepository.findAll();
+	public List<CozinhaDTO> listar() {
+		return cozinhaModelAssembler.toCollectionDTO(cozinhaRepository.findAll());
 	}
 
 	@GetMapping("/por-nome")
-	public List<CozinhaEntity> listarPorNome(@RequestParam String nome) {
-		return cozinhaRepository.findTodasBynomeContaining(nome);
+	public List<CozinhaDTO> listarPorNome(@RequestParam String nome) {
+		return cozinhaModelAssembler.toCollectionDTO(cozinhaRepository.findTodasBynomeContaining(nome));
 	}
 
 	@GetMapping("/por-nome-completo")
@@ -55,31 +65,26 @@ public class CozinhaController {
 	}
 
 	@GetMapping("/{id}")
-	public CozinhaEntity porId(@PathVariable Long id) {
-		return cadastroCozinha.buscarSeTiver(id);
+	public CozinhaDTO porId(@PathVariable Long id) {
+		CozinhaEntity cozinhaEntity = cadastroCozinha.buscarSeTiver(id);
+		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
 	@PostMapping
-	public ResponseEntity<CozinhaEntity> adicionar(@RequestBody @Valid CozinhaEntity cozinha) {
-		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
-
-		if (contem.isPresent()) {
-			System.err.println("AQUI TEM ESSA COZINHA!!!");
-			return ResponseEntity.badRequest().build();
-		}
-
-		cozinha = cadastroCozinha.adicionar(cozinha);
-		return ResponseEntity.created(null).body(cozinha);
+	public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
+		CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
+		cozinhaEntity = cadastroCozinha.adicionar(cozinhaEntity);
+		
+		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
 	@PutMapping("/{id}")
-	public CozinhaEntity atualizar(@PathVariable Long id, @RequestBody @Valid CozinhaEntity cozinha) {
+	public CozinhaDTO atualizar(@PathVariable Long id, @RequestBody @Valid CozinhaIdInput cozinhaIput) {
 
 		CozinhaEntity cozinhaAtual = cadastroCozinha.buscarSeTiver(id);
+		cozinhaModelInputAssembler.copyToDtoObject(cozinhaIput, cozinhaAtual);
 
-		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-
-		return cadastroCozinha.adicionar(cozinhaAtual);
+		return cozinhaModelAssembler.toDTO(cadastroCozinha.adicionar(cozinhaAtual));
 	}
 
 	@DeleteMapping("/{id}")
