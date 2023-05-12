@@ -66,14 +66,16 @@ public class CozinhaController {
 
 	@GetMapping("/{id}")
 	public CozinhaDTO porId(@PathVariable Long id) {
-		return cozinhaModelAssembler.toDTO(cadastroCozinha.buscarSeTiver(id));
+		CozinhaEntity cozinhaEntity = cadastroCozinha.buscarSeTiver(id);
+		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
 	@PostMapping
 	public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
 		CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
-
-		return cozinhaModelAssembler.toDTO(cadastroCozinha.adicionar(cozinhaEntity));
+		cozinhaEntity = cadastroCozinha.adicionar(cozinhaEntity);
+		
+		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
 	@PutMapping("/{id}")
