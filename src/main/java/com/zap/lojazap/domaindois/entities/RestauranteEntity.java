@@ -70,6 +70,8 @@ public class RestauranteEntity {
 	@Embedded
 	private Endereco endereco;
 	
+	private Boolean ativo = Boolean.TRUE;
+	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataCadastro;
@@ -87,4 +89,13 @@ public class RestauranteEntity {
 	@OneToMany(mappedBy = "restaurante")
 	private List<ProdutoEntity> produtos = new ArrayList<>();
 
+	public void ativar() {
+		setAtivo(true);
+//		this.ativo = true;
+	}
+	
+	public void inativar() {
+		setAtivo(false);
+//		this.ativo = false;
+	}
 }
