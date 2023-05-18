@@ -2,6 +2,7 @@ package com.zap.lojazap.domaindois.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.exception.FormaDePagamentoNaoEncontradoException;
@@ -9,24 +10,23 @@ import com.zap.lojazap.domaindois.repository.FormaPagamentoRepository;
 
 @Service
 public class CadastroFormaPagamentoService {
-	
-	private static final String MSG_CIDADE_EM_USO
-	= "Cozinha de código %d não pode ser removida, pois está em uso";
+
+	private static final String MSG_CIDADE_EM_USO = "Cozinha de código %d não pode ser removida, pois está em uso";
 
 	@Autowired
 	private FormaPagamentoRepository formaPagamentoRepository;
-	
-//	@Transactional
-//	public CidadeEntity cadastrar(CidadeEntity cidade) {
-//		Long estadoId = cidade.getEstado().getId();
+
+	@Transactional
+	public FormaPagamentoEntity cadastrar(FormaPagamentoEntity entity) {
+//		Long estadoId = entity.getEstado().getId();
 //		EstadoEntity estado = cadastroEstadosService.buscarSeTiver(estadoId);
-//		
+
 //		cidade.setEstado(estado);
-//		
-//		return cidadeRepository.save(cidade);
-//		
-//	}
-//	
+
+		return formaPagamentoRepository.save(entity);
+
+	}
+
 //	@Transactional
 //	public void remover(Long id) {
 //		try {
@@ -43,8 +43,7 @@ public class CadastroFormaPagamentoService {
 //	}
 
 	public FormaPagamentoEntity buscarSeTiver(Long id) {
-		return formaPagamentoRepository.findById(id)
-				.orElseThrow(()-> new FormaDePagamentoNaoEncontradoException(id));
+		return formaPagamentoRepository.findById(id).orElseThrow(() -> new FormaDePagamentoNaoEncontradoException(id));
 	}
-	
+
 }
