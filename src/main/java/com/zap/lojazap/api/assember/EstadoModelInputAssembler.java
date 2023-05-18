@@ -16,15 +16,7 @@ public class EstadoModelInputAssembler {
 
 	public EstadoEntity toDTOObject(EstadoIdInput estadoIdInput) {
 		return modelMapper.map(estadoIdInput, EstadoEntity.class);
-		/* RestauranteEntity restaurante = new RestauranteEntity();
-		restaurante.setNome(restauranteInput.getNome());
-		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
-		
-		CozinhaEntity cozinha = new CozinhaEntity();
-		cozinha.setId(restauranteInput.getCozinha().getId());
-		
-		restaurante.setCozinha(cozinha);
-		return restaurante; */
+
 	}
 	
 	public void copyToDtoObject(EstadoIdInput eInput, EstadoEntity estadoEntity) {
