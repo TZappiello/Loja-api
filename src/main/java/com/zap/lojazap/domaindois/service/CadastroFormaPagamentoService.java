@@ -18,11 +18,6 @@ public class CadastroFormaPagamentoService {
 
 	@Transactional
 	public FormaPagamentoEntity cadastrar(FormaPagamentoEntity entity) {
-//		Long estadoId = entity.getEstado().getId();
-//		EstadoEntity estado = cadastroEstadosService.buscarSeTiver(estadoId);
-
-//		cidade.setEstado(estado);
-
 		return formaPagamentoRepository.save(entity);
 
 	}
