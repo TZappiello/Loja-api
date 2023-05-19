@@ -21,8 +21,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "cidade")
 @Entity
 public class CidadeEntity {

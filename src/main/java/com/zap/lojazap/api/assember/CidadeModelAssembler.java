@@ -21,16 +21,6 @@ public class CidadeModelAssembler {
 	
 	public CidadeDTO toDTO(CidadeEntity cidadeEntity) {
 		return modelMapper.map(cidadeEntity, CidadeDTO.class);
-		
-		/*CozinhaDTO cozinhaDTO = new CozinhaDTO();
-		cozinhaDTO.setId(restauranteEntity.getCozinha().getId());
-		cozinhaDTO.setNome(restauranteEntity.getCozinha().getNome());
-		
-		RestauranteDTO restauranteDTO = new RestauranteDTO();
-		restauranteDTO.setId(restauranteEntity.getId());
-		restauranteDTO.setNome(restauranteEntity.getNome());
-		restauranteDTO.setCozinha(cozinhaDTO);
-		return restauranteDTO;*/
 	}
 	
 	public List<CidadeDTO> toCollectionDTO(List<CidadeEntity> cidades){

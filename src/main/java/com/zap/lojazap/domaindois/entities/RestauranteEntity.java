@@ -34,8 +34,6 @@ import lombok.NoArgsConstructor;
 		descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "restaurante")
 @Entity
 public class RestauranteEntity {

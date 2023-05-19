@@ -71,17 +71,12 @@ public class FormaPagamentoController {
 
 		return formaPagamentoModelAssembler.toDTO(cadastroFormaPagamentoService.cadastrar(entity));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long id) {
 		cadastroFormaPagamentoService.remover(id);
-		
-	}
 
+	}
+	
 }
-//@DeleteMapping("/{id}")
-//@ResponseStatus(HttpStatus.NO_CONTENT)
-//public void remover(@PathVariable Long id) {
-////	try {
-//		cadastroEstados.excluir(id);
