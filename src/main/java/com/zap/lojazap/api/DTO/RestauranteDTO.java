@@ -16,5 +16,5 @@ public class RestauranteDTO {
 	
 	private CozinhaDTO cozinha;
 	
-//	private EnderecoDTO endereco;
+	private EnderecoDTO endereco;
 }
