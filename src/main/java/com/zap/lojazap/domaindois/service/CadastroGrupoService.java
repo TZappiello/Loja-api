@@ -13,12 +13,21 @@ public class CadastroGrupoService {
 	@Autowired
 	private GrupoRepository grupoRepository;
 	
+	public GrupoEntity cadastrar(GrupoEntity grupoEntity) {
+			
+		GrupoEntity entity = grupoRepository.save(grupoEntity);
+		
+		return entity;
+	}
+	
+	
 	public GrupoEntity buscarSeTiver(Long id) {
-		return grupoRepository.findById(id).orElseThrow(() -> new GrupoNaoEncontradoException(id));
+		
+		GrupoEntity entity = grupoRepository.findById(id)
+				.orElseThrow(() -> new GrupoNaoEncontradoException(id));
+	
+		return entity;
 	}
 }
 
 
-//public FormaPagamentoEntity buscarSeTiver(Long id) {
-//	return formaPagamentoRepository.findById(id).orElseThrow(() -> new FormaDePagamentoNaoEncontradoException(id));
-//}
