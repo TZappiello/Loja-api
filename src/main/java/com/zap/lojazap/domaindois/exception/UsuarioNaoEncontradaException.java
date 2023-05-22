@@ -8,6 +8,6 @@ public class UsuarioNaoEncontradaException extends EntidadeNaoEncontradaExceptio
 	}
 
 	public UsuarioNaoEncontradaException(Long id) {
-		this(String.format("Não existe um cadastro da Cidade com código %d", id));
+		this(String.format("Não existe um cadastro de Usuário com código %d", id));
 	}
 }
