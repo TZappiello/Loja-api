@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +23,8 @@ import com.zap.lojazap.api.assember.RestauranteModelAssembler;
 import com.zap.lojazap.api.assember.RestauranteModelInputAssembler;
 import com.zap.lojazap.api.input.RestauranteInput;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.exception.CidadeNaoEncontradaException;
+import com.zap.lojazap.domaindois.exception.CozinhaNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
@@ -100,7 +101,7 @@ public class RestauranteController {
 
 			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restaurante));
 
-		} catch (EntidadeNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 //			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 			throw new NegocioException(e.getMessage());
@@ -120,7 +121,7 @@ public class RestauranteController {
 //			BeanUtils.copyProperties(restaurante, restauranteId, "id", "formasPagamento", "endereco", "dataCadastro");
 			return restauranteModelAssembler.toDTO(cadastroRestaurante.cadastrar(restauranteAtual));
 
-		} catch (EntidadeNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zap.lojazap.api.input.RestauranteInput;
+import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
@@ -31,6 +32,10 @@ public class RestauranteModelInputAssembler {
 		/* PARA EVITAR  org.hibernate.HibernateException: 
 		 * identifier of an instance of com.zap.lojazap.domaindois.entities.CozinhaEntity was altered from 1 to 2*/
 		restauranteEntity.setCozinha(new CozinhaEntity());
+		
+		if(restauranteEntity.getEndereco() != null) {
+			restauranteEntity.getEndereco().setCidade(new CidadeEntity());
+		}
 		
 		modelMapper.map(restauranteInput, restauranteEntity);
 	}
