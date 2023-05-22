@@ -1,7 +1,6 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -9,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.DTO.GrupoDTO;
@@ -28,41 +27,55 @@ import com.zap.lojazap.domaindois.service.CadastroGrupoService;
 @RequestMapping("/grupos")
 public class GrupoController {
 
-	@Autowired
-	private GrupoRepository grupoRepository;
+		@Autowired
+		private GrupoRepository grupoRepository;
 	
-	@Autowired
-	private CadastroGrupoService cadastroGrupo;
+		@Autowired
+		private CadastroGrupoService cadastroGrupo;
 	
-	@Autowired
-	private GrupoModelInputAssembler grupoModelInputAssembler;
+		@Autowired
+		private GrupoModelInputAssembler grupoModelInputAssembler;
 	
-	@Autowired
-	private GrupoModelAssembler grupoModelAssembler;
-	
+		@Autowired
+		private GrupoModelAssembler grupoModelAssembler;
+
 	@GetMapping
-	public List<GrupoDTO> listar(){
+	public List<GrupoDTO> listar() {
 		return grupoModelAssembler.toCollectionDTO(grupoRepository.findAll());
 	}
-	
+
 	@GetMapping("/{id}")
 	public GrupoDTO buscarPorId(@PathVariable Long id) {
-		
+
 		return grupoModelAssembler.toDTO(cadastroGrupo.buscarSeTiver(id));
 	}
-	
+
 	@PostMapping
 	public GrupoDTO salvar(@RequestBody @Valid GrupoIdInput grupo) {
 		try {
-			
+
 			GrupoEntity entity = grupoModelInputAssembler.toDTOObject(grupo);
-			
+
 			return grupoModelAssembler.toDTO(cadastroGrupo.cadastrar(entity));
-			
+
 		} catch (GrupoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage());
 		}
-		
+
 	}
-	
+
+	@PutMapping("/{id}")
+	public GrupoDTO atualizar(@PathVariable Long id, @RequestBody @Valid GrupoIdInput grupo) {
+		try {
+			GrupoEntity entity = cadastroGrupo.buscarSeTiver(id);
+
+			grupoModelInputAssembler.copyToDtoObject(grupo, entity);
+
+			return grupoModelAssembler.toDTO(cadastroGrupo.cadastrar(entity));
+
+		} catch (GrupoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
+
 }

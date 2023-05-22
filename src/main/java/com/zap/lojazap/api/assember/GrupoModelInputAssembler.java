@@ -14,14 +14,13 @@ public class GrupoModelInputAssembler {
 	private ModelMapper modelMapper;
 
 	public GrupoEntity toDTOObject(GrupoIdInput grupoIdInput) {
+	
 		return modelMapper.map(grupoIdInput, GrupoEntity.class);
 	}
 	
 	public void copyToDtoObject(GrupoIdInput grupoInput, GrupoEntity grupoEntity) {
-		/* PARA EVITAR  org.hibernate.HibernateException: 
-		 * identifier of an instance of com.zap.lojazap.domaindois.entities.CozinhaEntity was altered from 1 to 2*/
-//		grupoEntity.setId(new GrupoEntity());
-		
+		grupoInput.setId(grupoEntity.getId());
+
 		modelMapper.map(grupoInput, grupoEntity);
 	}
 }

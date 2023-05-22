@@ -14,7 +14,6 @@ public class CadastroGrupoService {
 	private GrupoRepository grupoRepository;
 	
 	public GrupoEntity cadastrar(GrupoEntity grupoEntity) {
-			
 		GrupoEntity entity = grupoRepository.save(grupoEntity);
 		
 		return entity;
