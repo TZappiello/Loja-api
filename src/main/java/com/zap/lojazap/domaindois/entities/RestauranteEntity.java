@@ -3,7 +3,9 @@ package com.zap.lojazap.domaindois.entities;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -25,10 +27,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.zap.lojazap.core.validation.TaxaFrete;
 import com.zap.lojazap.core.validation.ValorZeroDescricao;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @ValorZeroDescricao(valorField ="taxaFrete",
 		descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
@@ -82,7 +82,7 @@ public class RestauranteEntity {
 	@JoinTable(name = "restaurante_forma_pagamento",
 			joinColumns = @JoinColumn(name ="restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name ="forma_pagamento_id"))
-	private List<FormaPagamentoEntity> formasPagamento = new ArrayList<>();
+	private Set<FormaPagamentoEntity> formasPagamento = new HashSet<>();
 	
 	@OneToMany(mappedBy = "restaurante")
 	private List<ProdutoEntity> produtos = new ArrayList<>();
@@ -95,5 +95,13 @@ public class RestauranteEntity {
 	public void inativar() {
 		setAtivo(false);
 //		this.ativo = false;
+	}
+	
+	public boolean desassociarFormaPagamento(FormaPagamentoEntity formaPagamento) {
+		return getFormasPagamento().remove(formaPagamento);
+	}
+	
+	public boolean associarFormaPagamento(FormaPagamentoEntity formaPagamento) {
+		return getFormasPagamento().add(formaPagamento);
 	}
 }

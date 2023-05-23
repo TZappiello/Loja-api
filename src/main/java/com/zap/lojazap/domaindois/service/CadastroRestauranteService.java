@@ -1,13 +1,12 @@
 package com.zap.lojazap.domaindois.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
+import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
@@ -25,6 +24,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroCidadesService cadastroCidades;
+	
+	@Autowired
+	private CadastroFormaPagamentoService cadastroFormaPagamento;
 
 	@Transactional
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
@@ -76,4 +78,19 @@ public class CadastroRestauranteService {
 		restaurante.inativar();
 	}
 
+	@Transactional
+	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		FormaPagamentoEntity formaPagamento = cadastroFormaPagamento.buscarSeTiver(formaPagamentoId);
+		
+		restaurante.desassociarFormaPagamento(formaPagamento);
+	}
+	
+	@Transactional
+	public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		FormaPagamentoEntity formaPagamento = cadastroFormaPagamento.buscarSeTiver(formaPagamentoId);
+		
+		restaurante.associarFormaPagamento(formaPagamento);
+	}
 }

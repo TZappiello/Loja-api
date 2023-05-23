@@ -1,5 +1,6 @@
 package com.zap.lojazap.api.assember;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class FormaPagamentoModelAssembler {
 
 	}
 	
-	public List<FormaPagamentoDTO> toCollectionDTO(List<FormaPagamentoEntity> list){
+	public List<FormaPagamentoDTO> toCollectionDTO(Collection<FormaPagamentoEntity> list){
 		
 		return list.stream()
 			.map(lista -> toDTO(lista))
