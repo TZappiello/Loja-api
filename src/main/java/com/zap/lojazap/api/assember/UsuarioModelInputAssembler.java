@@ -25,7 +25,6 @@ public class UsuarioModelInputAssembler {
 	}
 	
 	public void copyToDtoObjectUsuarioSemSenha(UsuarioInputAtualizar inputAtualizar, UsuarioEntity usuarioEntity) {
-		
 		modelMapper.map(inputAtualizar, usuarioEntity);
 	}
 }
