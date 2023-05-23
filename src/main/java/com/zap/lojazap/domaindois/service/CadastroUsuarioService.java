@@ -14,11 +14,11 @@ public class CadastroUsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Transactional
 	public UsuarioEntity cadastrar(UsuarioEntity usuarioEntity) {
 		return usuarioRepository.save(usuarioEntity);
 	}
 	
-	@Transactional
 	public UsuarioEntity buscarSeTiver(Long id) {
 		UsuarioEntity entity = usuarioRepository.findById(id)
 				.orElseThrow(() -> new UsuarioNaoEncontradaException(id));
