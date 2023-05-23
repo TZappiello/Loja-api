@@ -61,12 +61,3 @@ public class UsuarioController {
 	}
 }
 
-//public CidadeDTO adicionar(@RequestBody @Valid CidadeIdInput cidadeIdInput) {
-//	
-//	try {
-//		CidadeEntity cidade = cidadeModelInputAssembler.toDTOObject(cidadeIdInput);
-//		
-//		return cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
-//
-//	} catch (EstadoNaoEncontradoException e) {
-//		throw new NegocioException(e.getMessage(), e);
