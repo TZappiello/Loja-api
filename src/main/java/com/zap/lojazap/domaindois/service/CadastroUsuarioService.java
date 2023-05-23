@@ -26,12 +26,12 @@ public class CadastroUsuarioService {
 	@Transactional
 	public UsuarioEntity cadastrar(UsuarioEntity usuarioEntity) {
 		
-		manager.detach(usuarioEntity); //desconecta * tira essa instancia do contexto de persistência, não faz o commit e depois o rallback
+		manager.detach(usuarioEntity); //desconecta * tira essa instancia do contexto de persistência não faz o commit e depois o rallback
 		
 		Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findByEmail(usuarioEntity.getEmail());
 		
 		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuarioEntity) ) {
-			throw new NegocioException(String.format("Já existe um usuário cadastrado com o e-mail: %s ",usuarioEntity.getEmail()));
+			throw new NegocioException(String.format("Já existe um usuário cadastrado com o e-mail: %s ", usuarioEntity.getEmail()));
 		} 
 		
 		return usuarioRepository.save(usuarioEntity);
