@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zap.lojazap.api.input.UsuarioInputAtualizarSenha;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
+import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.exception.UsuarioNaoEncontradaException;
 import com.zap.lojazap.domaindois.repository.UsuarioRepository;
 
@@ -26,4 +28,15 @@ public class CadastroUsuarioService {
 		return entity;
 	}
 
+	@Transactional
+	public UsuarioEntity AtualizarSenha(Long id, UsuarioInputAtualizarSenha atualizarSenha) {
+		UsuarioEntity usuarioEntity = buscarSeTiver(id);
+		
+		if(!usuarioEntity.getSenha().equals(atualizarSenha.getSenhaAtual())) {
+			throw new NegocioException(String.format("Senha atual informada não coincide com a senha do usuário."));
+		}
+		usuarioEntity.setSenha(atualizarSenha.getNovaSenha());
+		
+		return usuarioRepository.save(usuarioEntity);
+	}
 }
