@@ -1,5 +1,9 @@
 package com.zap.lojazap.domaindois.service;
 
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +20,20 @@ public class CadastroUsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private EntityManager manager;
+	
 	@Transactional
 	public UsuarioEntity cadastrar(UsuarioEntity usuarioEntity) {
+		
+		manager.detach(usuarioEntity); //desconecta * tira essa instancia do contexto de persistência, não faz o commit e depois o rallback
+		
+		Optional<UsuarioEntity> usuarioExistente = usuarioRepository.findByEmail(usuarioEntity.getEmail());
+		
+		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuarioEntity) ) {
+			throw new NegocioException(String.format("Já existe um usuário cadastrado com o e-mail: %s ",usuarioEntity.getEmail()));
+		} 
+		
 		return usuarioRepository.save(usuarioEntity);
 	}
 	
