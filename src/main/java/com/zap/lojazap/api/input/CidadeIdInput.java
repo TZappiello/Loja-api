@@ -14,7 +14,6 @@ import lombok.Setter;
 public class CidadeIdInput {
 
 	@NotBlank
-	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	private String nome;
 
 	@Valid
