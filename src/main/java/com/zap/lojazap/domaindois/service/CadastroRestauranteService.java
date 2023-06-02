@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
+import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
@@ -27,6 +28,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
+	
+	@Autowired
+	private CadastroProdutosService cadastroProdutos;
 
 	@Transactional
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
@@ -92,5 +96,13 @@ public class CadastroRestauranteService {
 		FormaPagamentoEntity formaPagamento = cadastroFormaPagamento.buscarSeTiver(formaPagamentoId);
 		
 		restaurante.associarFormaPagamento(formaPagamento);
+	}
+	
+	
+	public RestauranteEntity buscarSeTiverProdutos(Long restauranteId, Long produtoId) {
+		
+		RestauranteEntity restaurante = restauranteRepository.restauranteProduto(restauranteId, produtoId);
+	
+		 return restaurante;
 	}
 }
