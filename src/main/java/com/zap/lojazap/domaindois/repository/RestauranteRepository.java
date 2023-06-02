@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
@@ -38,5 +39,14 @@ public interface RestauranteRepository
 	boolean existsByNome(String nome);
 
 	int countByCozinhaId(Long cozinha);
+	
+	@Transactional(readOnly = true)
+	@Query("FROM RestauranteEntity restaurante "
+			+ " JOIN ProdutoEntity produtos ON restaurante.id = produtos.id "
+			+ " WHERE :restauranteId IS NULL OR restaurante.id =: restauranteId "
+			+ " AND :produtoId IS NULL OR produtos.id =: produtoId ")
+	RestauranteEntity restauranteProduto(
+			@Param("restauranteId") Long restauranteId, 
+			@Param("produtoId") Long produtoId);
 
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.DTO.ProdutoDTO;
 import com.zap.lojazap.api.assember.ProdutoModelAssembler;
+import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.service.CadastroProdutosService;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
 
 @RestController
@@ -27,16 +29,26 @@ public class RestauranteProdutoController {
 	@Autowired
 	private ProdutoModelAssembler produtoModelAssembler;
 	
-	
+	@Autowired
+	private CadastroProdutosService cadastroProdutoService;
 	
 	@GetMapping
-	public List<ProdutoDTO> listar(@PathVariable Long restauranteId) {
+	public List<ProdutoDTO> listarTodos(@PathVariable Long restauranteId) {
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(restauranteId);
 		
 		return produtoModelAssembler.toCollectionDTO(restaurante.getProdutos());
 	}
 	
-	@DeleteMapping("{formaPagamentoId}")
+	@GetMapping("/{produtoId}")
+	public ProdutoDTO listaPorId(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiverProdutos(restauranteId, produtoId);
+				
+//		ProdutoEntity produto = cadastroProdutoService.buscarSeTiver(produtoId);
+		
+		return produtoModelAssembler.toDTO(restaurante.getProdutos().get(0));
+	}
+	
+	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void desassociarFormaPagamento(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
