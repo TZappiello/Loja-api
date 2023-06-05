@@ -45,7 +45,7 @@ public interface RestauranteRepository
 			+ " JOIN ProdutoEntity produtos ON restaurante.id = produtos.id "
 			+ " WHERE :restauranteId IS NULL OR restaurante.id =: restauranteId "
 			+ " AND :produtoId IS NULL OR produtos.id =: produtoId ")
-	RestauranteEntity restauranteProduto(
+	Optional<RestauranteEntity> restauranteProduto(
 			@Param("restauranteId") Long restauranteId, 
 			@Param("produtoId") Long produtoId);
 
