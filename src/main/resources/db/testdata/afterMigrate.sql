@@ -43,9 +43,9 @@ insert into cidade (nome, estado_id) values ('Suzano', 1);
 insert into cidade (nome, estado_id) values ('Barra da Tijuca', 2);
 insert into cidade (nome, estado_id) values ('Barbacena', 3);
 
-insert into restaurante ( endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, nome, taxa_frete, cozinha_id, endereco_cidade_id, data_atualizacao, data_cadastro, ativo) values ( 'Cj Bosque', '08743-000', 'Casa fundos', 'Rua Shozo Sakay', '1000',  'Mestre cuca', 14, 1, 1, utc_timestamp, utc_timestamp, true);
-insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo) values ('Du Chefe', 17, 2, utc_timestamp, utc_timestamp, true);
-insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo) values ('Gula', 17, 3, utc_timestamp, utc_timestamp, true);
+insert into restaurante ( endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, nome, taxa_frete, cozinha_id, endereco_cidade_id, data_atualizacao, data_cadastro, ativo, aberto) values ( 'Cj Bosque', '08743-000', 'Casa fundos', 'Rua Shozo Sakay', '1000',  'Mestre cuca', 14, 1, 1, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo, aberto) values ('Du Chefe', 17, 2, utc_timestamp, utc_timestamp, true, true);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo, aberto) values ('Gula', 17, 3, utc_timestamp, utc_timestamp, true, false);
 
 insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into forma_pagamento (descricao) values ('Cartão Crédito');
