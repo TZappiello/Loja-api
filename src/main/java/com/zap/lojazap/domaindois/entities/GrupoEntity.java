@@ -1,7 +1,7 @@
 package com.zap.lojazap.domaindois.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,9 +35,13 @@ public class GrupoEntity {
 	@ManyToMany
 	@JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"), 
 			inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-	private List<PermissaoEntity> permissoes = new ArrayList<>();
+	private Set<PermissaoEntity> permissoes = new HashSet<>();
 
 	public boolean desassociarPermissao(PermissaoEntity permissao) {
 		return getPermissoes().remove(permissao);
+	}
+	
+	public boolean associarPermissao(PermissaoEntity permissao) {
+		return getPermissoes().add(permissao);
 	}
 }

@@ -59,4 +59,12 @@ public class CadastroGrupoService {
 		grupo.desassociarPermissao(permissao);
 		
 	}
+	
+	@Transactional
+	public void associarPermissao(Long grupoId, Long permissaoId) {
+		GrupoEntity grupo = buscarSeTiver(grupoId);
+		PermissaoEntity permissao = cadastroPermissao.buscarSeTiver(permissaoId);
+		
+		grupo.associarPermissao(permissao);
+	}
 }
