@@ -1,8 +1,8 @@
 package com.zap.lojazap.domaindois.entities;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +46,15 @@ public class UsuarioEntity {
 
 	@ManyToMany
 	@JoinTable(name = "grupos_usuarios", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-	private List<GrupoEntity> grupos = new ArrayList<>();
+	private Set<GrupoEntity> grupos = new HashSet<>();
 
+	
+	public boolean desassociar(GrupoEntity grupo) {
+		return getGrupos().remove(grupo);
+	}
+
+
+	public boolean associar(GrupoEntity grupo) {
+		return getGrupos().add(grupo);
+	}
 }

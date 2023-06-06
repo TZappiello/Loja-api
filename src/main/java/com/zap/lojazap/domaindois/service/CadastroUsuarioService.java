@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.api.input.UsuarioInputAtualizarSenha;
+import com.zap.lojazap.domaindois.entities.GrupoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.exception.UsuarioNaoEncontradaException;
@@ -22,6 +23,9 @@ public class CadastroUsuarioService {
 	
 	@Autowired
 	private EntityManager manager;
+	
+	@Autowired
+	private CadastroGrupoService cadastroGrupo;
 	
 	@Transactional
 	public UsuarioEntity cadastrar(UsuarioEntity usuarioEntity) {
@@ -54,5 +58,22 @@ public class CadastroUsuarioService {
 		usuarioEntity.setSenha(atualizarSenha.getNovaSenha());
 		
 		return usuarioRepository.save(usuarioEntity);
+	}
+
+	@Transactional
+	public void desassociarGrupo(Long usuarioId, Long grupoId) {
+		UsuarioEntity usuario = buscarSeTiver(usuarioId);
+		GrupoEntity grupo = cadastroGrupo.buscarSeTiver(grupoId);
+		
+		usuario.desassociar(grupo);
+		
+	}
+
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		UsuarioEntity usuario = buscarSeTiver(usuarioId);
+		GrupoEntity grupo = cadastroGrupo.buscarSeTiver(grupoId);
+		
+		usuario.associar(grupo);
 	}
 }
