@@ -51,7 +51,8 @@ insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into forma_pagamento (descricao) values ('Cartão Crédito');
 insert into forma_pagamento (descricao) values ('Cartão Débito');
 
-insert into permissao (descricao, nome) values ('Pedido Telefone', 'Joao ');
+insert into permissao (descricao, nome) values ('Pedido Telefone', 'Joao');
+insert into permissao (descricao, nome) values ('Permitir editar atributos', 'CONSULTAR_ATRIBUTOS');
 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1,1), (1,2), (1,3),(2,1),(2,2),(3,1);
 
@@ -62,7 +63,7 @@ insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (fals
 insert into grupo(nome) values ("Permitido");
 insert into grupo(nome) values ("Não permitido");
 
-insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(2,1);
+insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(1,2),(2,2);
 
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "primeiro_teste@mail.com", "Primeiro Teste", "123");
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "segundo_teste@mail.com", "Segundo Teste", "123");

@@ -140,7 +140,18 @@ public class RestauranteController {
 		
 		cadastroRestaurante.inativo(id);
 	}
+	
+	@PutMapping("/{id}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long id) {
+		cadastroRestaurante.fechar(id);
+	}
 
+	@PutMapping("/{id}/aberto")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long id) {
+		cadastroRestaurante.abrir(id);
+	}
 	/*
 	 * @PutMapping("/{id}") public ResponseEntity<Object> atualizar(@PathVariable
 	 * Long id, @RequestBody RestauranteEntity restaurante) { try {

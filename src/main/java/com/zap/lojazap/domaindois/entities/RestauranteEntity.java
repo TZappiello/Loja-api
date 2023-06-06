@@ -69,7 +69,7 @@ public class RestauranteEntity {
 	private Endereco endereco;
 	
 	private Boolean ativo = Boolean.TRUE;
-	private Boolean aberto;
+	private Boolean aberto = Boolean.TRUE;
 	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
@@ -96,6 +96,16 @@ public class RestauranteEntity {
 	public void inativar() {
 		setAtivo(false);
 //		this.ativo = false;
+	}
+	
+	public void fechar() {
+//		this.aberto = false;
+		setAberto(false);
+	}
+	
+	public void abrir() {
+		this.aberto = true;
+//		setAberto(true);
 	}
 	
 	public boolean desassociarFormaPagamento(FormaPagamentoEntity formaPagamento) {
