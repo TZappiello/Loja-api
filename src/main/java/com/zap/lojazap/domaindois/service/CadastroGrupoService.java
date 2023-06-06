@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.GrupoEntity;
+import com.zap.lojazap.domaindois.entities.PermissaoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.GrupoNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.GrupoRepository;
@@ -18,6 +19,9 @@ public class CadastroGrupoService {
 
 	@Autowired
 	private GrupoRepository grupoRepository;
+	
+	@Autowired
+	private CadastroPermissaoService cadastroPermissao;
 
 	@Transactional
 	public GrupoEntity cadastrar(GrupoEntity grupoEntity) {
@@ -45,5 +49,22 @@ public class CadastroGrupoService {
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(String.format(MSG_GRUPO_EM_USO));
 		}
+	}
+
+	@Transactional
+	public void desassociarPermissao(Long grupoId, Long permissaoId) {
+		GrupoEntity grupo = buscarSeTiver(grupoId);
+		PermissaoEntity permissao = cadastroPermissao.buscarSeTiver(permissaoId);
+		
+		grupo.desassociarPermissao(permissao);
+		
+	}
+	
+	@Transactional
+	public void associarPermissao(Long grupoId, Long permissaoId) {
+		GrupoEntity grupo = buscarSeTiver(grupoId);
+		PermissaoEntity permissao = cadastroPermissao.buscarSeTiver(permissaoId);
+		
+		grupo.associarPermissao(permissao);
 	}
 }
