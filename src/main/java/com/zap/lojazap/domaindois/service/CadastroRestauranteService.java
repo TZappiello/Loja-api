@@ -83,7 +83,21 @@ public class CadastroRestauranteService {
 //		restaurante.setAtivo(false);
 		restaurante.inativar();
 	}
+	
+	@Transactional
+	public void fechar(Long id) {
+		RestauranteEntity restaurante = buscarSeTiver(id);
+//		restaurante.setAberto(false);
+		restaurante.fechar();
+	}
 
+	@Transactional
+	public void abrir(Long id) {
+		RestauranteEntity restaurante = buscarSeTiver(id);
+		restaurante.setAberto(true);
+//		restaurante.abrir();
+	}
+	
 	@Transactional
 	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
 		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
