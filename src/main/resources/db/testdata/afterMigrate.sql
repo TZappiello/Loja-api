@@ -69,3 +69,5 @@ insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(1,2),(2,2);
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "primeiro_teste@mail.com", "Primeiro Teste", "123");
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "segundo_teste@mail.com", "Segundo Teste", "123");
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "terceiro_teste@mail.com", "Terceiro Teste", "123");
+
+insert into grupos_usuarios(usuario_id, grupo_id) values(1,1),(1,2),(2,1);
