@@ -48,4 +48,8 @@ public class UsuarioEntity {
 	@JoinTable(name = "grupos_usuarios", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<GrupoEntity> grupos = new ArrayList<>();
 
+	
+	public boolean desassociar(GrupoEntity grupo) {
+		return getGrupos().remove(grupo);
+	}
 }
