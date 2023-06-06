@@ -68,4 +68,12 @@ public class CadastroUsuarioService {
 		usuario.desassociar(grupo);
 		
 	}
+
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		UsuarioEntity usuario = buscarSeTiver(usuarioId);
+		GrupoEntity grupo = cadastroGrupo.buscarSeTiver(grupoId);
+		
+		usuario.associar(grupo);
+	}
 }
