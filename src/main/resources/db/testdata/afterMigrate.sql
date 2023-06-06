@@ -62,6 +62,7 @@ insert into produtos(ativo, descricao, nome, preco, restaurante_id) values (fals
 
 insert into grupo(nome) values ("Permitido");
 insert into grupo(nome) values ("Não permitido");
+insert into grupo(nome) values ("Avaliado");
 
 insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(1,2),(2,2);
 

@@ -37,4 +37,7 @@ public class GrupoEntity {
 			inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 	private List<PermissaoEntity> permissoes = new ArrayList<>();
 
+	public boolean desassociarPermissao(PermissaoEntity permissao) {
+		return getPermissoes().remove(permissao);
+	}
 }
