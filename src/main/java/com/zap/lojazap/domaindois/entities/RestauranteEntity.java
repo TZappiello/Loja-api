@@ -69,6 +69,7 @@ public class RestauranteEntity {
 	private Endereco endereco;
 	
 	private Boolean ativo = Boolean.TRUE;
+	private Boolean aberto;
 	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
