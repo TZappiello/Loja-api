@@ -125,4 +125,8 @@ public class RestauranteEntity {
 	public boolean desassociarUsuario(UsuarioEntity usuario) {
 		return getUsuarios().remove(usuario);
 	}
+	
+	public boolean associarUsuario(UsuarioEntity usuario) {
+		return getUsuarios().add(usuario);
+	}
 }

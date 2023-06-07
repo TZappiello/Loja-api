@@ -130,6 +130,16 @@ public class CadastroRestauranteService {
 		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
 		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(usuarioId);
 		
-		restaurante.desassociarUsuario(usuario);
+		restaurante.getUsuarios().remove(usuario);
+//		restaurante.desassociarUsuario(usuario);
+	}
+
+	@Transactional
+	public void associarUsuario(Long restauranteId, Long usuarioId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(usuarioId);
+		
+		restaurante.getUsuarios().add(usuario);
+//		restaurante.associarUsuario(usuario);
 	}
 }
