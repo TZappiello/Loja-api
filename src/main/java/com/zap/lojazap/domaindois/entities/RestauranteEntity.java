@@ -121,4 +121,8 @@ public class RestauranteEntity {
 	public boolean associarFormaPagamento(FormaPagamentoEntity formaPagamento) {
 		return getFormasPagamento().add(formaPagamento);
 	}
+	
+	public boolean desassociarUsuario(UsuarioEntity usuario) {
+		return getUsuarios().remove(usuario);
+	}
 }

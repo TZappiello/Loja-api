@@ -1,6 +1,5 @@
 package com.zap.lojazap.domaindois.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 
@@ -33,6 +33,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroProdutosService cadastroProdutos;
+	
+	@Autowired
+	private CadastroUsuarioService cadastroUsuario;
 
 	@Transactional
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
@@ -120,5 +123,13 @@ public class CadastroRestauranteService {
 		Optional<RestauranteEntity> restaurante = restauranteRepository.restauranteProduto(restauranteId, produtoId);
 	
 		 return restaurante.get();
+	}
+
+	@Transactional
+	public void desassociarUsuario(Long restauranteId, Long usuarioId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(usuarioId);
+		
+		restaurante.desassociarUsuario(usuario);
 	}
 }
