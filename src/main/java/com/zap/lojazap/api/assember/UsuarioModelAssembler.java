@@ -1,5 +1,6 @@
 package com.zap.lojazap.api.assember;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class UsuarioModelAssembler {
 		return modelMapper.map(usuarioEntity, UsuarioDTO.class);
 	}
 	
-	public List<UsuarioDTO> toCollectionDTO(List<UsuarioEntity> usuarios){
+	public List<UsuarioDTO> toCollectionDTO(Collection<UsuarioEntity> usuarios){
 		
 		return usuarios.stream()
 			.map(usuario -> toDTO(usuario))

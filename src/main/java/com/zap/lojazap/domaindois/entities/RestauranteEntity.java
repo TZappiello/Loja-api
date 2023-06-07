@@ -85,6 +85,12 @@ public class RestauranteEntity {
 			inverseJoinColumns = @JoinColumn(name ="forma_pagamento_id"))
 	private Set<FormaPagamentoEntity> formasPagamento = new HashSet<>();
 	
+	@ManyToMany
+	@JoinTable(name = "restaurante_usuario_responsavel",
+			joinColumns = @JoinColumn(name = "restaurante_id"),
+			inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<UsuarioEntity> usuarios = new HashSet<>();
+	
 	@OneToMany(mappedBy = "restaurante")
 	private List<ProdutoEntity> produtos = new ArrayList<>();
 
