@@ -13,6 +13,7 @@ delete from produtos;
 delete from restaurante;
 delete from restaurante_forma_pagamento;
 delete from usuario;
+delete from restaurante_usuario_responsavel;
 
 set foreign_key_checks = 1;
 SET SQL_SAFE_UPDATES = 1;
@@ -29,6 +30,7 @@ alter table produtos auto_increment = 1;
 alter table restaurante auto_increment = 1;
 alter table restaurante_forma_pagamento auto_increment = 1;
 alter table usuario auto_increment = 1;
+alter table restaurante_usuario_responsavel auto_increment = 1;
 
 insert into cozinha (id, nome) values (1, 'Chinesa');
 insert into cozinha (id, nome) values (2, 'Mexicana');
@@ -66,8 +68,10 @@ insert into grupo(nome) values ("Avaliado");
 
 insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(1,2),(2,2);
 
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "primeiro_teste@mail.com", "Primeiro Teste", "123");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "segundo_teste@mail.com", "Segundo Teste", "123");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "terceiro_teste@mail.com", "Terceiro Teste", "123");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "bob_teste@mail.com", "Bob Teste Primeiro", "123");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "ana_teste@mail.com", "Ana Teste Segundo", "123");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "joao_teste@mail.com", "Joao Teste Terceiro", "123");
 
 insert into grupos_usuarios(usuario_id, grupo_id) values(1,1),(1,2),(2,1);
+
+insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (1,1),(1,2),(2,3);
