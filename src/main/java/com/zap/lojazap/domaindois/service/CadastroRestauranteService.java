@@ -1,8 +1,5 @@
 package com.zap.lojazap.domaindois.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +8,14 @@ import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
+import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
 
-	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
+//	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
@@ -32,7 +30,7 @@ public class CadastroRestauranteService {
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
 	
 	@Autowired
-	private CadastroProdutosService cadastroProdutos;
+	private CadastroUsuarioService cadastroUsuario;
 
 	@Transactional
 	public RestauranteEntity cadastrar(RestauranteEntity restaurante) {
@@ -114,11 +112,21 @@ public class CadastroRestauranteService {
 		restaurante.associarFormaPagamento(formaPagamento);
 	}
 	
-	
-	public RestauranteEntity buscarSeTiverProdutos(Long restauranteId, Long produtoId) {
+	@Transactional
+	public void desassociarUsuario(Long restauranteId, Long usuarioId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(usuarioId);
 		
-		Optional<RestauranteEntity> restaurante = restauranteRepository.restauranteProduto(restauranteId, produtoId);
-	
-		 return restaurante.get();
+		restaurante.getUsuarios().remove(usuario);
+//		restaurante.desassociarUsuario(usuario);
+	}
+
+	@Transactional
+	public void associarUsuario(Long restauranteId, Long usuarioId) {
+		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
+		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(usuarioId);
+		
+		restaurante.getUsuarios().add(usuario);
+//		restaurante.associarUsuario(usuario);
 	}
 }
