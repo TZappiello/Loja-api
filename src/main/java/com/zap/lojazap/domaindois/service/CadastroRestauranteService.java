@@ -1,7 +1,5 @@
 package com.zap.lojazap.domaindois.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +15,7 @@ import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 @Service
 public class CadastroRestauranteService {
 
-	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
+//	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
@@ -30,9 +28,6 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
-	
-	@Autowired
-	private CadastroProdutosService cadastroProdutos;
 	
 	@Autowired
 	private CadastroUsuarioService cadastroUsuario;
@@ -117,14 +112,6 @@ public class CadastroRestauranteService {
 		restaurante.associarFormaPagamento(formaPagamento);
 	}
 	
-	
-	public RestauranteEntity buscarSeTiverProdutos(Long restauranteId, Long produtoId) {
-		
-		Optional<RestauranteEntity> restaurante = restauranteRepository.restauranteProduto(restauranteId, produtoId);
-	
-		 return restaurante.get();
-	}
-
 	@Transactional
 	public void desassociarUsuario(Long restauranteId, Long usuarioId) {
 		RestauranteEntity restaurante = buscarSeTiver(restauranteId);
