@@ -82,7 +82,7 @@ public class PedidoEntity {
 	
 	@Column(name = "status_pedido", nullable = false)
 	@Enumerated(value = EnumType.STRING)
-	private StatusPedido statusPedido = StatusPedido.CRIADO;
+	private StatusPedido status = StatusPedido.CRIADO;
 	
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedidoEntity> itemPedido = new ArrayList<>();
