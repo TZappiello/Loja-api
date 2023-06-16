@@ -27,6 +27,7 @@ import com.zap.lojazap.domaindois.exception.CidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.CozinhaNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
+import com.zap.lojazap.domaindois.exception.RestauranteNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.RestauranteRepository;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
 
@@ -141,10 +142,26 @@ public class RestauranteController {
 		cadastroRestaurante.inativo(id);
 	}
 	
-	@PutMapping("/ativo")
+	@PutMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativarMultiplos(@RequestBody List<Long> ids) {
-		cadastroRestaurante.ativarMultiplos(ids);
+		try {
+			cadastroRestaurante.ativarMultiplos(ids);
+			
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> ids) {
+		try {
+			cadastroRestaurante.inativarMultiplos(ids);
+
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 	
 	@PutMapping("/{id}/fechamento")
