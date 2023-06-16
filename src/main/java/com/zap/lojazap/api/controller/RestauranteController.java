@@ -141,6 +141,12 @@ public class RestauranteController {
 		cadastroRestaurante.inativo(id);
 	}
 	
+	@PutMapping("/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> ids) {
+		cadastroRestaurante.ativarMultiplos(ids);
+	}
+	
 	@PutMapping("/{id}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void fechar(@PathVariable Long id) {

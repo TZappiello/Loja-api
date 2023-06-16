@@ -1,5 +1,7 @@
 package com.zap.lojazap.domaindois.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +84,11 @@ public class CadastroRestauranteService {
 		restaurante.inativar();
 	}
 	
+	@Transactional
+	public void ativarMultiplos(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::ativo); //aqui estou referenciando o metodo de ativo
+	}
+
 	@Transactional
 	public void fechar(Long id) {
 		RestauranteEntity restaurante = buscarSeTiver(id);
