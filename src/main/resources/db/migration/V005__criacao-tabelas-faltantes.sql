@@ -13,7 +13,7 @@ create table item_pedido (
 create table pedido (
 	id bigint not null auto_increment, 
     data_cancelamento datetime, 
-    data_confirmacao datetime not null, 
+    data_confirmacao datetime, 
     data_criacao datetime not null, 
     data_entrega datetime, 
     endereco_bairro varchar(120) not null, 
