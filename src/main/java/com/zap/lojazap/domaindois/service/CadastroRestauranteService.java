@@ -90,6 +90,11 @@ public class CadastroRestauranteService {
 	}
 
 	@Transactional
+	public void inativarMultiplos(List<Long> restaurantesIds) {
+		restaurantesIds.forEach(this::inativo);	
+	}
+	
+	@Transactional
 	public void fechar(Long id) {
 		RestauranteEntity restaurante = buscarSeTiver(id);
 //		restaurante.setAberto(false);
