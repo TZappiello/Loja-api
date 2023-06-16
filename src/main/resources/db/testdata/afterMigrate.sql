@@ -14,6 +14,8 @@ delete from restaurante;
 delete from restaurante_forma_pagamento;
 delete from usuario;
 delete from restaurante_usuario_responsavel;
+delete from pedido;
+delete from item_pedido;
 
 set foreign_key_checks = 1;
 SET SQL_SAFE_UPDATES = 1;
@@ -31,6 +33,8 @@ alter table restaurante auto_increment = 1;
 alter table restaurante_forma_pagamento auto_increment = 1;
 alter table usuario auto_increment = 1;
 alter table restaurante_usuario_responsavel auto_increment = 1;
+alter table pedido auto_increment = 1;
+alter table item_pedido auto_increment = 1;
 
 insert into cozinha (id, nome) values (1, 'Chinesa');
 insert into cozinha (id, nome) values (2, 'Mexicana');
