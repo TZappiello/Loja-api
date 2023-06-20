@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.zap.lojazap.api.DTO.EnderecoDTO;
+import com.zap.lojazap.api.input.ItemPedidoInput;
 import com.zap.lojazap.domaindois.entities.Endereco;
+import com.zap.lojazap.domaindois.entities.ItemPedidoEntity;
 
 @Configuration
 public class ModelMapperConfig {
@@ -16,6 +18,10 @@ public class ModelMapperConfig {
 		
 //		modelMapper.createTypeMap(RestauranteEntity.class,RestauranteDTO.class)
 //			.addMapping(RestauranteEntity::getTaxaFrete, RestauranteDTO::setPrecoFrete);
+		
+		
+		modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedidoEntity.class)
+			.addMappings(mapper -> mapper.skip(ItemPedidoEntity::setId)); //aqui estou ignorando setar o id no itemPedidoEntity 
 		
 	 var enderecoToEnderecoDtoTypeMap =	modelMapper.createTypeMap(Endereco.class, EnderecoDTO.class);
 	 
