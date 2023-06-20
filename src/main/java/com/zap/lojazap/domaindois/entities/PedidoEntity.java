@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -85,9 +86,18 @@ public class PedidoEntity {
 	@Enumerated(value = EnumType.STRING)
 	private StatusPedido status = StatusPedido.CRIADO;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) //cascade = CascadeType.ALL colocar isso aqui para salvar os itens.
 	private List<ItemPedidoEntity> itemPedido = new ArrayList<>();
 	
+	public void calcularValorTotal() {
+		getItemPedido().forEach(ItemPedidoEntity::calcularPrecoTotal);
+		
+		this.subtotal = getItemPedido().stream()
+				.map(item -> item.getPrecoTotal())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
 }
 
 
