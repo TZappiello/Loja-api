@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.CozinhaDTO;
 import com.zap.lojazap.api.DTO.PedidoDTO;
 import com.zap.lojazap.api.DTO.PedidoResumoDTO;
 import com.zap.lojazap.api.assember.PedidoModelAssembler;
 import com.zap.lojazap.api.assember.PedidoModelInputAssembler;
 import com.zap.lojazap.api.assember.PedidoResumoModelAssembler;
-import com.zap.lojazap.api.input.CozinhaIdInput;
 import com.zap.lojazap.api.input.PedidoInput;
-import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
+import com.zap.lojazap.domaindois.entities.UsuarioEntity;
+import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.exception.PedidoNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.PedidoRepository;
@@ -62,21 +61,24 @@ public class PedidoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PedidoDTO adicionar(@RequestBody @Valid PedidoInput pedidoInput) {
+	public PedidoDTO adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
 		try {
 			PedidoEntity pedidoEntity = PedidoModelInput.toDTOObject(pedidoInput);
 			
-			return pedidoModel.toDTO(cadastroPedido.adicionar(pedidoEntity));
+//			UsuarioEntity usuarioEntity= new UsuarioEntity();
+//			usuarioEntity.setId(1L);
+//			pedidoEntity.setCliente(usuarioEntity);
 			
-		} catch (PedidoNaoEncontradoException e) {
-			throw new NegocioException(e.getMessage());
+			pedidoEntity.setCliente(new UsuarioEntity());
+			pedidoEntity.getCliente().setId(1L);
+			
+			pedidoEntity = cadastroPedido.adicionar(pedidoEntity);
+			
+			return pedidoModel.toDTO(pedidoEntity);
+			
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage(), e);
 		}
 	}
 }
 
-	//@PostMapping
-	//public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
-	//	CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
-	//	cozinhaEntity = cadastroCozinha.adicionar(cozinhaEntity);
-	//	
-	//	return cozinhaModelAssembler.toDTO(cozinhaEntity);

@@ -1,7 +1,5 @@
 package com.zap.lojazap.domaindois.service;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,11 +54,9 @@ public class CadastroPedidoService {
 		return pedidoRepository.save(pedido);
 	}
 
-
 	private void validarPedido(PedidoEntity pedido) {
-		Long id = (long) 1;
 		CidadeEntity cidade = cadastroCidades.buscarSeTiver(pedido.getEndereco().getCidade().getId());
-		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(id);
+		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(pedido.getCliente().getId());
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(pedido.getRestaurante().getId());
 		FormaPagamentoEntity pagamento = cadastroFormaPagamento.buscarSeTiver(pedido.getFormaPAgamento().getId());
 		
