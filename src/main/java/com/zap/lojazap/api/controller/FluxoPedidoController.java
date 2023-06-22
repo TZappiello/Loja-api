@@ -22,4 +22,10 @@ public class FluxoPedidoController {
 	public void confirmar(@PathVariable Long pedidoId) {
 		fluxoPedido.confirmar(pedidoId);
 	}
+	
+	@PutMapping("/entrega")
+	@ResponseStatus(HttpStatus.OK)
+	public void entregar(@PathVariable Long pedidoId) {
+		fluxoPedido.entregar(pedidoId);
+	}
 }
