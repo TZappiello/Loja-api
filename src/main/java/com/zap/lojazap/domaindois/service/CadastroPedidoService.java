@@ -37,8 +37,8 @@ public class CadastroPedidoService {
 	@Autowired
 	private CadastroProdutosService cadastroProdutos;
 
-	public PedidoEntity buscarSeTiver(Long id) {
-		PedidoEntity pedido = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException(id));
+	public PedidoEntity buscarSeTiver(String codigo) {
+		PedidoEntity pedido = pedidoRepository.findByCodigo(codigo).orElseThrow(() -> new PedidoNaoEncontradoException(codigo));
 
 		return pedido;
 	}

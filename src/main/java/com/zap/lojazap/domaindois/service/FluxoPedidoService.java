@@ -13,22 +13,22 @@ public class FluxoPedidoService {
 	private CadastroPedidoService cadastroPedido;
 	
 	@Transactional
-	public void confirmar(Long pedidoId) {
-		PedidoEntity pedido = cadastroPedido.buscarSeTiver(pedidoId);
+	public void confirmar(String codigo) {
+		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 		
 		pedido.confirmar();
 	}
 	
 	@Transactional
-	public void entregar(Long pedidoId) {
-		PedidoEntity pedido = cadastroPedido.buscarSeTiver(pedidoId);
+	public void entregar(String codigo) {
+		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 
 		pedido.entregar();
 	}
 	
 	@Transactional
-	public void cancelar(Long pedidoId) {
-		PedidoEntity pedido = cadastroPedido.buscarSeTiver(pedidoId);
+	public void cancelar(String codigo) {
+		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 		
 		pedido.cancelar();
 	}

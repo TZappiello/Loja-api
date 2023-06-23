@@ -52,9 +52,9 @@ public class PedidoController {
 		return pedidoResumoModel.toCollectionDTO(pedidoRepository.findAll());
 	}
 	
-	@GetMapping("{id}")
-	public PedidoDTO poId(@PathVariable Long id) {
-		PedidoEntity pedido = cadastroPedido.buscarSeTiver(id);
+	@GetMapping("{codigo}")
+	public PedidoDTO poId(@PathVariable String codigo) {
+		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 		
 		return pedidoModel.toDTO(pedido);
 	}
