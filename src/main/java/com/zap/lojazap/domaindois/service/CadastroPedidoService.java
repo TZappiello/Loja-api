@@ -50,10 +50,7 @@ public class CadastroPedidoService {
 		
 		pedido.setTaxaFrete(pedido.getRestaurante().getTaxaFrete());
 		pedido.calcularValorTotal();
-		pedido.setDataCancelamento(null);
-		pedido.setDataConfirmacao(null);
-		pedido.setDataEntrega(null);;
-		
+
 		return pedidoRepository.save(pedido);
 	}
 

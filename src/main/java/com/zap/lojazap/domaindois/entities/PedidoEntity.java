@@ -24,6 +24,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.zap.lojazap.domaindois.enums.StatusPedido;
+import com.zap.lojazap.domaindois.exception.NegocioException;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -97,6 +98,33 @@ public class PedidoEntity {
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		
 		this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
+
+	public void confirmar() {
+		setStatus(StatusPedido.CONFIRMADO);
+		setDataConfirmacao(OffsetDateTime.now());
+	}
+	
+	public void entregar() {
+		setStatus(StatusPedido.ENTREGUE);
+		setDataEntrega(OffsetDateTime.now());
+	}
+	
+	public void cancelar() {
+		setStatus(StatusPedido.CANCELADO);
+		setDataCancelamento(OffsetDateTime.now());
+	}
+	
+	private void setStatus(StatusPedido novoStatus) {
+		if( getStatus().naoPodeAlterarPara(novoStatus)) {
+			throw new NegocioException(
+					String.format("O status do pedido %d não pode ser alterado de %s para %s ",
+								getId(), 
+								getStatus().getDescricao(), 
+								novoStatus.getDescricao()));
+		}
+		
+		this.status = novoStatus;
 	}
 }
 
