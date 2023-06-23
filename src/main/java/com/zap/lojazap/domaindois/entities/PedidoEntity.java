@@ -56,15 +56,15 @@ public class PedidoEntity {
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataCriacao;
 
-	@UpdateTimestamp
+//	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataConfirmacao;
 	
-	@UpdateTimestamp
+//	@UpdateTimestamp
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataCancelamento;
 
-	@UpdateTimestamp
+//	@UpdateTimestamp
 	@Column(columnDefinition = "datetime")
 	private OffsetDateTime dataEntrega;
 
