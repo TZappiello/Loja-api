@@ -30,7 +30,9 @@ public class FluxoPedidoService {
 		}
 		
 		pedido.setStatus(StatusPedido.CONFIRMADO);
-		pedido.setDataConfirmacao(OffsetDateTime.now());;
+		pedido.setDataConfirmacao(OffsetDateTime.now());
+		pedido.setDataCancelamento(null);
+		pedido.setDataEntrega(null);
 	}
 	
 	@Transactional
@@ -47,5 +49,26 @@ public class FluxoPedidoService {
 		
 		pedido.setStatus(StatusPedido.ENTREGUE);
 		pedido.setDataEntrega(OffsetDateTime.now());
+		pedido.setDataCancelamento(null);
+	}
+	
+	@Transactional
+	public void cancelar(Long pedidoId) {
+		PedidoEntity pedido = cadastroPedido.buscarSeTiver(pedidoId);
+		
+		if(pedido.getStatus().equals(StatusPedido.CONFIRMADO) 
+				|| pedido.getStatus().equals(StatusPedido.ENTREGUE) ) {
+			throw new NegocioException(
+						String.format("O status do pedido %d não pode ser alterado de %s para %s", 
+								pedido.getId(),
+								pedido.getStatus().getDescricao(),
+								StatusPedido.CANCELADO.getDescricao()));
+		}
+		
+		pedido.setStatus(StatusPedido.CANCELADO);
+		pedido.setDataCancelamento(OffsetDateTime.now());
+		pedido.setDataEntrega(null);
+		pedido.setDataConfirmacao(null);
+		
 	}
 }
