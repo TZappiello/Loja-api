@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,6 +44,8 @@ public class PedidoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String codigo;
 
 	@Column(name = "sub_total", nullable = false)
 	private BigDecimal subtotal;
@@ -118,13 +122,18 @@ public class PedidoEntity {
 	private void setStatus(StatusPedido novoStatus) {
 		if( getStatus().naoPodeAlterarPara(novoStatus)) {
 			throw new NegocioException(
-					String.format("O status do pedido %d não pode ser alterado de %s para %s ",
-								getId(), 
+					String.format("O status do pedido %s não pode ser alterado de %s para %s ",
+								getCodigo(), 
 								getStatus().getDescricao(), 
 								novoStatus.getDescricao()));
 		}
 		
 		this.status = novoStatus;
+	}
+	
+	@PrePersist // callback do JPA antes de persistir ele faz esse método  
+	private void gerarCodigo() {
+		setCodigo(UUID.randomUUID().toString());
 	}
 }
 
