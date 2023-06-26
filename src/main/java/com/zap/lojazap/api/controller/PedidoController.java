@@ -26,7 +26,9 @@ import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.exception.PedidoNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.PedidoRepository;
+import com.zap.lojazap.domaindois.repository.filter.PedidoFilter;
 import com.zap.lojazap.domaindois.service.CadastroPedidoService;
+import com.zap.lojazap.infrastructure.repository.spec.PedidoSpec;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -48,8 +50,10 @@ public class PedidoController {
 	private PedidoModelInputAssembler PedidoModelInput;
 	
 	@GetMapping
-	public List<PedidoResumoDTO> listar(){
-		return pedidoResumoModel.toCollectionDTO(pedidoRepository.findAll());
+	public List<PedidoResumoDTO> listar(PedidoFilter filter){
+		List<PedidoEntity> pedidos = pedidoRepository.findAll(PedidoSpec.usandoFiltro(filter));
+		
+		return pedidoResumoModel.toCollectionDTO(pedidos);
 	}
 	
 	@GetMapping("{codigo}")
