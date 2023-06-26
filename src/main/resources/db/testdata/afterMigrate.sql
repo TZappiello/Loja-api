@@ -39,6 +39,9 @@ alter table item_pedido auto_increment = 1;
 insert into cozinha (id, nome) values (1, 'Chinesa');
 insert into cozinha (id, nome) values (2, 'Mexicana');
 insert into cozinha (id, nome) values (3, 'Tailandesa');
+insert into cozinha (id, nome) values (4, 'Brasileira');
+insert into cozinha (id, nome) values (5, 'Japonesa');
+insert into cozinha (id, nome) values (6, 'Arabe');
 
 insert into estado (nome) values ('São Paulo');
 insert into estado (nome) values ('Rio de Janeiro');
