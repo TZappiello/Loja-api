@@ -1,6 +1,7 @@
 package com.zap.lojazap.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -23,6 +24,7 @@ import com.zap.lojazap.api.assember.PedidoModelAssembler;
 import com.zap.lojazap.api.assember.PedidoModelInputAssembler;
 import com.zap.lojazap.api.assember.PedidoResumoModelAssembler;
 import com.zap.lojazap.api.input.PedidoInput;
+import com.zap.lojazap.core.data.PageableTranslator;
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
@@ -53,6 +55,8 @@ public class PedidoController {
 	
 	@GetMapping
 	public Page<PedidoResumoDTO> listar(PedidoFilter filter, Pageable pageable){
+		
+		pageable = traduzirPegeable(pageable);
 		
 		Page<PedidoEntity> pedidosPage = pedidoRepository.findAll(PedidoSpec.usandoFiltro(filter), pageable);
 		
@@ -90,6 +94,17 @@ public class PedidoController {
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}
+	}
+	
+	private Pageable traduzirPegeable(Pageable apiPageable) {
+		var mapeamento = Map.of(
+				"codigo", "codigo",
+				"restaurante.nome", "restaurante.nome",
+				"nomeCliente", "cliente.nome",
+				"valorTotal", "valorTotal"
+				);
+		return PageableTranslator.translate(apiPageable, mapeamento);
+		
 	}
 }
 
