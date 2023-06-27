@@ -14,8 +14,10 @@ public class PedidoSpec {
 	public static Specification<PedidoEntity> usandoFiltro(PedidoFilter filtro) {
 
 		return (root, query, builder) -> {
-			root.fetch("restaurante").fetch("cozinha");
-			root.fetch("cliente");
+			if(PedidoEntity.class.equals(query.getResultType())) {
+				root.fetch("restaurante").fetch("cozinha");
+				root.fetch("cliente");
+			}
 			
 			var predicates = new ArrayList<Predicate>();
 			

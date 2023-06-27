@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,6 @@ import com.zap.lojazap.domaindois.entities.PedidoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
-import com.zap.lojazap.domaindois.exception.PedidoNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.PedidoRepository;
 import com.zap.lojazap.domaindois.repository.filter.PedidoFilter;
 import com.zap.lojazap.domaindois.service.CadastroPedidoService;
@@ -50,10 +52,15 @@ public class PedidoController {
 	private PedidoModelInputAssembler PedidoModelInput;
 	
 	@GetMapping
-	public List<PedidoResumoDTO> listar(PedidoFilter filter){
-		List<PedidoEntity> pedidos = pedidoRepository.findAll(PedidoSpec.usandoFiltro(filter));
+	public Page<PedidoResumoDTO> listar(PedidoFilter filter, Pageable pageable){
 		
-		return pedidoResumoModel.toCollectionDTO(pedidos);
+		Page<PedidoEntity> pedidosPage = pedidoRepository.findAll(PedidoSpec.usandoFiltro(filter), pageable);
+		
+		List<PedidoResumoDTO> pedidoDto = pedidoResumoModel.toCollectionDTO(pedidosPage.getContent());
+		
+		Page<PedidoResumoDTO> pedidoDtoPage = new PageImpl<>(pedidoDto, pageable, pedidosPage.getTotalElements());
+		
+		return pedidoDtoPage;
 	}
 	
 	@GetMapping("{codigo}")
