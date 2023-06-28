@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zap.lojazap.api.DTO.CidadeDTO;
-import com.zap.lojazap.api.DTO.EstadoDTO;
+import com.zap.lojazap.api.dto.CidadeDTO;
+import com.zap.lojazap.api.dto.EstadoDTO;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
 

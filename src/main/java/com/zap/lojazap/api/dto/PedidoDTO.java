@@ -1,4 +1,4 @@
-package com.zap.lojazap.api.DTO;
+package com.zap.lojazap.api.dto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -11,15 +11,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PedidoResumoDTO {
+public class PedidoDTO {
 
 	private String codigo;
 	private BigDecimal subtotal;
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
-	private String statusPedido;     
+	private StatusPedido statusPedido;     //mudar tipagem para string TODO
 	private OffsetDateTime dataCriacao;
+	private OffsetDateTime dataConfirmacao;
+	private OffsetDateTime dataEntrega;
+	private OffsetDateTime dataCancelamento;
 	private RestauranteResumidoDTO restaurante;
-//	private UsuarioDTO cliente;
-	private String nomeCliente;
+	private UsuarioDTO cliente;
+	private FormaPagamentoDTO formaPAgamento;
+	private EnderecoDTO endereco;
+	private List<ItemPedidoDTO> itemPedido;
 }

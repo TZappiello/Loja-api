@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.CidadeDTO;
 import com.zap.lojazap.api.assember.CidadeModelAssembler;
 import com.zap.lojazap.api.assember.CidadeModelInputAssembler;
+import com.zap.lojazap.api.dto.CidadeDTO;
 import com.zap.lojazap.api.input.CidadeIdInput;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;

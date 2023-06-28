@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.PedidoDTO;
-import com.zap.lojazap.api.DTO.PedidoResumoDTO;
 import com.zap.lojazap.api.assember.PedidoModelAssembler;
 import com.zap.lojazap.api.assember.PedidoModelInputAssembler;
 import com.zap.lojazap.api.assember.PedidoResumoModelAssembler;
+import com.zap.lojazap.api.dto.PedidoDTO;
+import com.zap.lojazap.api.dto.PedidoResumoDTO;
 import com.zap.lojazap.api.input.PedidoInput;
 import com.zap.lojazap.core.data.PageableTranslator;
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
@@ -99,10 +99,12 @@ public class PedidoController {
 	private Pageable traduzirPegeable(Pageable apiPageable) {
 		var mapeamento = Map.of(
 				"codigo", "codigo",
+				"subtotal", "subtotal",
 				"restaurante.nome", "restaurante.nome",
 				"nomeCliente", "cliente.nome",
 				"valorTotal", "valorTotal"
 				);
+		
 		return PageableTranslator.translate(apiPageable, mapeamento);
 		
 	}

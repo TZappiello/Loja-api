@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.UsuarioDTO;
 import com.zap.lojazap.api.assember.UsuarioModelAssembler;
+import com.zap.lojazap.api.dto.UsuarioDTO;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;

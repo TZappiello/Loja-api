@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.ProdutoDTO;
 import com.zap.lojazap.api.assember.ProdutoModelAssembler;
 import com.zap.lojazap.api.assember.ProdutoModelInputAssembler;
+import com.zap.lojazap.api.dto.ProdutoDTO;
 import com.zap.lojazap.api.input.ProdutoInput;
 import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;

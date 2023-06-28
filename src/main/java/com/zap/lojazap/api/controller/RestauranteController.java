@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.RestauranteDTO;
 import com.zap.lojazap.api.assember.RestauranteModelAssembler;
 import com.zap.lojazap.api.assember.RestauranteModelInputAssembler;
+import com.zap.lojazap.api.dto.RestauranteDTO;
 import com.zap.lojazap.api.input.RestauranteInput;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.CidadeNaoEncontradaException;

@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zap.lojazap.api.DTO.UsuarioDTO;
+import com.zap.lojazap.api.dto.UsuarioDTO;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 
 @Component
