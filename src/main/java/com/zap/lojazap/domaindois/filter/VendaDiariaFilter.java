@@ -1,4 +1,4 @@
-package com.zap.lojazap.domaindois.repository.filter;
+package com.zap.lojazap.domaindois.filter;
 
 import java.time.OffsetDateTime;
 
@@ -10,9 +10,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PedidoFilter {
+public class VendaDiariaFilter {
 
-	private Long clienteId;
 	private Long restauranteId;
 	
 	@DateTimeFormat(iso= ISO.DATE_TIME)
