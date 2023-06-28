@@ -29,8 +29,8 @@ import com.zap.lojazap.domaindois.entities.PedidoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
+import com.zap.lojazap.domaindois.filter.PedidoFilter;
 import com.zap.lojazap.domaindois.repository.PedidoRepository;
-import com.zap.lojazap.domaindois.repository.filter.PedidoFilter;
 import com.zap.lojazap.domaindois.service.CadastroPedidoService;
 import com.zap.lojazap.infrastructure.repository.spec.PedidoSpec;
 
