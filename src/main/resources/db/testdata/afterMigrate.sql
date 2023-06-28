@@ -86,7 +86,7 @@ insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (
 insert into pedido (id, codigo, restaurante, cliente_usuario, forma_pagamento, endereco_cidade_id, endereco_cep, 
 			    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 			    status_pedido,  data_criacao, sub_total, taxa_frete, valor_total)
-    values (1, '45e415ac-8f8e-4193-bacd-b7b19a6c070f', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil', 'CRIADO',  utc_timestamp, 298.90, 10, 308.90);
+    values (1, '45e415ac-8f8e-4193-bacd-b7b19a6c070f', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil', 'CRIADO',  '2023-05-28 18:12:42', 298.90, 10, 308.90);
 				
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)values (1, 1, 1, 1, 78.9, 78.9, null);
 
@@ -95,17 +95,17 @@ insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, 
 insert into pedido (id, codigo, restaurante, cliente_usuario, forma_pagamento, endereco_cidade_id, endereco_cep, 
 		        endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 		        status_pedido, data_criacao, sub_total, taxa_frete, valor_total)
-	values (2, '9251d342-f179-407f-888f-0fda8ed5d932', 3, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', utc_timestamp, 79, 0, 79);
+	values (2, '9251d342-f179-407f-888f-0fda8ed5d932', 3, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', '2023-05-04 18:12:42', 79, 0, 79);
 	
 insert into pedido (id, codigo, restaurante, cliente_usuario, forma_pagamento, endereco_cidade_id, endereco_cep, 
 		        endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 		        status_pedido, data_criacao, sub_total, taxa_frete, valor_total)
-	values (3, 'b5ab0856-0508-4c14-b4db-262c5511d502', 1, 2, 3, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', utc_timestamp, 79, 0, 79);
+	values (3, 'b5ab0856-0508-4c14-b4db-262c5511d502', 1, 2, 3, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', '2023-06-08 18:12:42', 79, 0, 79);
 
 insert into pedido (id, codigo, restaurante, cliente_usuario, forma_pagamento, endereco_cidade_id, endereco_cep, 
 		        endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 		        status_pedido, data_criacao, sub_total, taxa_frete, valor_total)
-	values (4, 'b5ab0336-0508-4c14-b4db-262c5511d502', 1, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', utc_timestamp, 79, 0, 79);
+	values (4, 'b5ab0336-0508-4c14-b4db-262c5511d502', 1, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro','CRIADO', '2023-06-25 18:12:42', 89, 10, 79);
 
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)values (3, 2, 3, 1, 79, 79, 'Ao ponto');
