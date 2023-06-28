@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.PermissaoDTO;
 import com.zap.lojazap.api.assember.PermissaoModelAssembler;
+import com.zap.lojazap.api.dto.PermissaoDTO;
 import com.zap.lojazap.domaindois.entities.GrupoEntity;
 import com.zap.lojazap.domaindois.service.CadastroGrupoService;
 

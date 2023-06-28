@@ -1,4 +1,4 @@
-package com.zap.lojazap.api.DTO;
+package com.zap.lojazap.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;

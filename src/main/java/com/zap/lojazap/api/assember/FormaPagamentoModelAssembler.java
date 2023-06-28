@@ -8,10 +8,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zap.lojazap.api.DTO.CidadeDTO;
-import com.zap.lojazap.api.DTO.CozinhaDTO;
-import com.zap.lojazap.api.DTO.FormaPagamentoDTO;
-import com.zap.lojazap.api.DTO.RestauranteDTO;
+import com.zap.lojazap.api.dto.CidadeDTO;
+import com.zap.lojazap.api.dto.CozinhaDTO;
+import com.zap.lojazap.api.dto.FormaPagamentoDTO;
+import com.zap.lojazap.api.dto.RestauranteDTO;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
 import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;

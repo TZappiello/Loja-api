@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.UsuarioDTO;
 import com.zap.lojazap.api.assember.UsuarioModelAssembler;
 import com.zap.lojazap.api.assember.UsuarioModelInputAssembler;
+import com.zap.lojazap.api.dto.UsuarioDTO;
 import com.zap.lojazap.api.input.UsuarioIdInput;
 import com.zap.lojazap.api.input.UsuarioInputAtualizar;
 import com.zap.lojazap.api.input.UsuarioInputAtualizarSenha;

@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.CozinhaDTO;
 import com.zap.lojazap.api.assember.CozinhaModelAssembler;
 import com.zap.lojazap.api.assember.CozinhaModelInputAssembler;
+import com.zap.lojazap.api.dto.CozinhaDTO;
 import com.zap.lojazap.api.input.CozinhaIdInput;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;

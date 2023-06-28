@@ -1,14 +1,15 @@
-package com.zap.lojazap.api.DTO;
+package com.zap.lojazap.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class CidadeResumoDTO {
 
 	private Long id;
 	private String nome;
-	private String email;
-
+	
+	private String estado;
+		
 }

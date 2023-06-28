@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.zap.lojazap.api.DTO.EnderecoDTO;
+import com.zap.lojazap.api.dto.EnderecoDTO;
 import com.zap.lojazap.api.input.ItemPedidoInput;
 import com.zap.lojazap.domaindois.entities.Endereco;
 import com.zap.lojazap.domaindois.entities.ItemPedidoEntity;

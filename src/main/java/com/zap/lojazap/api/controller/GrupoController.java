@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.GrupoDTO;
 import com.zap.lojazap.api.assember.GrupoModelAssembler;
 import com.zap.lojazap.api.assember.GrupoModelInputAssembler;
+import com.zap.lojazap.api.dto.GrupoDTO;
 import com.zap.lojazap.api.input.GrupoIdInput;
 import com.zap.lojazap.domaindois.entities.GrupoEntity;
 import com.zap.lojazap.domaindois.exception.GrupoNaoEncontradoException;

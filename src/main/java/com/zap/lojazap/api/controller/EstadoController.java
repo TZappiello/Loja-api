@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.EstadoDTO;
 import com.zap.lojazap.api.assember.EstadoModelAssembler;
 import com.zap.lojazap.api.assember.EstadoModelInputAssembler;
+import com.zap.lojazap.api.dto.EstadoDTO;
 import com.zap.lojazap.api.input.EstadoIdInput;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;

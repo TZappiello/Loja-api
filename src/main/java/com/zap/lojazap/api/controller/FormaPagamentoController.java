@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zap.lojazap.api.DTO.EstadoDTO;
-import com.zap.lojazap.api.DTO.FormaPagamentoDTO;
 import com.zap.lojazap.api.assember.FormaPagamentoModelAssembler;
 import com.zap.lojazap.api.assember.FormaPagamentoModelInputAssembler;
+import com.zap.lojazap.api.dto.EstadoDTO;
+import com.zap.lojazap.api.dto.FormaPagamentoDTO;
 import com.zap.lojazap.api.input.EstadoIdInput;
 import com.zap.lojazap.api.input.FormaPagamentoInput;
 import com.zap.lojazap.domaindois.entities.EstadoEntity;
