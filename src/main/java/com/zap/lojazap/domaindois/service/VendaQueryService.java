@@ -7,5 +7,5 @@ import com.zap.lojazap.domaindois.filter.VendaDiariaFilter;
 
 public interface VendaQueryService {
 
-	List<VendaDiaria> consultaVendasDiarias(VendaDiariaFilter filtro); 
+	List<VendaDiaria> consultaVendasDiarias(VendaDiariaFilter filtro, String timeOffset); 
 }
