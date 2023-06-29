@@ -1,7 +1,7 @@
 package com.zap.lojazap.domaindois.entities.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class VendaDiaria {
 	//troquei o nome do pacote de dto para model
-	private LocalDate data;
+	private Date data;
 	private Long totalVendas;
 	private BigDecimal totalFaturado;
 }
