@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.xml.crypto.Data;
 import javax.persistence.criteria.Predicate;
 
 import org.springframework.stereotype.Repository;
@@ -24,14 +25,24 @@ public class VendaQueryServiceImpl implements VendaQueryService {
 	private EntityManager manager;
 	
 	@Override
-	public List<VendaDiaria> consultaVendasDiarias(VendaDiariaFilter filtro) {
+	public List<VendaDiaria> consultaVendasDiarias(VendaDiariaFilter filtro, String timeOffset) {
 		var builder = manager.getCriteriaBuilder(); // instanciando uma fabrica 
 		var query = builder.createQuery(VendaDiaria.class); //no query vai ser a classe de retorno não precisa ser a entidade
 		var root = query.from(PedidoEntity.class); // aqui faz o from da entidade
 		
 		var predicates = new ArrayList<Predicate>();
 		
-		var functionDateDataCriacao = builder.function("date", Date.class, root.get("dataCriacao"));
+		var functionConvertTzDataCriacao = builder.function(
+				"convert_tz", 
+				Data.class, 
+				root.get("dataCriacao"),
+				builder.literal("+00:00"), 
+				builder.literal(timeOffset));
+		
+		var functionDateDataCriacao = builder.function(
+				"date", 
+				Date.class, 
+				functionConvertTzDataCriacao);
 		
 		var selection = builder.construct(VendaDiaria.class, 
 				functionDateDataCriacao,
@@ -51,7 +62,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
 		if(filtro.getDataFim() != null) {
 			predicates.add(builder.lessThanOrEqualTo(root.get("dataCriacao"), 
 					filtro.getDataFim()));
-		}
+		} 
 		
 		predicates.add(root.get("status").in(StatusPedido.CONFIRMADO, StatusPedido.ENTREGUE)); 
 		
