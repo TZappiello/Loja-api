@@ -1,4 +1,4 @@
-package com.zap.lojazap.infrastructure.repository.service;
+package com.zap.lojazap.infrastructure.repository.service.query;
 
 import java.sql.Date;
 import java.util.ArrayList;
