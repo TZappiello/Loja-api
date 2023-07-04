@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,16 +19,12 @@ import com.zap.lojazap.api.input.FotoProdutoInput;
 public class RestauranteProdutoFotoController {
 
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void atualizarFoto(@PathVariable Long restauranteId, Long produtoId, FotoProdutoInput fotoProdutoInput) {
+	public void atualizarFoto(@PathVariable Long restauranteId, Long produtoId, @Valid FotoProdutoInput fotoProdutoInput) {
 		
 		var nomeArquivo = UUID.randomUUID().toString() 
 				+"_"+ fotoProdutoInput.getArquivo().getOriginalFilename();
 		 
 		var arquivoFoto = Path.of("C:/Users/Zappi/Documents/catalogo", nomeArquivo);
-		
-		System.out.println(fotoProdutoInput.getDescricao());
-		System.out.println(arquivoFoto);
-		System.out.println(fotoProdutoInput.getArquivo().getContentType());
 		
 		try {
 			fotoProdutoInput.getArquivo().transferTo(arquivoFoto);
