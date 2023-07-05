@@ -16,6 +16,7 @@ delete from usuario;
 delete from restaurante_usuario_responsavel;
 delete from pedido;
 delete from item_pedido;
+delete from foto_produto;
 
 set foreign_key_checks = 1;
 SET SQL_SAFE_UPDATES = 1;
