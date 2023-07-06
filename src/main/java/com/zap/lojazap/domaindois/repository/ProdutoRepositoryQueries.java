@@ -5,4 +5,6 @@ import com.zap.lojazap.domaindois.entities.FotoProdutoEntity;
 public interface ProdutoRepositoryQueries {
 
 	FotoProdutoEntity save(FotoProdutoEntity foto);
+	
+	void delete(FotoProdutoEntity foto);
 }

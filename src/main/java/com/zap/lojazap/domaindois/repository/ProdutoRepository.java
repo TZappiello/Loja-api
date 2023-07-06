@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zap.lojazap.domaindois.entities.FotoProdutoEntity;
 import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
@@ -27,4 +28,10 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> , 
 			+ " WHERE p.ativo = true "
 			+ " AND p.restaurante =:restaurante")
 	List<ProdutoEntity> findByAtivo(RestauranteEntity restaurante);
+	
+	@Query("SELECT f FROM FotoProdutoEntity f "
+			+ " JOIN f.produto p "
+			+ " WHERE f.produto.id = :produtoId "
+			+ " AND p.restaurante.id = :restauranteId ")
+	Optional<FotoProdutoEntity> findByFotoExistente(Long restauranteId, Long produtoId);
 }
