@@ -1,5 +1,7 @@
 package com.zap.lojazap.domaindois.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,18 @@ public class CatalogoFotoProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@Transactional
-	public FotoProdutoEntity salvar (FotoProdutoEntity foto) {
+	public FotoProdutoEntity salvar(FotoProdutoEntity foto) {
+		Long restauranteId = foto.getRestauranteId();
+		Long produtoId = foto.getProduto().getId();
+
+		Optional<FotoProdutoEntity> fotoExistente = produtoRepository.findByFotoExistente(restauranteId, produtoId);
+
+		if (fotoExistente.isPresent()) {
+			produtoRepository.delete(fotoExistente.get());
+		}
+
 		return produtoRepository.save(foto);
 	}
 }

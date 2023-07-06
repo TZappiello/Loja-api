@@ -12,7 +12,6 @@ import com.zap.lojazap.domaindois.repository.ProdutoRepositoryQueries;
 @Repository
 public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
 
-
 	@PersistenceContext
 	private EntityManager manager;
 
@@ -21,4 +20,11 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
 	public FotoProdutoEntity save(FotoProdutoEntity foto) {
 		return manager.merge(foto);
 	}
+
+	@Transactional
+	@Override
+	public void delete(FotoProdutoEntity foto) {
+		manager.remove(foto);
+	}
+
 }
