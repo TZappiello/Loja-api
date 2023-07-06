@@ -6,11 +6,13 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "foto_produto")
 @Entity
 public class FotoProdutoEntity {
 	

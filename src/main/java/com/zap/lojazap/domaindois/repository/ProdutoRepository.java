@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 
-public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
+public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> , ProdutoRepositoryQueries {
 
 	@Transactional(readOnly = true)
 	@Query("FROM ProdutoEntity produto "
