@@ -1,5 +1,7 @@
 package com.zap.lojazap.api.controller;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class RestauranteProdutoFotoController {
 	private FotoProdutoModelAssembler produtoModelAssembler;
 	
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public FotoProdutoDTO atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId, @Valid FotoProdutoInput fotoProdutoInput) {
+	public FotoProdutoDTO atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId, @Valid FotoProdutoInput fotoProdutoInput) throws IOException {
 	
 		ProdutoEntity produto = produtosService.buscarSeTiver(restauranteId, produtoId);
 		
@@ -45,11 +47,12 @@ public class RestauranteProdutoFotoController {
 		foto.setTamanho(arquivo.getSize());
 		foto.setNomeArquivo(arquivo.getOriginalFilename());
 		
-		FotoProdutoEntity fotoSalva = catalogoFotoProdutoService.salvar(foto);
+		FotoProdutoEntity fotoSalva = catalogoFotoProdutoService.salvar(foto, arquivo.getInputStream());
 		
 		return produtoModelAssembler.toDTO(fotoSalva);
 	}
 }
+
 
 
 	/*	var nomeArquivo = UUID.randomUUID().toString() 

@@ -1,5 +1,7 @@
 package com.zap.lojazap.infrastructure.repository.storege;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -30,5 +32,29 @@ public class LocalFotoStoregeService implements FotoStoreService {
 
 	private Path getArquivoPath(String nomeArquivo) {
 		return diretorioFotos.resolve(Path.of(nomeArquivo));
+	}
+
+	@Override
+	public void remover(String nomeArquivo) {
+		Path arquivoPath = getArquivoPath(nomeArquivo);
+		
+		try {
+			Files.deleteIfExists(arquivoPath);
+	
+		} catch (Exception e) {
+			throw new StorageException("Não foi possível excluir arquivo.", e);
+		}
+	}
+
+	@Override
+	public InputStream recuperar(String nomeArquivo) {
+		try {
+			Path arquivoPath = getArquivoPath(nomeArquivo);
+			
+			return Files.newInputStream(arquivoPath);
+		} catch (Exception e) {
+			throw new StorageException("Não foi possível recuperar o arquivo.", e);
+		}
+		
 	}
 }
