@@ -1,6 +1,5 @@
 package com.zap.lojazap.infrastructure.repository.storege;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +13,7 @@ import com.zap.lojazap.domaindois.service.FotoStoreService;
 @Service
 public class LocalFotoStoregeService implements FotoStoreService {
 
-	@Value("${loja-apai.storage.local.diretorio-fotos}")
+	@Value("${loja-api.storage.local.diretorio-fotos}")
 	private Path diretorioFotos;
 
 	@Override
