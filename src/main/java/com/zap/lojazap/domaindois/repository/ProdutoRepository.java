@@ -34,4 +34,5 @@ public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> , 
 			+ " WHERE f.produto.id = :produtoId "
 			+ " AND p.restaurante.id = :restauranteId ")
 	Optional<FotoProdutoEntity> findByFotoExistente(Long restauranteId, Long produtoId);
+
 }
