@@ -4,17 +4,21 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import com.zap.lojazap.core.storage.StorageProperties;
 import com.zap.lojazap.domaindois.service.FotoStoreService;
 
 @Service
 public class LocalFotoStoregeService implements FotoStoreService {
 
-	@Value("${loja-api.storage.local.diretorio-fotos}")
-	private Path diretorioFotos;
+//	@Value("${loja-api.storage.local.diretorio-fotos}")
+//	private Path diretorioFotos;
+	
+	@Autowired
+	private StorageProperties storageProperties;
 
 	@Override
 	public void armazenar(NovaFoto novaFoto) {
@@ -30,7 +34,8 @@ public class LocalFotoStoregeService implements FotoStoreService {
 	}
 
 	private Path getArquivoPath(String nomeArquivo) {
-		return diretorioFotos.resolve(Path.of(nomeArquivo));
+		return storageProperties.getLocal().getDiretorioFotos()
+				.resolve(Path.of(nomeArquivo));
 	}
 
 	@Override
