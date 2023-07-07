@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zap.lojazap.domaindois.entities.FotoProdutoEntity;
+import com.zap.lojazap.domaindois.exception.FotoProdutoNaoEncontradoException;
 import com.zap.lojazap.domaindois.repository.ProdutoRepository;
 import com.zap.lojazap.domaindois.service.FotoStoreService.NovaFoto;
 
@@ -47,5 +48,10 @@ public class CatalogoFotoProdutoService {
 		fotoStore.substituir(nomeArquivoExistente, novaFoto);
 		
 		return foto;
+	}
+	
+	public FotoProdutoEntity buscarSeTiver(Long restauranteId, Long produtoId) {
+		return produtoRepository.findByFotoExistente(restauranteId, produtoId).
+				orElseThrow(()-> new FotoProdutoNaoEncontradoException(restauranteId, produtoId));
 	}
 }
