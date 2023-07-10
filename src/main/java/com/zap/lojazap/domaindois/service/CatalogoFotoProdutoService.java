@@ -41,7 +41,8 @@ public class CatalogoFotoProdutoService {
 		produtoRepository.flush();			 // descarrega tudo que esta na fila 		
 		
 		NovaFoto novaFoto = NovaFoto.builder()
-				.nomeAquivo(foto.getNomeArquivo())
+				.nomeArquivo(foto.getNomeArquivo())
+				.contentType(foto.getContentType())
 				.inputStream(dadosArquivo)
 				.build();
 		

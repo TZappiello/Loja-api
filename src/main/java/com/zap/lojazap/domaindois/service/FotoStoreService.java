@@ -30,7 +30,8 @@ public interface FotoStoreService {
 	@Getter
 	class NovaFoto{
 		
-		private String nomeAquivo;
+		private String nomeArquivo;
+		private String contentType;
 		private InputStream inputStream;
 	}
 
