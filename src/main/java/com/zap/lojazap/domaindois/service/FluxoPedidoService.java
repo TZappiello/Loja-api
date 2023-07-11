@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
-import com.zap.lojazap.domaindois.service.EnvioEmailService.Mensagem;
+import com.zap.lojazap.domaindois.repository.PedidoRepository;
 
 @Service
 public class FluxoPedidoService {
@@ -14,14 +14,15 @@ public class FluxoPedidoService {
 	private CadastroPedidoService cadastroPedido;
 	
 	@Autowired
-	private EnvioEmailService envioEmail;
+	private PedidoRepository pedidoRepository;
 	
 	@Transactional
 	public void confirmar(String codigo) {
 		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 		pedido.confirmar();
 		
-		var mensagem = Mensagem.builder()
+		pedidoRepository.save(pedido);
+		/* var mensagem = Mensagem.builder()
 				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
 				.corpo("pedido-confirmado.html")
 				.variavel("pedido", pedido)
@@ -31,7 +32,7 @@ public class FluxoPedidoService {
 //				.corpo("O pedido de código <strong> " + pedido.getCodigo() + " </strong> foi confirmado" )	PODEMOS FAZER ASSIM!
 //				.destinatario("teste@mail.com.br")  PODERIA ENVIAR MAIS EMAIL
 		
-		envioEmail.enviar(mensagem);
+		envioEmail.enviar(mensagem); */  //AQUI VAI SER USADO UM SERVICE!
 		
 	}
 	
