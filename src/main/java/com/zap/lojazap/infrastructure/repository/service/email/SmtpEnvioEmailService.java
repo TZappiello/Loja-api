@@ -1,7 +1,5 @@
 package com.zap.lojazap.infrastructure.repository.service.email;
 
-import java.io.IOException;
-
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,10 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import com.zap.lojazap.core.email.EmailProperties;
 import com.zap.lojazap.domaindois.service.EnvioEmailService;
 
-import freemarker.core.ParseException;
 import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
-import freemarker.template.TemplateNotFoundException;
 
-@Service
+//@Service
 public class SmtpEnvioEmailService implements EnvioEmailService {
 
 	@Autowired
@@ -51,7 +46,7 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
 		}
 	}
 
-	private String processarTemplate(Mensagem mensagem) {
+	protected String processarTemplate(Mensagem mensagem) {
 		try {
 			Template template = freemarkerConfig.getTemplate(mensagem.getCorpo());
 		
