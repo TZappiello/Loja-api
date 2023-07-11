@@ -23,9 +23,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import com.zap.lojazap.domaindois.enums.StatusPedido;
+import com.zap.lojazap.domaindois.event.PedidoConfirmadoEvent;
 import com.zap.lojazap.domaindois.exception.NegocioException;
 
 import lombok.AllArgsConstructor;
@@ -36,10 +37,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper=false)
 @Table(name = "pedido")
 @Entity
-public class PedidoEntity {
+public class PedidoEntity extends AbstractAggregateRoot<PedidoEntity> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,6 +108,8 @@ public class PedidoEntity {
 	public void confirmar() {
 		setStatus(StatusPedido.CONFIRMADO);
 		setDataConfirmacao(OffsetDateTime.now());
+		
+		registerEvent(new PedidoConfirmadoEvent(this));
 	}
 	
 	public void entregar() {
