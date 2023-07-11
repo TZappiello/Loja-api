@@ -77,7 +77,7 @@ public class PedidoEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "forma_pagamento", nullable = false)
-	private FormaPagamentoEntity formaPAgamento;
+	private FormaPagamentoEntity formaPagamento;
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurante", nullable = false)

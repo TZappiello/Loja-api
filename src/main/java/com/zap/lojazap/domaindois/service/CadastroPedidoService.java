@@ -58,12 +58,12 @@ public class CadastroPedidoService {
 		CidadeEntity cidade = cadastroCidades.buscarSeTiver(pedido.getEndereco().getCidade().getId());
 		UsuarioEntity usuario = cadastroUsuario.buscarSeTiver(pedido.getCliente().getId());
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(pedido.getRestaurante().getId());
-		FormaPagamentoEntity pagamento = cadastroFormaPagamento.buscarSeTiver(pedido.getFormaPAgamento().getId());
+		FormaPagamentoEntity pagamento = cadastroFormaPagamento.buscarSeTiver(pedido.getFormaPagamento().getId());
 		
 		pedido.getEndereco().setCidade(cidade);
 		pedido.setCliente(usuario);
 		pedido.setRestaurante(restaurante);
-		pedido.setFormaPAgamento(pagamento);
+		pedido.setFormaPagamento(pagamento);
 	}
 
 	private void validarItens(PedidoEntity pedido) {
