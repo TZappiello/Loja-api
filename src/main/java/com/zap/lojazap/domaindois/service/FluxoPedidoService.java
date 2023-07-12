@@ -48,5 +48,7 @@ public class FluxoPedidoService {
 		PedidoEntity pedido = cadastroPedido.buscarSeTiver(codigo);
 		
 		pedido.cancelar();
+		
+		pedidoRepository.delete(pedido);
 	}
 }
