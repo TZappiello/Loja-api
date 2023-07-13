@@ -53,9 +53,13 @@ public class FormaPagamentoController {
 	}
 
 	@GetMapping("/{id}")
-	public FormaPagamentoDTO porid(@PathVariable Long id) {
+	public ResponseEntity<FormaPagamentoDTO> porid(@PathVariable Long id) {
 		FormaPagamentoEntity entity = cadastroFormaPagamentoService.buscarSeTiver(id);
-		return formaPagamentoModelAssembler.toDTO(entity);
+		var formaPagamentoPorid = formaPagamentoModelAssembler.toDTO(entity);
+		
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.body(formaPagamentoPorid);
 	}
 
 	@PostMapping
