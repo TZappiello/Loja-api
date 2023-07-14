@@ -10,7 +10,7 @@ import com.zap.lojazap.domaindois.entities.FormaPagamentoEntity;
 public interface FormaPagamentoRepository extends JpaRepository<FormaPagamentoEntity, Long> {
 
 	@Query("SELECT MAX(dataAtualizacao) FROM FormaPagamentoEntity")
-	OffsetDateTime getDataUltimaatualizacao();
+	OffsetDateTime getDataUltimaAtualizacao();
 //	List<FormaPagamentoEntity> todas();
 //	FormaPagamentoEntity porId(Long id);
 //	FormaPagamentoEntity adicionar(FormaPagamentoEntity pagamento);
