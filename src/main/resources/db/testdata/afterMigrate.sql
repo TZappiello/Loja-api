@@ -57,9 +57,9 @@ insert into restaurante ( endereco_bairro, endereco_cep, endereco_complemento, e
 insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo, aberto) values ('Du Chefe', 17, 2, utc_timestamp, utc_timestamp, true, true);
 insert into restaurante (nome, taxa_frete, cozinha_id, data_atualizacao, data_cadastro, ativo, aberto) values ('Gula', 17, 3, utc_timestamp, utc_timestamp, true, false);
 
-insert into forma_pagamento (descricao) values ('Dinheiro');
-insert into forma_pagamento (descricao) values ('Cartão Crédito');
-insert into forma_pagamento (descricao) values ('Cartão Débito');
+insert into forma_pagamento (descricao, data_atualizacao) values ('Dinheiro', utc_timestamp);
+insert into forma_pagamento (descricao, data_atualizacao) values ('Cartão Crédito', utc_timestamp);
+insert into forma_pagamento (descricao, data_atualizacao) values ('Cartão Débito', utc_timestamp);
 
 insert into permissao (descricao, nome) values ('Pedido Telefone', 'Joao');
 insert into permissao (descricao, nome) values ('Permitir editar atributos', 'CONSULTAR_ATRIBUTOS');
