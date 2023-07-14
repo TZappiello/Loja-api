@@ -1,6 +1,10 @@
 package com.zap.lojazap.core.web;
 
+import javax.servlet.Filter;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -14,6 +18,11 @@ public class WebConfig implements WebMvcConfigurer {
 //		.allowedOrigins("*") 	ORIGEN DOS METODOS
 //		.maxAge(30);			QUANTIDADE DE TEMPO PARA O CACHE NA CHAMADA OPTIONS
 		
+	}
+	
+	@Bean
+	public Filter shallowEtagHeaderFilter() {
+		return new ShallowEtagHeaderFilter(); 	// FAZ A CONFIGURAÇÃO DO ETAG PARA CACHEAR AS REQUISIÇÕES
 	}
 	
 }
