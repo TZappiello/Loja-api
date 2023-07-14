@@ -1,5 +1,6 @@
 package com.zap.lojazap.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.zap.lojazap.api.assember.FormaPagamentoModelAssembler;
 import com.zap.lojazap.api.assember.FormaPagamentoModelInputAssembler;
@@ -44,21 +47,52 @@ public class FormaPagamentoController {
 	private FormaPagamentoModelInputAssembler formaPagamentoModelInputAssembler;
 
 	@GetMapping
-	public ResponseEntity<List<FormaPagamentoDTO>> listar() {
-		var formasPagamentos = formaPagamentoModelAssembler.toCollectionDTO(formaPagamentoRepository.findAll());
-	
+	public ResponseEntity<List<FormaPagamentoDTO>> listar(ServletWebRequest request) {
+		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+		String eTag = "0";
+
+		OffsetDateTime dataUltimaAtualizacao = formaPagamentoRepository.getDataUltimaAtualizacao();
+
+		if(dataUltimaAtualizacao != null) {
+			eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+		}
+		
+		if (request.checkNotModified(eTag)) {
+			return null;
+		}
+		
+		List<FormaPagamentoDTO> formasPagamentos = formaPagamentoModelAssembler
+				.toCollectionDTO(formaPagamentoRepository.findAll());
+
 		return ResponseEntity.ok()
-				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)) // COLOCANDO CACHE NO METODO PODENDO SETAR O TEMPO  
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)) // COLOCANDO CACHE NO METODO
+				.eTag(eTag)																			// PODENDO SETAR O TEMPO
 				.body(formasPagamentos);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<FormaPagamentoDTO> porid(@PathVariable Long id) {
+	public ResponseEntity<FormaPagamentoDTO> porid(@PathVariable Long id, ServletWebRequest request) {
+		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+		
+		String eTag ="0";
+		
+		 OffsetDateTime dataUltimaAtualizacao = formaPagamentoRepository.getDataUltimaAtualizacao();
+		
+		if(dataUltimaAtualizacao != null) {
+			eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+		}
+		
+		if(request.checkNotModified(eTag)) {
+			return null;
+		}
+		
 		FormaPagamentoEntity entity = cadastroFormaPagamentoService.buscarSeTiver(id);
 		var formaPagamentoPorid = formaPagamentoModelAssembler.toDTO(entity);
-		
+
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.eTag(eTag)
 				.body(formaPagamentoPorid);
 	}
 
@@ -86,5 +120,5 @@ public class FormaPagamentoController {
 		cadastroFormaPagamentoService.remover(id);
 
 	}
-	
+
 }
