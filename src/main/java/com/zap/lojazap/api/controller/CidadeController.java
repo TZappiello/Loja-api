@@ -1,9 +1,12 @@
 package com.zap.lojazap.api.controller;
 
+import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.catalina.filters.ExpiresFilter.XHttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.google.common.net.HttpHeaders;
+import com.zap.lojazap.api.ResourceUriHelper;
 import com.zap.lojazap.api.assember.CidadeModelAssembler;
 import com.zap.lojazap.api.assember.CidadeModelInputAssembler;
 import com.zap.lojazap.api.dto.CidadeDTO;
@@ -70,8 +78,11 @@ public class CidadeController {
 		try {
 			CidadeEntity cidade = cidadeModelInputAssembler.toDTOObject(cidadeIdInput);
 			
-			return cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
+			 CidadeDTO cidadeDto = cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
 
+			 ResourceUriHelper.addUriInResponseHeader(cidadeDto.getId());
+			
+			return cidadeDto;
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}
