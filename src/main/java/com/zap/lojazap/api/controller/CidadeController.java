@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.apache.catalina.filters.ExpiresFilter.XHttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +62,14 @@ public class CidadeController {
 	public CidadeDTO porId(@PathVariable Long id) {
 		CidadeEntity cidade = cadastroService.buscarSeTiver(id);
 		
-		return cidadeModelAssembler.toDTO(cidade);
+		
+		var cidadeDto = cidadeModelAssembler.toDTO(cidade);
+		
+		cidadeDto.add(Link.of("http://localhost:8080/cidades/1"));
+		
+		cidadeDto.add(Link.of("http://localhost:8080/cidades", "cidades"));
+		
+		return cidadeDto;
 		
 //		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
 //		if (cidade.isPresent()) {
