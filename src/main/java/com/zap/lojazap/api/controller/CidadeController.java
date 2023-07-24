@@ -10,6 +10,7 @@ import org.apache.catalina.filters.ExpiresFilter.XHttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,9 +66,18 @@ public class CidadeController {
 		
 		var cidadeDto = cidadeModelAssembler.toDTO(cidade);
 		
-		cidadeDto.add(Link.of("http://localhost:8080/cidades/1"));
+		cidadeDto.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
+				.slash(cidadeDto.getId()).withSelfRel());
 		
-		cidadeDto.add(Link.of("http://localhost:8080/cidades", "cidades"));
+//		cidadeDto.add(Link.of("http://localhost:8080/cidades/1"));
+		
+		cidadeDto.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
+				.withRel("cidades"));
+		
+//		cidadeDto.add(Link.of("http://localhost:8080/cidades", "cidades"));
+		
+		cidadeDto.add(WebMvcLinkBuilder.linkTo(EstadoController.class)
+				.slash(cidadeDto.getEstado().getId()).withSelfRel());
 		
 		return cidadeDto;
 		
