@@ -1,16 +1,14 @@
 package com.zap.lojazap.api.controller;
 
-import java.net.URI;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.catalina.filters.ExpiresFilter.XHttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +18,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.google.common.net.HttpHeaders;
 import com.zap.lojazap.api.ResourceUriHelper;
 import com.zap.lojazap.api.assember.CidadeModelAssembler;
 import com.zap.lojazap.api.assember.CidadeModelInputAssembler;
 import com.zap.lojazap.api.dto.CidadeDTO;
 import com.zap.lojazap.api.input.CidadeIdInput;
 import com.zap.lojazap.domaindois.entities.CidadeEntity;
-import com.zap.lojazap.domaindois.entities.EstadoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeEmUsoException;
 import com.zap.lojazap.domaindois.exception.EstadoNaoEncontradoException;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -66,17 +59,19 @@ public class CidadeController {
 		
 		var cidadeDto = cidadeModelAssembler.toDTO(cidade);
 		
-		cidadeDto.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
-				.slash(cidadeDto.getId()).withSelfRel());
+		var link = linkTo(methodOn(CidadeController.class)
+				.porId(cidadeDto.getId())).withSelfRel();
+		
+		cidadeDto.add(link);
 		
 //		cidadeDto.add(Link.of("http://localhost:8080/cidades/1"));
 		
-		cidadeDto.add(WebMvcLinkBuilder.linkTo(CidadeController.class)
+		cidadeDto.add(linkTo(CidadeController.class)
 				.withRel("cidades"));
 		
 //		cidadeDto.add(Link.of("http://localhost:8080/cidades", "cidades"));
 		
-		cidadeDto.add(WebMvcLinkBuilder.linkTo(EstadoController.class)
+		cidadeDto.getEstado().add(linkTo(EstadoController.class)
 				.slash(cidadeDto.getEstado().getId()).withSelfRel());
 		
 		return cidadeDto;
