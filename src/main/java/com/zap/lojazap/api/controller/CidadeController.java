@@ -1,14 +1,12 @@
 package com.zap.lojazap.api.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +29,6 @@ import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
 import com.zap.lojazap.domaindois.service.CadastroCidadesService;
 
-import antlr.collections.List;
 
 @RestController
 @RequestMapping("/cidades")
@@ -51,49 +48,17 @@ public class CidadeController {
 
 	@GetMapping
 	public CollectionModel<CidadeDTO> listar() {
-		var todasCidades = cidadeRepository.findAll();
+		List<CidadeEntity> todasCidades = cidadeRepository.findAll();
 		
-		var cidadesModel = cidadeModelAssembler.toCollectionDTO(todasCidades);
+		return cidadeModelAssembler.toCollectionModel(todasCidades);
 		
-		cidadesModel.forEach(cidadeDto ->{
-			cidadeDto.add(linkTo(methodOn(CidadeController.class)
-					.porId(cidadeDto.getId())).withSelfRel());
-			
-			cidadeDto.getEstado().add(linkTo(EstadoController.class)
-					.slash(cidadeDto.getEstado().getId()).withSelfRel());
-		});
-		
-		var cidadesCollectionModel = CollectionModel.of(cidadesModel);
-		
-		cidadesCollectionModel.add(linkTo(CidadeController.class)
-				.withRel("cidades"));
-		
-		return cidadesCollectionModel;
 	}
 
 	@GetMapping("/{id}")
 	public CidadeDTO porId(@PathVariable Long id) {
 		CidadeEntity cidade = cadastroService.buscarSeTiver(id);
 		
-		
-		var cidadeDto = cidadeModelAssembler.toDTO(cidade);
-		
-		var link = linkTo(methodOn(CidadeController.class)
-				.porId(cidadeDto.getId())).withSelfRel();
-		
-		cidadeDto.add(link);
-		
-//		cidadeDto.add(Link.of("http://localhost:8080/cidades/1"));
-		
-		cidadeDto.add(linkTo(CidadeController.class)
-				.withRel("cidades"));
-		
-//		cidadeDto.add(Link.of("http://localhost:8080/cidades", "cidades"));
-		
-		cidadeDto.getEstado().add(linkTo(EstadoController.class)
-				.slash(cidadeDto.getEstado().getId()).withSelfRel());
-		
-		return cidadeDto;
+		return cidadeModelAssembler.toModel(cidade);
 		
 //		Optional<CidadeEntity> cidade = cidadeRepository.findById(id);
 //		if (cidade.isPresent()) {
@@ -110,7 +75,7 @@ public class CidadeController {
 		try {
 			CidadeEntity cidade = cidadeModelInputAssembler.toDTOObject(cidadeIdInput);
 			
-			 CidadeDTO cidadeDto = cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
+			 CidadeDTO cidadeDto = cidadeModelAssembler.toModel(cadastroService.cadastrar(cidade));
 
 			 ResourceUriHelper.addUriInResponseHeader(cidadeDto.getId());
 			
@@ -127,7 +92,7 @@ public class CidadeController {
 			CidadeEntity cidade = cadastroService.buscarSeTiver(id);
 			BeanUtils.copyProperties(cidadeIdInput, cidade, "id");
 
-			return cidadeModelAssembler.toDTO(cadastroService.cadastrar(cidade));
+			return cidadeModelAssembler.toModel(cadastroService.cadastrar(cidade));
 			
 		} catch (EstadoNaoEncontradoException e) {
 			 throw new NegocioException(e.getMessage(), e);
