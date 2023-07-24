@@ -3,12 +3,12 @@ package com.zap.lojazap.api.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +31,8 @@ import com.zap.lojazap.domaindois.exception.NegocioException;
 import com.zap.lojazap.domaindois.repository.CidadeRepository;
 import com.zap.lojazap.domaindois.service.CadastroCidadesService;
 
+import antlr.collections.List;
+
 @RestController
 @RequestMapping("/cidades")
 public class CidadeController {
@@ -48,8 +50,25 @@ public class CidadeController {
 	private CidadeModelInputAssembler cidadeModelInputAssembler;
 
 	@GetMapping
-	public List<CidadeDTO> listar() {
-		return cidadeModelAssembler.toCollectionDTO(cidadeRepository.findAll());
+	public CollectionModel<CidadeDTO> listar() {
+		var todasCidades = cidadeRepository.findAll();
+		
+		var cidadesModel = cidadeModelAssembler.toCollectionDTO(todasCidades);
+		
+		cidadesModel.forEach(cidadeDto ->{
+			cidadeDto.add(linkTo(methodOn(CidadeController.class)
+					.porId(cidadeDto.getId())).withSelfRel());
+			
+			cidadeDto.getEstado().add(linkTo(EstadoController.class)
+					.slash(cidadeDto.getEstado().getId()).withSelfRel());
+		});
+		
+		var cidadesCollectionModel = CollectionModel.of(cidadesModel);
+		
+		cidadesCollectionModel.add(linkTo(CidadeController.class)
+				.withRel("cidades"));
+		
+		return cidadesCollectionModel;
 	}
 
 	@GetMapping("/{id}")
