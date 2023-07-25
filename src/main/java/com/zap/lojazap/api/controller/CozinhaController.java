@@ -31,10 +31,13 @@ import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author JARVIZ
  *
  */
+@Slf4j
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
@@ -54,6 +57,10 @@ public class CozinhaController {
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public Page<CozinhaDTO> listar(@PageableDefault(size = 2) Pageable pageable) {  // sort = "nome" pode ordenar assim setando o atributo
 	
+		log.info("Lista {} paginas de cozinhas" , pageable.getPageNumber());
+		log.warn("Passou por aqui!!!");
+		log.error("Testando um possível erro!");
+		
 		Page<CozinhaEntity> cozinhasPage = cozinhaRepository.findAll(pageable);
 
 		List<CozinhaDTO> cozinhasDTO = cozinhaModelAssembler.toCollectionDTO(cozinhasPage.getContent());
