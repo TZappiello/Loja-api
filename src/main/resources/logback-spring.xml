@@ -23,3 +23,7 @@
   </springProfile>
   
 </configuration>
+
+<!-- https://documentation.solarwinds.com/en/success_center/loggly/content/admin/java-logback.htm?cshid=loggly_java-logback -->
+
+
