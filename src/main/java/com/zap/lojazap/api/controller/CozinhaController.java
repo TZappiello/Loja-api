@@ -60,6 +60,10 @@ public class CozinhaController {
 		log.info("Lista {} paginas de cozinhas" , pageable.getPageNumber());
 		log.warn("Passou por aqui!!!");
 		log.error("Testando um possível erro!");
+//		
+//		if(true) { // FAZENDO TESTE DE ERRO COM LOG! NO ApiExceptionHandler
+//			throw new RuntimeException("Testando exception com o Slf4j!!!");
+//		}
 		
 		Page<CozinhaEntity> cozinhasPage = cozinhaRepository.findAll(pageable);
 
