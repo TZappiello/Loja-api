@@ -58,8 +58,8 @@ public class CozinhaController {
 	public Page<CozinhaDTO> listar(@PageableDefault(size = 2) Pageable pageable) {  // sort = "nome" pode ordenar assim setando o atributo
 	
 		log.info("Lista {} paginas de cozinhas" , pageable.getPageNumber());
-//		log.warn("Passou por aqui!!!");
-//		log.error("Testando um possível erro!");
+		log.warn("Passou por aqui!!!");
+		log.error("Testando um possível erro!");
 //		
 //		if(true) { // FAZENDO TESTE DE ERRO COM LOG! NO ApiExceptionHandler
 //			throw new RuntimeException("Testando exception com o Slf4j!!!");
