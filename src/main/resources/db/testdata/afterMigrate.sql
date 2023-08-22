@@ -76,9 +76,9 @@ insert into grupo(nome) values ("Avaliado");
 
 insert into grupo_permissao(grupo_id, permissao_id) values (1,1),(1,2),(2,2);
 
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago@gmail.com", "Thiago Teste Quarto", "321");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago+luana@gmail.com", "Luana Teste Quinto", "987");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "bob_teste@mail.com", "Bob Teste Primeiro", "123");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago@gmail.com", "Thiago Teste Quarto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago+luana@gmail.com", "Luana Teste Quinto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "bob_teste@mail.com", "Bob Teste Primeiro", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "ana_teste@mail.com", "Ana Teste Segundo", "123");
 insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "joao_teste@mail.com", "Joao Teste Terceiro", "123");
 
