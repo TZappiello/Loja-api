@@ -1,15 +1,11 @@
 package com.zap.lojazap.core.security;
 
-import javax.crypto.spec.SecretKeySpec;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -29,12 +25,12 @@ public class ResourceServerConfig {
 		
 	}
 
-    @Bean
-    JwtDecoder jwtDecoder() {
-		var secretKey = new SecretKeySpec("uyrkfxzfuyflewyffuydfsyufluflugçiurehoihbcsjl".getBytes(), "HmacSHA256");
-    	
-    	return NimbusJwtDecoder.withSecretKey(secretKey).build();
-	}
+//    @Bean
+//    JwtDecoder jwtDecoder() {
+//		var secretKey = new SecretKeySpec("uyrkfxzfuyflewyffuydfsyufluflugçiurehoihbcsjl".getBytes(), "HmacSHA256");
+//    	
+//    	return NimbusJwtDecoder.withSecretKey(secretKey).build();
+//	}
 
 }
 
