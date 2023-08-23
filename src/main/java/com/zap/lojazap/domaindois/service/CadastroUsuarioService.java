@@ -5,10 +5,12 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zap.lojazap.api.input.UsuarioInputAtualizarSenha;
+import com.zap.lojazap.core.security.CryptConfig;
 import com.zap.lojazap.domaindois.entities.GrupoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.NegocioException;
@@ -27,6 +29,9 @@ public class CadastroUsuarioService {
 	@Autowired
 	private CadastroGrupoService cadastroGrupo;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Transactional
 	public UsuarioEntity cadastrar(UsuarioEntity usuarioEntity) {
 		
@@ -37,6 +42,10 @@ public class CadastroUsuarioService {
 		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuarioEntity) ) {
 			throw new NegocioException(String.format("Já existe um usuário cadastrado com o e-mail: %s ", usuarioEntity.getEmail()));
 		} 
+		
+		if (usuarioEntity.isNovo()) {
+			usuarioEntity.setSenha(passwordEncoder.encode(usuarioEntity.getSenha()));
+		}
 		
 		return usuarioRepository.save(usuarioEntity);
 	}
@@ -51,11 +60,16 @@ public class CadastroUsuarioService {
 	@Transactional
 	public UsuarioEntity AtualizarSenha(Long id, UsuarioInputAtualizarSenha atualizarSenha) {
 		UsuarioEntity usuarioEntity = buscarSeTiver(id);
+
+//		passwordEncoder.matches(usuarioEntity.getSenha(), atualizarSenha.getSenhaAtual());
+//		var senhaAtual = passwordEncoder.encode(atualizarSenha.getSenhaAtual());
 		
-		if(!usuarioEntity.getSenha().equals(atualizarSenha.getSenhaAtual())) {
+		if(!passwordEncoder.matches(atualizarSenha.getSenhaAtual(), usuarioEntity.getSenha())) {
 			throw new NegocioException(String.format("Senha atual informada não coincide com a senha do usuário."));
 		}
-		usuarioEntity.setSenha(atualizarSenha.getNovaSenha());
+		
+		
+		usuarioEntity.setSenha(passwordEncoder.encode(atualizarSenha.getNovaSenha()));
 		
 		return usuarioRepository.save(usuarioEntity);
 	}

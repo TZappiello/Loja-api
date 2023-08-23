@@ -57,4 +57,8 @@ public class UsuarioEntity {
 	public boolean associar(GrupoEntity grupo) {
 		return getGrupos().add(grupo);
 	}
+	
+	public boolean isNovo() {
+	    return getId() == null;
+	}
 }
