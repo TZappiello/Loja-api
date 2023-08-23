@@ -25,6 +25,7 @@ import com.zap.lojazap.api.dto.PedidoDTO;
 import com.zap.lojazap.api.dto.PedidoResumoDTO;
 import com.zap.lojazap.api.input.PedidoInput;
 import com.zap.lojazap.core.data.PageableTranslator;
+import com.zap.lojazap.core.security.ZapSecurity;
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
@@ -52,6 +53,9 @@ public class PedidoController {
 	
 	@Autowired
 	private PedidoModelInputAssembler PedidoModelInput;
+	
+	@Autowired
+	private ZapSecurity zapSecurity;
 	
 	@GetMapping
 	public Page<PedidoResumoDTO> listar(PedidoFilter filter, Pageable pageable){
@@ -85,7 +89,7 @@ public class PedidoController {
 //			pedidoEntity.setCliente(usuarioEntity);
 			
 			pedidoEntity.setCliente(new UsuarioEntity());
-			pedidoEntity.getCliente().setId(1L);
+			pedidoEntity.getCliente().setId(zapSecurity.getUsuarioId());
 			
 			pedidoEntity = cadastroPedido.adicionar(pedidoEntity);
 			
