@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +55,7 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaModelInputAssembler cozinhaModelInputAssembler;
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public Page<CozinhaDTO> listar(@PageableDefault(size = 2) Pageable pageable) {  // sort = "nome" pode ordenar assim setando o atributo
 	
@@ -73,23 +75,27 @@ public class CozinhaController {
 		
 		return cozinhaDtoPage;
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/por-nome")
 	public List<CozinhaDTO> listarPorNome(@RequestParam String nome) {
 		return cozinhaModelAssembler.toCollectionDTO(cozinhaRepository.findTodasBynomeContaining(nome));
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/por-nome-completo")
 	public Optional<CozinhaEntity> listarPorNomeCompleto(@RequestParam String nome) {
 		return cozinhaRepository.findNomeCompletoByNome(nome);
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/{id}")
 	public CozinhaDTO porId(@PathVariable Long id) {
 		CozinhaEntity cozinhaEntity = cadastroCozinha.buscarSeTiver(id);
 		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
+	@PreAuthorize("hasAuthority('CONSULTAR_COZINHAS')")
 	@PostMapping
 	public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
 		CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
