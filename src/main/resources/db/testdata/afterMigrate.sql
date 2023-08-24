@@ -105,13 +105,13 @@ select 3, id from permissao where nome like 'CONSULTAR_%';
 insert into grupo_permissao (grupo_id, permissao_id)
 select 4, id from permissao where nome like '%_RESTAURANTES' or nome like '%_PRODUTOS';
 
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago@gmail.com", "Thiago Teste Quarto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago+luana@gmail.com", "Luana Teste Quinto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "bob_teste@mail.com", "Bob Teste Primeiro", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "ana_teste@mail.com", "Ana Teste Segundo", "123");
-insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "joao_teste@mail.com", "Joao Teste Terceiro", "123");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago.ger@gmail.com", "Thiago Teste Quarto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "zappi.thiago+luana.ven@gmail.com", "Luana Teste Quinto", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "bob_teste.sec@mail.com", "Bob Teste Primeiro", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "ana_teste.cad@mail.com", "Ana Teste Segundo", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
+insert into usuario(data_cadastro, email, nome, senha) values(utc_timestamp, "joao_teste@mail.com", "Joao Teste Terceiro", "$2a$12$lSyQfqx48h1E2ytRZ0HSKu4si6iyEBZ75Z00i0vBslYqqWptOMS/y");
 
-insert into grupos_usuarios(usuario_id, grupo_id) values(1,1),(1,2),(2,1);
+insert into grupos_usuarios(usuario_id, grupo_id) values (1,1), (1,2), (2,2), (3,3), (4,4); 
 
 insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (1,1),(1,2),(2,3);
 
