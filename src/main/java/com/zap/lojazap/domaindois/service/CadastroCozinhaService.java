@@ -24,8 +24,8 @@ public class CadastroCozinhaService {
 
 	@Transactional
 	public CozinhaEntity adicionar(CozinhaEntity cozinha) {
-		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
-		
+//		Optional<CozinhaEntity> contem = cozinhaRepository.findNomeCompletoByNome(cozinha.getNome());
+		 
 //		if(contem.isPresent()) {
 //			System.err.println("AQUI TEM ESSA COZINHA!!!");
 //			throw new EntidadeEmUsoException(
