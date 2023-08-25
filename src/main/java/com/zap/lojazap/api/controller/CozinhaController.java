@@ -95,7 +95,7 @@ public class CozinhaController {
 		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
-	@PreAuthorize("hasAuthority('CONSULTAR_COZINHAS')")
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@PostMapping
 	public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
 		CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
@@ -104,6 +104,7 @@ public class CozinhaController {
 		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@PutMapping("/{id}")
 	public CozinhaDTO atualizar(@PathVariable Long id, @RequestBody @Valid CozinhaIdInput cozinhaIput) {
 
@@ -113,6 +114,7 @@ public class CozinhaController {
 		return cozinhaModelAssembler.toDTO(cadastroCozinha.adicionar(cozinhaAtual));
 	}
 
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long id) {
