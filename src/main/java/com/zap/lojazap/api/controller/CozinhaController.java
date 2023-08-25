@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +62,9 @@ public class CozinhaController {
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public Page<CozinhaDTO> listar(@PageableDefault(size = 2) Pageable pageable) {  // sort = "nome" pode ordenar assim setando o atributo
 	
+		System.out.println(SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities());
+		
 		log.info("Lista {} paginas de cozinhas" , pageable.getPageNumber());
 		log.warn("Passou por aqui!!!");
 		log.error("Testando um possível erro!");
