@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +27,7 @@ import com.zap.lojazap.api.assember.CozinhaModelAssembler;
 import com.zap.lojazap.api.assember.CozinhaModelInputAssembler;
 import com.zap.lojazap.api.dto.CozinhaDTO;
 import com.zap.lojazap.api.input.CozinhaIdInput;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.domaindois.entities.CozinhaEntity;
 import com.zap.lojazap.domaindois.repository.CozinhaRepository;
 import com.zap.lojazap.domaindois.service.CadastroCozinhaService;
@@ -55,7 +55,9 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaModelInputAssembler cozinhaModelInputAssembler;
 
-	@PreAuthorize("isAuthenticated()")
+//	@PreAuthorize("isAuthenticated()")	as 3 anotações fazem a mesma coisa só esta mais organizado
+//	@PodeConsultarCozinhas
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public Page<CozinhaDTO> listar(@PageableDefault(size = 2) Pageable pageable) {  // sort = "nome" pode ordenar assim setando o atributo
 	
@@ -76,26 +78,28 @@ public class CozinhaController {
 		return cozinhaDtoPage;
 	}
 	
-	@PreAuthorize("isAuthenticated()")
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping("/por-nome")
 	public List<CozinhaDTO> listarPorNome(@RequestParam String nome) {
 		return cozinhaModelAssembler.toCollectionDTO(cozinhaRepository.findTodasBynomeContaining(nome));
 	}
 
-	@PreAuthorize("isAuthenticated()")
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping("/por-nome-completo")
 	public Optional<CozinhaEntity> listarPorNomeCompleto(@RequestParam String nome) {
 		return cozinhaRepository.findNomeCompletoByNome(nome);
 	}
 
-	@PreAuthorize("isAuthenticated()")
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping("/{id}")
 	public CozinhaDTO porId(@PathVariable Long id) {
 		CozinhaEntity cozinhaEntity = cadastroCozinha.buscarSeTiver(id);
 		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
-	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
+//	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")	as 3 anotações fazem a mesma coisa só esta mais organizado
+//	@PodeEditarCozinha 
+	@CheckSecurity.Cozinhas.PodeEditar
 	@PostMapping
 	public CozinhaDTO adicionar(@RequestBody @Valid CozinhaIdInput cozinhaIput) {
 		CozinhaEntity cozinhaEntity = cozinhaModelInputAssembler.toDTOObject(cozinhaIput);
@@ -104,7 +108,7 @@ public class CozinhaController {
 		return cozinhaModelAssembler.toDTO(cozinhaEntity);
 	}
 
-	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
+	@CheckSecurity.Cozinhas.PodeEditar
 	@PutMapping("/{id}")
 	public CozinhaDTO atualizar(@PathVariable Long id, @RequestBody @Valid CozinhaIdInput cozinhaIput) {
 
@@ -114,7 +118,7 @@ public class CozinhaController {
 		return cozinhaModelAssembler.toDTO(cadastroCozinha.adicionar(cozinhaAtual));
 	}
 
-	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
+	@CheckSecurity.Cozinhas.PodeEditar
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long id) {
