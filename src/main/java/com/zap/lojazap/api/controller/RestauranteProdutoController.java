@@ -20,6 +20,7 @@ import com.zap.lojazap.api.assember.ProdutoModelAssembler;
 import com.zap.lojazap.api.assember.ProdutoModelInputAssembler;
 import com.zap.lojazap.api.dto.ProdutoDTO;
 import com.zap.lojazap.api.input.ProdutoInput;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.repository.ProdutoRepository;
@@ -45,7 +46,7 @@ public class RestauranteProdutoController {
 	@Autowired
 	private ProdutoModelInputAssembler produtoModelInputAssembler;
 	
-	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public List<ProdutoDTO> listarTodos(@PathVariable Long restauranteId,
 			@RequestParam(required = false) boolean ativo) {
@@ -61,6 +62,7 @@ public class RestauranteProdutoController {
 		return produtoModelAssembler.toCollectionDTO(todosprodutos);
 	}
 	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/{produtoId}")
 	public ProdutoDTO listaPorId(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		ProdutoEntity produto = cadastroProdutoService.buscarSeTiver(restauranteId, produtoId);
@@ -68,6 +70,7 @@ public class RestauranteProdutoController {
 		return produtoModelAssembler.toDTO(produto);
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoDTO adicionar(@PathVariable Long restauranteId, @RequestBody @Valid ProdutoInput produtoInput) {
@@ -82,6 +85,7 @@ public class RestauranteProdutoController {
 		
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{produtoId}")
 	public ProdutoDTO atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestBody @Valid ProdutoInput produtoInput) {

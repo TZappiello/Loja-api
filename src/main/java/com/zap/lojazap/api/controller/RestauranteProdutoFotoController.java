@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zap.lojazap.api.assember.FotoProdutoModelAssembler;
 import com.zap.lojazap.api.dto.FotoProdutoDTO;
 import com.zap.lojazap.api.input.FotoProdutoInput;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.domaindois.entities.FotoProdutoEntity;
 import com.zap.lojazap.domaindois.entities.ProdutoEntity;
 import com.zap.lojazap.domaindois.exception.EntidadeNaoEncontradaException;
@@ -47,6 +48,7 @@ public class RestauranteProdutoFotoController {
 	@Autowired
 	private FotoStoreService fotoStore;
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public FotoProdutoDTO atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@Valid FotoProdutoInput fotoProdutoInput) throws IOException {
@@ -67,6 +69,7 @@ public class RestauranteProdutoFotoController {
 		return produtoModelAssembler.toDTO(fotoSalva);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public FotoProdutoDTO buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		FotoProdutoEntity fotoProduto = catalogoFotoProdutoService.buscarSeTiver(restauranteId, produtoId);
@@ -83,6 +86,7 @@ public class RestauranteProdutoFotoController {
 		return produtoModelAssembler.toDTO(fotoProduto);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestHeader(name = "accept") String acceptHeader)
@@ -107,6 +111,7 @@ public class RestauranteProdutoFotoController {
 		}	
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long restauranteId, @PathVariable Long produtoId) {

@@ -22,6 +22,7 @@ import com.zap.lojazap.api.assember.RestauranteModelAssembler;
 import com.zap.lojazap.api.assember.RestauranteModelInputAssembler;
 import com.zap.lojazap.api.dto.RestauranteDTO;
 import com.zap.lojazap.api.input.RestauranteInput;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.exception.CidadeNaoEncontradaException;
 import com.zap.lojazap.domaindois.exception.CozinhaNaoEncontradaException;
@@ -52,6 +53,7 @@ public class RestauranteController {
 		return restauranteModelAssembler.toCollectionDTO(restauranteRepository.findAll());
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/{id}")
 	public RestauranteDTO porId(@PathVariable Long id) {
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(id);
@@ -59,6 +61,7 @@ public class RestauranteController {
 		return restauranteModelAssembler.toDTO(restaurante);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/por-taxa")
 	public List<RestauranteEntity> porTaxa(@RequestParam BigDecimal taxaInicial, @RequestParam BigDecimal taxaFinal) {
 		return restauranteRepository.queryBytaxaFreteBetween(taxaInicial, taxaFinal);
@@ -66,11 +69,13 @@ public class RestauranteController {
 
 //	@RequestParam(value = "nomeParteInstituicao", defaultValue = "", required = false)
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/por-nome-frete")
 	public List<RestauranteEntity> porNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return restauranteRepository.buscar(nome, taxaInicial, taxaFinal);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/com-frete-gratis")
 	public List<RestauranteEntity> restauranteComFreteGratis(String nome) {
 //		var comFreteGratis = new RestauranteComFreteGratisSpec();
@@ -79,21 +84,25 @@ public class RestauranteController {
 		return restauranteRepository.freteGratis(nome);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/count")
 	public int countCozinha(@RequestParam Long cozinha) {
 		return restauranteRepository.countByCozinhaId(cozinha);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/exists")
 	public boolean exists(@RequestParam String nome) {
 		return restauranteRepository.existsByNome(nome);
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/por-nome-id")
 	public List<RestauranteEntity> porNomeECozinhaId(@RequestParam String nome, @RequestParam Long cozinha) {
 		return restauranteRepository.buscarPorNome(nome, cozinha);
 	}
-
+	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PostMapping
 	public RestauranteDTO adicionar(@RequestBody @Valid // @Validated(Groups.CozinhaId.class)
 	RestauranteInput restauranteInput) {
@@ -109,6 +118,7 @@ public class RestauranteController {
 		}
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{id}")
 	public RestauranteDTO atualizar(@PathVariable Long id, @RequestBody @Valid RestauranteInput restauranteInput) {
 
@@ -128,6 +138,7 @@ public class RestauranteController {
 
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{id}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativar(@PathVariable Long id) {
@@ -135,6 +146,7 @@ public class RestauranteController {
 		cadastroRestaurante.ativo(id);
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping("/{id}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long id) {
@@ -142,6 +154,7 @@ public class RestauranteController {
 		cadastroRestaurante.inativo(id);
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativarMultiplos(@RequestBody List<Long> ids) {
@@ -153,6 +166,7 @@ public class RestauranteController {
 		}
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativarMultiplos(@RequestBody List<Long> ids) {
@@ -164,12 +178,14 @@ public class RestauranteController {
 		}
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{id}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void fechar(@PathVariable Long id) {
 		cadastroRestaurante.fechar(id);
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{id}/aberto")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void abrir(@PathVariable Long id) {
