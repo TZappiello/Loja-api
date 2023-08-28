@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@Retention(RUNTIME)
-@Target(METHOD)
 public @interface CheckSecurity {
 	
 	public @interface Cozinhas {
@@ -23,6 +21,20 @@ public @interface CheckSecurity {
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
+		
+	}
+	
+	public @interface Restaurantes{
+		
+		@PreAuthorize("hasAuthority('SCOPE_ESCRITA') and hasAuthority('EDITAR_RESTAURANTES')")
+		@Retention(RUNTIME)
+		@Target(METHOD)
+		public @interface PodeEditar{}
+		
+		@PreAuthorize("hasAuthority('SCOPE_LEITURA') and isAuthenticated()")
+		@Retention(RUNTIME)
+		@Target(METHOD)
+		public @interface PodeConsultar{}
 		
 	}
 
