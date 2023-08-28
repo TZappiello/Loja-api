@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zap.lojazap.api.assember.FormaPagamentoModelAssembler;
 import com.zap.lojazap.api.dto.FormaPagamentoDTO;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.domaindois.entities.RestauranteEntity;
 import com.zap.lojazap.domaindois.service.CadastroRestauranteService;
 
@@ -27,6 +28,7 @@ public class RestauranteFormaPagamentoController {
 	@Autowired
 	private FormaPagamentoModelAssembler formaPagamentoModelAssembler;
 	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public List<FormaPagamentoDTO> listar(@PathVariable Long restauranteId) {
 		RestauranteEntity restaurante = cadastroRestaurante.buscarSeTiver(restauranteId);
@@ -34,12 +36,14 @@ public class RestauranteFormaPagamentoController {
 		return formaPagamentoModelAssembler.toCollectionDTO(restaurante.getFormasPagamento());
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping("{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void desassociarFormaPagamento(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void associarFormaPagamento(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
