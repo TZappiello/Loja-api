@@ -49,4 +49,11 @@ public interface RestauranteRepository
 			@Param("restauranteId") Long restauranteId, 
 			@Param("produtoId") Long produtoId);
 
+	
+	@Transactional(readOnly = true)
+	@Query("FROM RestauranteEntity restaurante "
+			+ " JOIN UsuarioEntity usuario ON restaurante.id = usuario.id "
+			+ " WHERE :restauranteId IS NULL OR restaurante.id =: restauranteId "
+			+ " OR :usuarioId IS NULL OR usuario.id =: usuarioId ")
+	boolean existsResponsavel(Long restauranteId, Long usuarioId);
 }
