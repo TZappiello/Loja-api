@@ -25,6 +25,7 @@ import com.zap.lojazap.api.dto.PedidoDTO;
 import com.zap.lojazap.api.dto.PedidoResumoDTO;
 import com.zap.lojazap.api.input.PedidoInput;
 import com.zap.lojazap.core.data.PageableTranslator;
+import com.zap.lojazap.core.security.CheckSecurity;
 import com.zap.lojazap.core.security.ZapSecurity;
 import com.zap.lojazap.domaindois.entities.PedidoEntity;
 import com.zap.lojazap.domaindois.entities.UsuarioEntity;
@@ -57,6 +58,7 @@ public class PedidoController {
 	@Autowired
 	private ZapSecurity zapSecurity;
 	
+	@CheckSecurity.Pedidos.PodePesquisar
 	@GetMapping
 	public Page<PedidoResumoDTO> listar(PedidoFilter filter, Pageable pageable){
 		

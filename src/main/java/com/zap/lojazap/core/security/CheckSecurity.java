@@ -38,4 +38,13 @@ public @interface CheckSecurity {
 		
 	}
 
+	public @interface Pedidos{
+		
+		@PreAuthorize("hasAuthority('SCOPE_LEITURA') and (hasAuthority('CONSULTAR_PEDIDOS') or " 
+				+ "@zapSecurity.getUsuarioId() == #filter.clienteId or "
+				+ "@zapSecurity.gerenciaRestaurante(#filter.restauranteId))")
+		@Retention(RUNTIME)
+		@Target(METHOD)
+		public @interface PodePesquisar{}
+	}
 }
