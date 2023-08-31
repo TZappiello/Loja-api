@@ -51,9 +51,13 @@ public interface RestauranteRepository
 
 	
 	@Transactional(readOnly = true)
-	@Query("FROM RestauranteEntity restaurante "
-			+ " JOIN UsuarioEntity usuario ON restaurante.id = usuario.id "
+	@Query("SELECT COUNT(1) "
+			+ "FROM RestauranteEntity restaurante "
+			+ " JOIN restaurante.usuarios usuario "
 			+ " WHERE :restauranteId IS NULL OR restaurante.id =: restauranteId "
-			+ " OR :usuarioId IS NULL OR usuario.id =: usuarioId ")
-	boolean existsResponsavel(Long restauranteId, Long usuarioId);
+			+ " AND :usuarioId IS NULL OR usuario.id =: usuarioId ")
+	Long existsResponsavel(
+			@Param("restauranteId") Long restauranteId, 
+			@Param("usuarioId")Long usuarioId);
+	
 }

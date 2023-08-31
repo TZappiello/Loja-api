@@ -178,18 +178,18 @@ public class RestauranteController {
 		}
 	}
 	
-	@CheckSecurity.Restaurantes.PodeEditar
-	@PutMapping("/{id}/fechamento")
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
+	@PutMapping("/{restauranteId}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void fechar(@PathVariable Long id) {
-		cadastroRestaurante.fechar(id);
+	public void fechar(@PathVariable Long restauranteId) {
+		cadastroRestaurante.fechar(restauranteId);
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
-	@PutMapping("/{id}/aberto")
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
+	@PutMapping("/{restauranteId}/aberto")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void abrir(@PathVariable Long id) {
-		cadastroRestaurante.abrir(id);
+	public void abrir(@PathVariable Long restauranteId) {
+		cadastroRestaurante.abrir(restauranteId);
 	}
 	/*
 	 * @PutMapping("/{id}") public ResponseEntity<Object> atualizar(@PathVariable
