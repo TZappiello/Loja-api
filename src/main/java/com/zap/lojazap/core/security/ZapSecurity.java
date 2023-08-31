@@ -29,6 +29,12 @@ public class ZapSecurity {
 	        return false;
 	    }
 	    
-	    return restauranteRepository.existsResponsavel(restauranteId, getUsuarioId());
+	     Long retorno = restauranteRepository.existsResponsavel(restauranteId, getUsuarioId());
+	    
+	     if(retorno == 1) {
+	    	 return true;
+	     }
+	     
+	    return false;
 	} 
 }
