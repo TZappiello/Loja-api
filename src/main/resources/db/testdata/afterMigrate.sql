@@ -17,6 +17,7 @@ delete from restaurante_usuario_responsavel;
 delete from pedido;
 delete from item_pedido;
 delete from foto_produto;
+delete from oauth_client_details;
 
 set foreign_key_checks = 1;
 SET SQL_SAFE_UPDATES = 1;
@@ -132,3 +133,38 @@ insert into pedido (id, codigo, restaurante, cliente_usuario, forma_pagamento, e
 
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)values (3, 2, 3, 1, 79, 79, 'Ao ponto');
+
+
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'loja-api-web', null, '$2a$12$laqXp155./Ra/8qJLR1x6u2AOuo/XcIxksm34qR6NSRnrW/v/fFZC',
+  'LEITURA,ESCRITA', 'password', null, null,
+  60 * 60 * 6, 60 * 24 * 60 * 60, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'lojaanalista', null, '$2a$12$laqXp155./Ra/8qJLR1x6u2AOuo/XcIxksm34qR6NSRnrW/v/fFZC',
+  'LEITURA,ESCRITA', 'authorization_code', 'http://www.lojaalanista.local:8082', null,
+  null, null, null
+);
+
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret, 
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'faturamento', null, '$2a$12$laqXp155./Ra/8qJLR1x6u2AOuo/XcIxksm34qR6NSRnrW/v/fFZC',
+  'LEITURA,ESCRITA', 'client_credentials', null, 'CONSULTAR_PEDIDOS,GERAR_RELATORIOS',
+  null, null, null
+);
