@@ -11,14 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-		.allowedMethods("*");
-//		.allowedOrigins("*") 	ORIGEN DOS METODOS
-//		.maxAge(30);			QUANTIDADE DE TEMPO PARA O CACHE NA CHAMADA OPTIONS
-		
-	}
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/**")
+//		.allowedMethods("*");
+////		.allowedOrigins("*") 	ORIGEN DOS METODOS
+////		.maxAge(30);			QUANTIDADE DE TEMPO PARA O CACHE NA CHAMADA OPTIONS
+//		
+//	}   FOI TIRADO DEPOIS QUE COLOCOU O AUTHORIZATION SERVE NO MESMO PRJ
 	
 	@Bean
 	public Filter shallowEtagHeaderFilter() {
